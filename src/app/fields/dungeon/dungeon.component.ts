@@ -14,7 +14,26 @@ export class DungeonComponent implements OnInit {
   fieldMap: string[][];
 
   ngOnInit(): void {
-    this.access.get().subscribe(it => this.fieldMap = it);
+    this.access.start().subscribe(() =>
+      this.access.get().subscribe(it => this.fieldMap = it));
   }
 
+  keyupEvent($event: any) {
+    console.log($event);
+    switch ($event.key) {
+      case 'ArrowUp':
+        this.access.top().subscribe(() => this.access.get().subscribe( it => this.fieldMap = it));
+        break;
+      case 'ArrowDown':
+        this.access.down().subscribe(() => this.access.get().subscribe( it => this.fieldMap = it));
+        break;
+      case 'ArrowRight':
+        this.access.right().subscribe(() => this.access.get().subscribe( it => this.fieldMap = it));
+        break;
+      case 'ArrowLeft':
+        this.access.left().subscribe(() => this.access.get().subscribe( it => this.fieldMap = it));
+        break;
+      default:
+    }
+  }
 }
