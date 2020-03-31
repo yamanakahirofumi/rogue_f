@@ -37,6 +37,9 @@ export class DungeonComponent implements OnInit {
       case 'ArrowLeft':
         this.access.left().subscribe(() => this.access.get().subscribe( it => this.fieldMap = it));
         break;
+      case 'g':
+        this.access.pickUp().subscribe(() => this.access.get().subscribe(it => this.fieldMap = it));
+        break;
       default:
     }
   }

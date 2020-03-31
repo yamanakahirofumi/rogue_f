@@ -32,4 +32,8 @@ export class FieldsAccessService {
   left() {
     return this.httpClient.put('/api/player/hero/command/left', {});
   }
+
+  pickUp(){
+    return this.httpClient.put('/api/player/hero/command/pickup', {});
+  }
 }
