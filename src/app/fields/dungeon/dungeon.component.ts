@@ -1,5 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {FieldsAccessService} from '../service/fields-access.service';
+import {Observable, of} from 'rxjs';
+import {mergeMap} from 'rxjs/operators';
 
 @Component({
   selector: 'app-dungeon',
@@ -20,27 +22,27 @@ export class DungeonComponent implements OnInit {
 
   keyupEvent($event: any) {
     console.log($event);
-    switch ($event.key) {
-      case 'k':
-      case 'ArrowUp':
-        this.access.top().subscribe(() => this.access.get().subscribe( it => this.fieldMap = it));
-        break;
-      case 'j':
-      case 'ArrowDown':
-        this.access.down().subscribe(() => this.access.get().subscribe( it => this.fieldMap = it));
-        break;
-      case 'l':
-      case 'ArrowRight':
-        this.access.right().subscribe(() => this.access.get().subscribe( it => this.fieldMap = it));
-        break;
-      case 'h':
-      case 'ArrowLeft':
-        this.access.left().subscribe(() => this.access.get().subscribe( it => this.fieldMap = it));
-        break;
-      case 'g':
-        this.access.pickUp().subscribe(() => this.access.get().subscribe(it => this.fieldMap = it));
-        break;
-      default:
-    }
+    const ob: Observable<object> = (() => {
+      switch ($event.key) {
+        case 'k':
+        case 'ArrowUp':
+          return this.access.top();
+        case 'j':
+        case 'ArrowDown':
+          return this.access.down();
+        case 'l':
+        case 'ArrowRight':
+          return this.access.right();
+        case 'h':
+        case 'ArrowLeft':
+          return this.access.left();
+        case 'g':
+          return this.access.pickUp();
+        default:
+          return of('a');
+      }
+    })();
+    ob.pipe(mergeMap(() => this.access.get()))
+      .subscribe(it => this.fieldMap = it);
   }
 }
