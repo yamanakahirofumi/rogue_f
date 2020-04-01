@@ -21,17 +21,24 @@ export class DungeonComponent implements OnInit {
   keyupEvent($event: any) {
     console.log($event);
     switch ($event.key) {
+      case 'k':
       case 'ArrowUp':
         this.access.top().subscribe(() => this.access.get().subscribe( it => this.fieldMap = it));
         break;
+      case 'j':
       case 'ArrowDown':
         this.access.down().subscribe(() => this.access.get().subscribe( it => this.fieldMap = it));
         break;
+      case 'l':
       case 'ArrowRight':
         this.access.right().subscribe(() => this.access.get().subscribe( it => this.fieldMap = it));
         break;
+      case 'h':
       case 'ArrowLeft':
         this.access.left().subscribe(() => this.access.get().subscribe( it => this.fieldMap = it));
+        break;
+      case 'g':
+        this.access.pickUp().subscribe(() => this.access.get().subscribe(it => this.fieldMap = it));
         break;
       default:
     }
