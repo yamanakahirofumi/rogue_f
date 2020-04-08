@@ -16,8 +16,8 @@ export class DungeonComponent implements OnInit {
   fieldMap: string[][];
 
   ngOnInit(): void {
-    this.access.start().subscribe(() =>
-      this.access.get().subscribe(it => this.fieldMap = it));
+    this.access.start().pipe( mergeMap(() => this.access.get()))
+      .subscribe(it => this.fieldMap = it);
   }
 
   keyupEvent($event: any) {
