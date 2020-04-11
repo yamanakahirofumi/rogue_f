@@ -9,31 +9,39 @@ export class FieldsAccessService {
   constructor(private httpClient: HttpClient) {
   }
 
-  get() {
-    return this.httpClient.get<Array<Array<string>>>('/api/fields/main');
+  get(userId: number) {
+    return this.httpClient.get<Array<Array<string>>>(`/api/fields/${userId}`);
   }
 
-  start() {
-    return this.httpClient.post('/api/player/hero', {});
+  top(userId: number) {
+    return this.httpClient.put(`/api/player/${userId}/command/top`, {});
   }
 
-  top() {
-    return this.httpClient.put('/api/player/hero/command/top', {});
+  down(userId: number) {
+    return this.httpClient.put(`/api/player/${userId}/command/down`, {});
   }
 
-  down() {
-    return this.httpClient.put('/api/player/hero/command/down', {});
+  right(userId: number) {
+    return this.httpClient.put(`/api/player/${userId}/command/right`, {});
   }
 
-  right() {
-    return this.httpClient.put('/api/player/hero/command/right', {});
+  left(userId: number) {
+    return this.httpClient.put(`/api/player/${userId}/command/left`, {});
   }
 
-  left() {
-    return this.httpClient.put('/api/player/hero/command/left', {});
+  exist(name: string) {
+    return this.httpClient.get<boolean>(`/api/user/name/${name}/exist`);
   }
 
-  pickUp(){
-    return this.httpClient.put('/api/player/hero/command/pickup', {});
+  create(name: string) {
+    return this.httpClient.post<number>(`/api/user/${name}`, {});
+  }
+
+  gotoDungeon(userId: number) {
+    return this.httpClient.post(`/api/player/${userId}`, {});
+  }
+
+  pickUp(userId: number) {
+    return this.httpClient.put(`/api/player/${userId}/command/pickup`, {});
   }
 }
