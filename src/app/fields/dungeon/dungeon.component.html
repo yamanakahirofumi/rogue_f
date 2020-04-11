@@ -1,3 +1,8 @@
-<div (keyup)="keyupEvent($event)" tabindex="0">
-<span *ngFor="let line of fieldMap"><span *ngFor="let f of line">{{f}}</span><br/></span>
+<div (keyup)="keyupEvent($event)" style="display: flex" tabindex="0">
+  <div>
+    <span *ngFor="let line of fieldMap"><span *ngFor="let f of line">{{f}}</span><br/></span>
+  </div>
+  <div style="margin-left: 1em">
+    Name: {{name}}
+  </div>
 </div>

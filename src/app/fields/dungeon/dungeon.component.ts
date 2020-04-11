@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {FieldsAccessService} from '../service/fields-access.service';
 import {Observable, of} from 'rxjs';
 import {mergeMap} from 'rxjs/operators';
+import {StorageService} from '../service/storage.service';
 
 @Component({
   selector: 'app-dungeon',
@@ -10,39 +11,44 @@ import {mergeMap} from 'rxjs/operators';
 })
 export class DungeonComponent implements OnInit {
 
-  constructor(private access: FieldsAccessService) {
+  constructor(private access: FieldsAccessService, private storage: StorageService) {
   }
 
   fieldMap: string[][];
+  private id: number;
+  name: string;
 
   ngOnInit(): void {
-    this.access.start().pipe( mergeMap(() => this.access.get()))
-      .subscribe(it => this.fieldMap = it);
+    this.id = Number(this.storage.get('playerId'));
+    this.name = this.storage.get('playerName');
+    this.access.get(this.id).subscribe(it => this.fieldMap = it);
   }
 
-  keyupEvent($event: any) {
-    console.log($event);
+  keyupEvent(event: any) {
+    console.log(event);
     const ob: Observable<object> = (() => {
-      switch ($event.key) {
+      switch (event.key) {
         case 'k':
         case 'ArrowUp':
-          return this.access.top();
+          return this.access.top(this.id);
         case 'j':
         case 'ArrowDown':
-          return this.access.down();
+          return this.access.down(this.id);
         case 'l':
         case 'ArrowRight':
-          return this.access.right();
+          return this.access.right(this.id);
+        // case 'y':
+        //   return this.access.
         case 'h':
         case 'ArrowLeft':
-          return this.access.left();
+          return this.access.left(this.id);
         case 'g':
-          return this.access.pickUp();
+          return this.access.pickUp(this.id);
         default:
           return of('a');
       }
     })();
-    ob.pipe(mergeMap(() => this.access.get()))
+    ob.pipe(mergeMap(() => this.access.get(this.id)))
       .subscribe(it => this.fieldMap = it);
   }
 }
