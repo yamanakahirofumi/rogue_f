@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, ViewChild} from '@angular/core';
 import {StorageService} from '../../service/storage.service';
 import {FieldsAccessService} from '../../service/fields-access.service';
 import {filter, mergeMap} from 'rxjs/operators';
@@ -9,12 +9,15 @@ import {Router} from '@angular/router';
   templateUrl: './create-user.component.html',
   styleUrls: ['./create-user.component.css']
 })
-export class CreateUserComponent implements OnInit {
+export class CreateUserComponent implements AfterViewInit {
+
+  @ViewChild('name') name: ElementRef;
 
   constructor(private router: Router, private access: FieldsAccessService, private storageService: StorageService) {
   }
 
-  ngOnInit(): void {
+  ngAfterViewInit(): void {
+    this.name.nativeElement.focus();
   }
 
   fixedName(name: string): void {

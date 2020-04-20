@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {FieldsAccessService} from '../service/fields-access.service';
 import {Observable, of} from 'rxjs';
 import {mergeMap} from 'rxjs/operators';
@@ -9,20 +9,26 @@ import {StorageService} from '../service/storage.service';
   templateUrl: './dungeon.component.html',
   styleUrls: ['./dungeon.component.css']
 })
-export class DungeonComponent implements OnInit {
-
-  constructor(private access: FieldsAccessService, private storage: StorageService) {
-  }
+export class DungeonComponent implements OnInit, AfterViewInit {
 
   fieldMap: string[][];
   private id: number;
   name: string;
+  @ViewChild('outer') outer: ElementRef;
+
+  constructor(private access: FieldsAccessService, private storage: StorageService) {
+  }
 
   ngOnInit(): void {
     this.id = Number(this.storage.get('playerId'));
     this.name = this.storage.get('playerName');
     this.access.get(this.id).subscribe(it => this.fieldMap = it);
   }
+
+  ngAfterViewInit(): void {
+    this.outer.nativeElement.focus();
+  }
+
 
   keyupEvent(event: any) {
     console.log(event);

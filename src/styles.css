@@ -2,6 +2,8 @@
 
 body {
   font-family: "Noto Sans Mono CJK", monospace;
+  background: black;
+  color: white;
 }
 
 span {

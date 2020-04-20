@@ -1,4 +1,4 @@
-<div (keyup)="keyupEvent($event)" style="display: flex" tabindex="0">
+<div #outer (keyup)="keyupEvent($event)" style="display: flex" tabindex="0">
   <div>
     <span *ngFor="let line of fieldMap"><span *ngFor="let f of line">{{f}}</span><br/></span>
   </div>
