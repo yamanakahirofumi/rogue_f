@@ -1,8 +1,12 @@
-<div #outer (keyup)="keyupEvent($event)" style="display: flex" tabindex="0">
-  <div>
-    <span *ngFor="let line of fieldMap"><span *ngFor="let f of line">{{f}}</span><br/></span>
-  </div>
-  <div style="margin-left: 1em">
-    Name: {{name}}
+<div #outer (keyup)="keyupEvent($event)" tabindex="0">
+  <div style="height: 1em">{{comment}}</div>
+  <div style="display: flex">
+    <div style="margin-left: 1em; width: 20em">
+      Name: {{name}}<br/>
+      {{dungeon}} {{level}}階
+    </div>
+    <div>
+      <span *ngFor="let line of fieldMap"><span *ngFor="let f of line">{{f}}</span><br/></span>
+    </div>
   </div>
 </div>
