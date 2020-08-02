@@ -13,6 +13,14 @@ export class FieldsAccessService {
     return this.httpClient.get<Array<Array<string>>>(`/api/fields/${userId}`);
   }
 
+  getDungeonInfo(userId: number){
+    return this.httpClient.get(`api/fields/${userId}/info`);
+  }
+
+  private command(userId: number, command: string) {
+    return this.httpClient.put(`/api/player/${userId}/command/${command}`, {});
+  }
+
   top(userId: number) {
     return this.httpClient.put(`/api/player/${userId}/command/top`, {});
   }
@@ -27,6 +35,14 @@ export class FieldsAccessService {
 
   left(userId: number) {
     return this.httpClient.put(`/api/player/${userId}/command/left`, {});
+  }
+
+  downStairs(userId: number){
+    return this.httpClient.put(`/api/player/${userId}/command/downStairs`, {});
+  }
+
+  upStairs(userId: number){
+    return this.httpClient.put(`/api/player/${userId}/command/upStairs`, {});
   }
 
   exist(name: string) {
