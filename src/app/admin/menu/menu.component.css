@@ -1,0 +1,23 @@
+div.outer {
+  display: flex;
+}
+
+div.menu-border {
+  border: white solid 1px;
+  margin: 0 5px 0 5px;
+  padding: 0 5px 0 5px;
+}
+
+div.menu-select::before {
+  content: "▶︎";
+  line-height: 24px;
+}
+
+div.menu-item::before {
+  content: "　";
+  line-height: 24px;
+}
+
+div:focus {
+  outline: none;
+}

@@ -4,8 +4,9 @@ import {DungeonComponent} from './fields/dungeon/dungeon.component';
 import {CreateUserComponent} from './fields/player/create-user/create-user.component';
 
 const appRoutes: Routes = [
-  { path: '', component: CreateUserComponent },
-  { path: 'play', component: DungeonComponent}
+  {path: '', component: CreateUserComponent},
+  {path: 'play', component: DungeonComponent},
+  {path: 'admin', loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule)}
 ];
 
 @NgModule({
@@ -14,7 +15,5 @@ const appRoutes: Routes = [
   ],
   exports: [RouterModule]
 })
-export class AppRouteModule { }
-
-
-
+export class AppRouteModule {
+}
