@@ -11,7 +11,6 @@ export class MenuComponent implements OnInit {
 
   constructor() {
     this.initIsSelected();
-
   }
 
   ngOnInit(): void {
