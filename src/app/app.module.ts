@@ -7,6 +7,7 @@ import {AppRouteModule} from './app-routing.module';
 import {HttpClientModule} from '@angular/common/http';
 import { CreateUserComponent } from './fields/player/create-user/create-user.component';
 import {ReactiveFormsModule} from '@angular/forms';
+import {AdminModule} from './admin/admin.module';
 
 @NgModule({
   declarations: [
@@ -15,6 +16,7 @@ import {ReactiveFormsModule} from '@angular/forms';
     CreateUserComponent
   ],
     imports: [
+        AdminModule,
         BrowserModule,
         AppRouteModule,
         HttpClientModule,

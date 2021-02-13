@@ -50,7 +50,7 @@ export class FieldsAccessService {
   }
 
   create(name: string) {
-    return this.httpClient.post<number>(`/api/user/${name}`, {});
+    return this.httpClient.post<number>(`/api/user/name/${name}`, {});
   }
 
   gotoDungeon(userId: number) {

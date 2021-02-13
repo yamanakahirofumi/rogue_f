@@ -27,9 +27,9 @@ export class CreateUserComponent implements AfterViewInit {
         this.storageService.set('playerId', String(it));
         return this.access.gotoDungeon(it);
       }))
-      .subscribe(it => {
+      .subscribe(() => {
         this.storageService.set('playerName', name);
-        this.router.navigate(['/play']);
+        this.router.navigate(['/play']).then();
       });
   }
 

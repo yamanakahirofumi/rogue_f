@@ -1,0 +1,16 @@
+<div (keyup)="keyupEvent($event)" class="outer" tabindex="0">
+  <div class="menu-border">
+    <div [ngClass]="{'menu-select': isSelected[0],'menu-item' : !isSelected[0]}" (click)="clickFocus(0)">
+      Dungeon
+    </div>
+    <div [ngClass]="{'menu-select': isSelected[1], 'menu-item' : !isSelected[1]}" (click)="clickFocus(1)">
+      Item
+    </div>
+    <div  [ngClass]="{'menu-select': isSelected[2], 'menu-item' : !isSelected[2]}" (click)="clickFocus(2)">
+      World
+    </div>
+  </div>
+  <div>
+    <router-outlet></router-outlet>
+  </div>
+</div>
