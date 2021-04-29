@@ -1,15 +1,16 @@
-import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {FieldsAccessService} from '../service/fields-access.service';
-import {Observable, of} from 'rxjs';
-import {mergeMap, tap} from 'rxjs/operators';
+import {from, Observable, of} from 'rxjs';
+import {mergeMap, mergeMapTo, tap} from 'rxjs/operators';
 import {StorageService} from '../service/storage.service';
+import {SseFieldService} from '../service/sse-field.service';
 
 @Component({
   selector: 'app-dungeon',
   templateUrl: './dungeon.component.html',
   styleUrls: ['./dungeon.component.css']
 })
-export class DungeonComponent implements OnInit, AfterViewInit {
+export class DungeonComponent implements OnInit, OnDestroy, AfterViewInit {
 
   fieldMap: string[][];
   private id: number;
@@ -19,7 +20,10 @@ export class DungeonComponent implements OnInit, AfterViewInit {
   comment: string;
   @ViewChild('outer') outer: ElementRef;
 
-  constructor(private access: FieldsAccessService, private storage: StorageService) {
+  constructor(private access: FieldsAccessService,
+              private sse: SseFieldService,
+              private storage: StorageService) {
+    this.fieldMap = [];
   }
 
   ngOnInit(): void {
@@ -27,11 +31,24 @@ export class DungeonComponent implements OnInit, AfterViewInit {
     this.name = this.storage.get('playerName');
     this.comment = '';
     this.access.getDungeonInfo(this.id).subscribe(it => this.setDungeonInfo(it));
-    this.access.get(this.id).subscribe(it => this.fieldMap = it);
+    this.sse.openGet(this.id).subscribe(it => this.setField(it));
   }
 
   ngAfterViewInit(): void {
     this.outer.nativeElement.focus();
+  }
+
+  ngOnDestroy(): void {
+    this.sse.close();
+  }
+
+  private setField(it: DisplayData): void {
+    for (let i = it.position.x; i < it.data.length; i++) {
+      if (!this.fieldMap[it.position.y]) {
+        this.fieldMap[it.position.y] = [];
+      }
+      this.fieldMap[it.position.y][i] = it.data[i];
+    }
   }
 
   private setDungeonInfo(mapSet) {
@@ -40,7 +57,6 @@ export class DungeonComponent implements OnInit, AfterViewInit {
   }
 
   keyupEvent(event: any) {
-    console.log(event);
     const ob: Observable<object> = (() => {
       switch (event.key) {
         case 'k':
@@ -71,8 +87,10 @@ export class DungeonComponent implements OnInit, AfterViewInit {
           return of('a');
       }
     })();
-    ob.pipe(mergeMap(() => this.access.get(this.id)))
-      .subscribe(it => this.fieldMap = it);
+    ob.pipe(
+      mergeMapTo(this.access.get(this.id)),
+      mergeMap(it => from(it)))
+      .subscribe(it => this.setField(it));
   }
 
   private pickupComment(resultSet): string {

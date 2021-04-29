@@ -1,5 +1,5 @@
 <div #outer (keyup)="keyupEvent($event)" tabindex="0">
-  <div style="height: 1em">{{comment}}</div>
+  <app-message [message]="comment"></app-message>
   <div style="display: flex">
     <div style="margin-left: 1em; width: 20em">
       Name: {{name}}<br/>
