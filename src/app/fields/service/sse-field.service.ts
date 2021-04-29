@@ -8,14 +8,14 @@ export class SseFieldService {
 
   private eventSource;
 
-  constructor(private _zone: NgZone) {
+  constructor(private zone: NgZone) {
   }
 
   openGet(userId: number): Observable<DisplayData> {
     return new Observable(observer => {
       this.eventSource = new EventSource(`/api/fields/${userId}`);
       this.eventSource.onmessage = ev => {
-        this._zone.run(() => {
+        this.zone.run(() => {
         observer.next(JSON.parse(ev.data));
       }); };
     });
