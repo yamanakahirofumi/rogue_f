@@ -1,0 +1,9 @@
+.bar {
+  position: absolute;
+  height: 1em;
+}
+
+.all {
+  width: 100%;
+  background-color: gray;
+}

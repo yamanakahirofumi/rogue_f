@@ -9,13 +9,15 @@ import { CreateUserComponent } from './fields/player/create-user/create-user.com
 import {ReactiveFormsModule} from '@angular/forms';
 import {AdminModule} from './admin/admin.module';
 import { MessageComponent } from './fields/message/message.component';
+import { StatusBarComponent } from './fields/status-bar/status-bar.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     DungeonComponent,
     CreateUserComponent,
-    MessageComponent
+    MessageComponent,
+    StatusBarComponent
   ],
     imports: [
         AdminModule,

@@ -14,11 +14,11 @@ export class FieldsAccessService {
   }
 
   getDungeonInfo(userId: number) {
-    return this.httpClient.get(`api/fields/${userId}/info`);
+    return this.httpClient.get<{[name: string]: string}>(`api/fields/${userId}/info`);
   }
 
   private command(userId: number, command: string) {
-    return this.httpClient.put(`/api/player/${userId}/command/${command}`, {});
+    return this.httpClient.put<{[name: string]: boolean}>(`/api/player/${userId}/command/${command}`, {});
   }
 
   top(userId: number) {
