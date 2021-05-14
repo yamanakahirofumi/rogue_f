@@ -5,7 +5,7 @@ import {WorldComponent} from './world/world.component';
 
 const routes: Routes = [
   {
-    path: '', component: MenuComponent, children: [
+    path: 'menu', component: MenuComponent, children: [
       {path: 'menu', component: WorldComponent},
     ]
   },

@@ -1,8 +1,10 @@
 <div #outer (keyup)="keyupEvent($event)" tabindex="0">
-  <div style="height: 1em">{{comment}}</div>
-  <div style="display: flex">
-    <div style="margin-left: 1em; width: 20em">
-      Name: {{name}}<br/>
+  <app-message [message]="comment"></app-message>
+  <div class="flex">
+    <div class="status">
+      Name: {{player.getName()}}<br/>
+      Action Gage:
+      <app-status-bar [value]="actionGage"></app-status-bar>
       {{dungeon}} {{level}}階
     </div>
     <div>

@@ -1,3 +1,12 @@
 div:focus {
   outline: none;
 }
+
+.status {
+  margin-left: 1em;
+  width: 20em;
+}
+
+.flex {
+  display: flex;
+}

@@ -10,39 +10,39 @@ export class FieldsAccessService {
   }
 
   get(userId: number) {
-    return this.httpClient.get<Array<Array<string>>>(`/api/fields/${userId}`);
+    return this.httpClient.get<DisplayData[]>(`/api/fields/${userId}/now`);
   }
 
-  getDungeonInfo(userId: number){
-    return this.httpClient.get(`api/fields/${userId}/info`);
+  getDungeonInfo(userId: number) {
+    return this.httpClient.get<{[name: string]: string}>(`api/fields/${userId}/info`);
   }
 
   private command(userId: number, command: string) {
-    return this.httpClient.put(`/api/player/${userId}/command/${command}`, {});
+    return this.httpClient.put<{[name: string]: boolean}>(`/api/player/${userId}/command/${command}`, {});
   }
 
   top(userId: number) {
-    return this.httpClient.put(`/api/player/${userId}/command/top`, {});
+    return this.command(userId, 'top');
   }
 
   down(userId: number) {
-    return this.httpClient.put(`/api/player/${userId}/command/down`, {});
+    return this.command(userId, 'down');
   }
 
   right(userId: number) {
-    return this.httpClient.put(`/api/player/${userId}/command/right`, {});
+    return this.command(userId, 'right');
   }
 
   left(userId: number) {
-    return this.httpClient.put(`/api/player/${userId}/command/left`, {});
+    return this.command(userId, 'left');
   }
 
-  downStairs(userId: number){
-    return this.httpClient.put(`/api/player/${userId}/command/downStairs`, {});
+  downStairs(userId: number) {
+    return this.command(userId, 'downStairs');
   }
 
-  upStairs(userId: number){
-    return this.httpClient.put(`/api/player/${userId}/command/upStairs`, {});
+  upStairs(userId: number) {
+    return this.command(userId, 'upStairs');
   }
 
   exist(name: string) {
@@ -58,6 +58,6 @@ export class FieldsAccessService {
   }
 
   pickUp(userId: number) {
-    return this.httpClient.put(`/api/player/${userId}/command/pickup`, {});
+    return this.command(userId, 'pickup');
   }
 }
