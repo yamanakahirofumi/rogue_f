@@ -59,8 +59,8 @@ export class DungeonComponent implements OnInit, OnDestroy, AfterViewInit {
 
   keyupEvent(event: any) {
     from([event.key]).pipe(
-      filter(it => this.player.isAction()),
-      tap(it => {
+      filter(() => this.player.isAction()),
+      tap(() => {
         this.player.action();
         this.actionGage = 0;
         interval(1000).pipe(take(this.player.getActionGageRecoveryTimes()))
