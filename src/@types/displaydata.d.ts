@@ -4,6 +4,6 @@ declare class DisplayData{
 }
 
 declare class DisplayPoint{
-  x;
-  y;
+  x: number;
+  y: number;
 }

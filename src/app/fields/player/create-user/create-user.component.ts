@@ -1,8 +1,8 @@
 import {AfterViewInit, Component, ElementRef, ViewChild} from '@angular/core';
-import {StorageService} from '../../service/storage.service';
-import {FieldsAccessService} from '../../service/fields-access.service';
-import {filter, mergeMap} from 'rxjs/operators';
-import {Router} from '@angular/router';
+import {Router} from "@angular/router";
+import {FieldsAccessService} from "../../services/fields-access.service";
+import {StorageService} from "../../services/storage.service";
+import {filter, mergeMap} from "rxjs";
 
 @Component({
   selector: 'app-create-user',
@@ -11,7 +11,7 @@ import {Router} from '@angular/router';
 })
 export class CreateUserComponent implements AfterViewInit {
 
-  @ViewChild('name') name: ElementRef;
+  @ViewChild('name') name!: ElementRef;
 
   constructor(private router: Router, private access: FieldsAccessService, private storageService: StorageService) {
   }
@@ -32,5 +32,4 @@ export class CreateUserComponent implements AfterViewInit {
         this.router.navigate(['/play']).then();
       });
   }
-
 }

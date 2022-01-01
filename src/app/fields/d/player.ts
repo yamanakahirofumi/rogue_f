@@ -1,17 +1,20 @@
-export class Player {
-  private readonly id: number;
-  private readonly durationSecond: number;
-  private readonly name: string;
-  private actionTime: number;
+import {CurrentStatus} from './current-status';
 
-  constructor(id, name) {
+export class Player {
+  private readonly id: string;
+  private readonly name: string;
+  private gold: number = 0;
+  private actionTime: number;
+  private currentStatus: CurrentStatus;
+
+  constructor(id: string, name: string) {
     this.id = id;
-    this.durationSecond = 20;
     this.name = name;
     this.actionTime = new Date().getTime();
+    this.currentStatus = new CurrentStatus(0, 0, 0); //TODO: これで良いなか？
   }
 
-  public getId(): number {
+  public getId(): string {
     return this.id;
   }
 
@@ -20,11 +23,11 @@ export class Player {
   }
 
   public getActionGageRecoveryTimes(): number {
-    return this.durationSecond + 1;
+    return this.currentStatus.getActionInterval() + 1;
   }
 
   public getActionGageRecoveryValue(): number {
-    return 100 / this.durationSecond;
+    return 100 / this.currentStatus.getActionInterval();
   }
 
   public action(): void {
@@ -34,6 +37,6 @@ export class Player {
   }
 
   public isAction(): boolean {
-    return this.durationSecond * 1000 + this.actionTime < new Date().getTime();
+    return this.currentStatus.getActionInterval() * 1000 + this.actionTime < new Date().getTime();
   }
 }
