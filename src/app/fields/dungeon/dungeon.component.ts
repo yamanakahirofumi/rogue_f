@@ -1,25 +1,24 @@
-import {AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {FieldsAccessService} from '../service/fields-access.service';
-import {from, interval, Observable, of} from 'rxjs';
-import {filter, mergeMap, mergeMapTo, take, tap} from 'rxjs/operators';
-import {StorageService} from '../service/storage.service';
-import {SseFieldService} from '../service/sse-field.service';
-import {Player} from '../d/player';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {Player} from "../d/player";
+import {FieldsAccessService} from "../services/fields-access.service";
+import {SseFieldService} from "../services/sse-field.service";
+import {StorageService} from "../services/storage.service";
+import {filter, from, interval, mergeMap, mergeMapTo, Observable, of, take, tap} from "rxjs";
 
 @Component({
   selector: 'app-dungeon',
   templateUrl: './dungeon.component.html',
   styleUrls: ['./dungeon.component.css']
 })
-export class DungeonComponent implements OnInit, OnDestroy, AfterViewInit {
+export class DungeonComponent implements OnInit {
 
   fieldMap: string[][];
-  player: Player;
-  actionGage: number;
-  dungeon: string;
-  level: number;
-  comment: string;
-  @ViewChild('outer') outer: ElementRef;
+  player!: Player;
+  actionGage!: number;
+  dungeon!: string;
+  level!: number;
+  comment!: string;
+  @ViewChild('outer') outer!: ElementRef;
 
   constructor(private access: FieldsAccessService,
               private sse: SseFieldService,
@@ -28,11 +27,14 @@ export class DungeonComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngOnInit(): void {
-    this.player = new Player(Number(this.storage.get('playerId')), this.storage.get('playerName'));
+    const playerId = this.storage.get('playerId');
+    from(playerId)
+      .pipe(mergeMap(it => this.access.getPlayerInfo(it)))
+      .subscribe(it => this.player = it);
     this.comment = '';
     this.actionGage = 100;
-    this.access.getDungeonInfo(this.player.getId()).subscribe(it => this.setDungeonInfo(it));
-    this.sse.openGet(this.player.getId()).subscribe(it => this.setField(it));
+    this.access.getDungeonInfo(playerId).subscribe(it => this.setDungeonInfo(it));
+    this.sse.openGet(playerId).subscribe(it => this.setField(it));
   }
 
   ngAfterViewInit(): void {
@@ -52,7 +54,7 @@ export class DungeonComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
 
-  private setDungeonInfo(mapSet) {
+  private setDungeonInfo(mapSet: any) {
     this.level = mapSet.level;
     this.dungeon = mapSet.name;
   }
@@ -108,7 +110,7 @@ export class DungeonComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
 
-  private pickupComment(resultSet): string {
+  private pickupComment(resultSet: any): string {
     console.log(resultSet);
 
     if (resultSet.result && resultSet.type === 1) {

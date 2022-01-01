@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 
 import { SseFieldService } from './sse-field.service';
 
-describe('SseService', () => {
+describe('SseFieldService', () => {
   let service: SseFieldService;
 
   beforeEach(() => {

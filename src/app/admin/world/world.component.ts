@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import {FieldsAccessService} from '../../fields/service/fields-access.service';
+import {Component, OnInit} from '@angular/core';
+import {FieldsAccessService} from '../../fields/services/fields-access.service';
 
 @Component({
   selector: 'app-world',
@@ -8,12 +8,12 @@ import {FieldsAccessService} from '../../fields/service/fields-access.service';
 })
 export class WorldComponent implements OnInit {
 
-  data;
+  data: any;
 
-  constructor(private access: FieldsAccessService) { }
-
-  ngOnInit(): void {
-    this.access.getDungeonInfo(1).subscribe(it => this.data = it);
+  constructor(private access: FieldsAccessService) {
   }
 
+  ngOnInit(): void {
+    this.access.getDungeonInfo('1').subscribe(it => this.data = it);
+  }
 }

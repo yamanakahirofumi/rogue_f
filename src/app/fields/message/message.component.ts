@@ -7,13 +7,14 @@ import {Component, Input, OnInit} from '@angular/core';
 })
 export class MessageComponent implements OnInit {
 
-  constructor() {
-  }
-
   @Input()
   message: string;
 
-  ngOnInit(): void {
+
+  constructor() {
+    this.message = "";
   }
 
+  ngOnInit(): void {
+  }
 }

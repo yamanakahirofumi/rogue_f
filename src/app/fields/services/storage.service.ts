@@ -4,6 +4,7 @@ import {Injectable} from '@angular/core';
   providedIn: 'root'
 })
 export class StorageService {
+
   private storage;
 
   constructor() {
@@ -15,11 +16,14 @@ export class StorageService {
   }
 
   public get(key: string): string {
-    return this.storage.getItem(key);
+    const item = this.storage.getItem(key);
+    if (item === null) {
+      return "";
+    }
+    return item;
   }
 
   public clear(): void {
     this.storage.clear();
   }
-
 }

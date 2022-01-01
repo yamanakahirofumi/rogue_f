@@ -6,6 +6,7 @@ import {Component, Input} from '@angular/core';
   styleUrls: ['./status-bar.component.css']
 })
 export class StatusBarComponent {
+
   @Input()
   get value(): number {
     return this.pValue;

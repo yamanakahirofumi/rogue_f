@@ -1,9 +1,9 @@
-import {RouterModule, Routes} from '@angular/router';
 import {NgModule} from '@angular/core';
-import {DungeonComponent} from './fields/dungeon/dungeon.component';
-import {CreateUserComponent} from './fields/player/create-user/create-user.component';
+import {RouterModule, Routes} from '@angular/router';
+import {CreateUserComponent} from "./fields/player/create-user/create-user.component";
+import {DungeonComponent} from "./fields/dungeon/dungeon.component";
 
-const appRoutes: Routes = [
+const routes: Routes = [
   {path: 'user/create', component: CreateUserComponent},
   {path: 'play', component: DungeonComponent},
   {path: 'admin', pathMatch: 'full', loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule)},
@@ -11,10 +11,8 @@ const appRoutes: Routes = [
 ];
 
 @NgModule({
-  imports: [
-    RouterModule.forRoot(appRoutes)
-  ],
+  imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
-export class AppRouteModule {
+export class AppRoutingModule {
 }

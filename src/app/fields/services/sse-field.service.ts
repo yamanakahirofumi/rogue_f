@@ -1,23 +1,24 @@
 import {Injectable, NgZone} from '@angular/core';
-import {Observable} from 'rxjs';
+import {Observable} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
 })
 export class SseFieldService {
 
-  private eventSource;
+  private eventSource!: EventSource
 
   constructor(private zone: NgZone) {
   }
 
-  openGet(userId: number): Observable<DisplayData> {
+  openGet(userId: string): Observable<DisplayData> {
     return new Observable(observer => {
       this.eventSource = new EventSource(`/api/fields/${userId}`);
       this.eventSource.onmessage = ev => {
         this.zone.run(() => {
-        observer.next(JSON.parse(ev.data));
-      }); };
+          observer.next(JSON.parse(ev.data));
+        });
+      };
     });
   }
 
