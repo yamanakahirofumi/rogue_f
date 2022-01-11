@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {Player} from "../d/player";
+import {Observable} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -50,8 +50,8 @@ export class FieldsAccessService {
     return this.httpClient.get<boolean>(`/api/user/name/${name}/exist`);
   }
 
-  create(name: string) {
-    return this.httpClient.post<string>(`/api/user/name/${name}`, {});
+  create(name: string): Observable<string> {
+    return this.httpClient.post(`/api/user/name/${name}`, {}, {responseType: 'text'});
   }
 
   getPlayerInfo(userId: string) {

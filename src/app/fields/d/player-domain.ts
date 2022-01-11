@@ -1,6 +1,6 @@
 import {CurrentStatus} from './current-status';
 
-export class Player {
+export class PlayerDomain {
   private readonly id: string;
   private readonly name: string;
   private gold: number = 0;

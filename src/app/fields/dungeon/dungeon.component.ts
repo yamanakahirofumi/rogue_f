@@ -1,5 +1,5 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
-import {Player} from "../d/player";
+import {PlayerDomain} from "../d/player-domain";
 import {FieldsAccessService} from "../services/fields-access.service";
 import {SseFieldService} from "../services/sse-field.service";
 import {StorageService} from "../services/storage.service";
@@ -12,8 +12,8 @@ import {filter, from, interval, mergeMap, mergeMapTo, Observable, of, take, tap}
 })
 export class DungeonComponent implements OnInit {
 
-  fieldMap: string[][];
-  player!: Player;
+  fieldMap!: string[][];
+  player!: PlayerDomain;
   actionGage!: number;
   dungeon!: string;
   level!: number;
@@ -28,9 +28,9 @@ export class DungeonComponent implements OnInit {
 
   ngOnInit(): void {
     const playerId = this.storage.get('playerId');
-    from(playerId)
+    of(playerId)
       .pipe(mergeMap(it => this.access.getPlayerInfo(it)))
-      .subscribe(it => this.player = it);
+      .subscribe(it => this.player = new PlayerDomain(it.id, it.name));
     this.comment = '';
     this.actionGage = 100;
     this.access.getDungeonInfo(playerId).subscribe(it => this.setDungeonInfo(it));
