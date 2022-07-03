@@ -1,4 +1,6 @@
 <div style="width: 100%; height: 1em; position: relative">
   <div class="bar all"></div>
-  <div class="bar" style="background-color: white;" [style]="size()"></div>
+  <div class="bar"
+       [@progress-bar]="{value: status, params: {fullTime: secondNumber, beforePercent: _beforeValue / _maxValue * 100, afterPercent: _value / _maxValue * 100}}"
+       (@progress-bar.start)="start($event)" (@progress-bar.done)="end($event)"></div>
 </div>

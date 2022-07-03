@@ -12,4 +12,30 @@ export class CurrentStatus {
   public getActionInterval(): number {
     return this.actionInterval;
   }
+
+  public getStamina(): number {
+    return this.stamina;
+  }
+
+  public minusStamina(): void {
+    if (this, this.stamina <= 0) {
+      this.minusHp(1);
+    } else {
+      this.stamina--;
+    }
+  }
+
+  public getHp() {
+    return this.hp;
+  }
+
+  public minusHp(v: number) {
+    this.hp -= v;
+  }
+
+  addStamina() {
+    if (this.stamina < 100) {
+      this.stamina++;
+    }
+  }
 }

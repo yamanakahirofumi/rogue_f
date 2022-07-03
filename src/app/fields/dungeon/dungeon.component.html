@@ -1,10 +1,16 @@
 <div #outer (keyup)="keyupEvent($event)" tabindex="0">
   <app-message [message]="comment"></app-message>
   <div class="flex">
-    <div class="status">
-      Name: <span *ngIf="player">{{player.getName()}}</span><br/>
-      Action Gage:
-      <app-status-bar [value]="actionGage"></app-status-bar>
+    <div class="status" *ngIf="player">
+      Name: {{player.getName()}}<br/>
+      HP: {{player.getHp()}} / {{player.getMaxHp()}} <br/>
+      <app-status-bar [second]="1" [value]="player.getHp()" [maxValue]="player.getMaxHp()"></app-status-bar>
+      MP:<br/>
+      <app-status-bar [second]="1" [value]="player.getStamina()"></app-status-bar>
+      Stamina: {{player.getStamina()}} / {{player.getMaxStamina()}} <br/>
+      <app-status-bar [second]="1" [value]="player.getStamina()" [maxValue]="player.getMaxStamina()"></app-status-bar>
+      Action Gage: <br/>
+      <app-status-bar [second]="player.getActionGageRecoveryTimes()" [changeFlg]="statusChangeFlg"></app-status-bar>
       {{dungeon}} {{level}}階
     </div>
     <div>
