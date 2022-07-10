@@ -72,6 +72,7 @@ export class StatusBarComponent {
 
   end(event: AnimationEvent) {
     this.flg = false;
+    console.log(event);
   }
 
 }

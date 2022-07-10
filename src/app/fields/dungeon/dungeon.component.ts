@@ -34,7 +34,7 @@ export class DungeonComponent implements OnInit {
       .pipe(mergeMap(it => this.access.getPlayerInfo(it)))
       .subscribe(it => {
         this.player = new PlayerDomain(it)
-        this.interval.getTimer(3).subscribe(it => this.player.addStamina())
+        this.interval.getTimer(3).subscribe(() => this.player.addStamina())
       });
     this.comment = '';
     this.statusChangeFlg = false;

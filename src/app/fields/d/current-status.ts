@@ -18,7 +18,7 @@ export class CurrentStatus {
   }
 
   public minusStamina(): void {
-    if (this, this.stamina <= 0) {
+    if (this.stamina <= 0) {
       this.minusHp(1);
     } else {
       this.stamina--;
