@@ -1,9 +1,10 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
-import {Player} from "../d/player";
+import {PlayerDomain} from "../d/player-domain";
 import {FieldsAccessService} from "../services/fields-access.service";
 import {SseFieldService} from "../services/sse-field.service";
 import {StorageService} from "../services/storage.service";
-import {filter, from, interval, mergeMap, mergeMapTo, Observable, of, take, tap} from "rxjs";
+import {filter, from, mergeMap, mergeMapTo, Observable, of, tap} from "rxjs";
+import {IntervalService} from "../services/interval.service";
 
 @Component({
   selector: 'app-dungeon',
@@ -12,27 +13,31 @@ import {filter, from, interval, mergeMap, mergeMapTo, Observable, of, take, tap}
 })
 export class DungeonComponent implements OnInit {
 
-  fieldMap: string[][];
-  player!: Player;
-  actionGage!: number;
+  fieldMap!: string[][];
+  player!: PlayerDomain;
   dungeon!: string;
+  statusChangeFlg!: boolean;
   level!: number;
   comment!: string;
   @ViewChild('outer') outer!: ElementRef;
 
   constructor(private access: FieldsAccessService,
               private sse: SseFieldService,
-              private storage: StorageService) {
+              private storage: StorageService,
+              private interval: IntervalService) {
     this.fieldMap = [];
   }
 
   ngOnInit(): void {
     const playerId = this.storage.get('playerId');
-    from(playerId)
+    of(playerId)
       .pipe(mergeMap(it => this.access.getPlayerInfo(it)))
-      .subscribe(it => this.player = it);
+      .subscribe(it => {
+        this.player = new PlayerDomain(it)
+        this.interval.getTimer(3).subscribe(() => this.player.addStamina())
+      });
     this.comment = '';
-    this.actionGage = 100;
+    this.statusChangeFlg = false;
     this.access.getDungeonInfo(playerId).subscribe(it => this.setDungeonInfo(it));
     this.sse.openGet(playerId).subscribe(it => this.setField(it));
   }
@@ -59,21 +64,20 @@ export class DungeonComponent implements OnInit {
     this.dungeon = mapSet.name;
   }
 
-  keyupEvent(event: any) {
+  keyupEvent(event: KeyboardEvent) {
     from([event.key]).pipe(
       filter(() => this.player.isAction()),
       tap(() => {
         this.player.action();
-        this.actionGage = 0;
-        interval(1000).pipe(take(this.player.getActionGageRecoveryTimes()))
-          .subscribe(() => {
-            this.actionGage = Math.min(this.actionGage + this.player.getActionGageRecoveryValue(), 100);
-          });
+        this.statusChangeFlg = true;
       }),
       mergeMap(it => this.execKeyEvent(it)),
       mergeMapTo(this.access.get(this.player.getId())),
       mergeMap(from)
-    ).subscribe(it => this.setField(it));
+    ).subscribe(it => {
+      this.setField(it);
+      this.statusChangeFlg = false
+    });
   }
 
   private execKeyEvent(key: string): Observable<any> {
