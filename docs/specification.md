@@ -31,12 +31,60 @@ RogueFは、Angular (v14) を使用して構築されたローグライクゲー
 
 ## API仕様 (コードより推論)
 - `GET /api/user/name/{name}/exist`: ユーザー名の存在確認。
+    - レスポンス: `boolean`
 - `POST /api/user/name/{name}`: ユーザー作成。
+    - レスポンス: `string` (作成されたユーザーのID)
 - `GET /api/player/{userId}`: プレイヤー情報の取得。
+    - レスポンス: `Player`
 - `GET /api/fields/{userId}/now`: フィールドの現在の状態取得。
+    - レスポンス: `DisplayData[]`
 - `GET /api/fields/{userId}/info`: ダンジョン情報の取得。
-- `PUT /api/player/{userId}/command/{command}`: 移動やアクションのコマンド送信（top, down, right, left, pickup, downStairs, upStairs）。
+    - レスポンス: `DungeonInfo`
+- `PUT /api/player/{userId}/command/{command}`: 移動やアクションのコマンド送信。
+    - コマンド: `top`, `down`, `right`, `left`, `pickup`, `downStairs`, `upStairs`
+    - レスポンス (pickup以外): `{ [name: string]: boolean }`
+    - レスポンス (pickup): `PickUpResult`
 - `POST /api/player/{userId}/command/dungeon/default`: ダンジョンへの入場。
+    - レスポンス: (なし/空オブジェクト)
+
+## データモデル
+### Player
+- `id`: string (ユーザーID)
+- `name`: string (ユーザー名)
+- `gold`: number (所持ゴールド)
+- `actionTime`: number (最終行動時刻のタイムスタンプ)
+
+### DisplayData
+- `position`: DisplayPoint
+- `data`: string[] (描画データの配列)
+
+### DisplayPoint
+- `x`: number (X座標)
+- `y`: number (Y座標)
+
+### DungeonInfo (mapSet)
+- `name`: string (ダンジョン名)
+- `level`: number (現在の階層)
+
+### PickUpResult (resultSet)
+- `result`: boolean (取得成否)
+- `type`: number (アイテム種別: 1=ゴールド, 2=アイテム)
+- `gold`: number (取得したゴールド量, type=1の場合)
+- `itemName`: string (取得したアイテム名, type=2の場合)
+- `message`: string (エラーメッセージ等, 例: 'NoObjectOnTheFloor')
+
+## 技術的詳細
+### リアルタイム更新 (SSE)
+- ダンジョンのフィールド情報は `SseFieldService` を通じて `GET /api/fields/{userId}` から Server-Sent Events (SSE) で配信されます。
+- これにより、他のプレイヤーの移動やイベントによるフィールドの変化をリアルタイムに反映します。
+
+### セッション管理
+- `StorageService` を使用して、ブラウザの `localStorage` に `playerId` を保存しています。
+- 初回アクセス時またはユーザー作成時に `playerId` を取得・保存し、以降のAPIリクエストで使用します。
+
+### フロントエンドでの状態保持
+- `PlayerDomain` クラスがプレイヤーの現在の状態（HP、スタミナ等）を管理しています。
+- 現状、HPやスタミナの初期値や最大値は `PlayerDomain` 内でハードコードされており、バックエンドの完全な同期は今後の課題となっています。
 
 ## テスト状況
 現状、以下の理由により複数の単体テストが失敗しています（修正が必要な項目）：
@@ -46,9 +94,9 @@ RogueFは、Angular (v14) を使用して構築されたローグライクゲー
 - **アニメーションの欠落**: `StatusBarComponent` のテストで、`BrowserAnimationsModule` がインポートされていないためアニメーションの検証に失敗しています。
 
 ## 不足している情報 (確実に実装するために必要)
-1. **APIレスポンスの詳細定義**:
-   - `DisplayData` や `Player` の詳細なフィールド定義（特にバックエンド側の完全なモデル）。
-   - アイテム取得時の `resultSet` の詳細（typeごとの意味、itemName以外に何が含まれるかなど）。
+1. **バックエンドモデルとの完全な同期**:
+   - 現状、フロントエンドで定義されている `Player` などの型がバックエンドの完全な仕様と一致しているか確認が必要。
+   - 特にHP、スタミナ、経験値などの属性をバックエンドから取得・反映する仕組みの導入。
 2. **エラーハンドリング**:
    - APIがエラー（4xx, 5xx）を返した場合の共通的な処理方針。
    - ネットワーク切断時の挙動（SSEの再接続ロジックなど）。
