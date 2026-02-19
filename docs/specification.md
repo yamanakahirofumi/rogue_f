@@ -1,5 +1,17 @@
 # RogueF 仕様書
 
+## 目次
+1. [プロジェクト概要](#プロジェクト概要)
+2. [システム構成](#システム構成)
+3. [画面構成とルーティング](#画面構成とルーティング)
+4. [ゲームメカニクス](#ゲームメカニクス)
+5. [APIリファレンス](#apiリファレンス)
+6. [データモデル](#データモデル)
+7. [技術的詳細](#技術的詳細)
+8. [開発状況と課題](#開発状況と課題)
+
+---
+
 ## プロジェクト概要
 RogueFは、Angular (v14) を使用して構築されたローグライクゲームのフロントエンドアプリケーションです。
 バックエンドAPI (`/api`) と連携し、ダンジョンの探索、プレイヤーの状態管理、アイテムの取得などの機能を提供します。
@@ -7,64 +19,96 @@ RogueFは、Angular (v14) を使用して構築されたローグライクゲー
 ## システム構成
 - **フロントエンド**: Angular 14.0.4
 - **バックエンド連携**: `proxy.conf.json` により `http://localhost:8080/` の `/api` にプロキシされます。
-- **データ通信**: HTTPクライアント (`HttpClient`) および Server-Sent Events (SSE) を使用してダンジョン情報のリアルタイム更新を行います。
+- **データ通信**:
+  - **HTTP (REST)**: プレイヤー操作、情報取得に使用。
+  - **Server-Sent Events (SSE)**: ダンジョンフィールドのリアルタイム更新に使用。
 
-## 主要画面
-1. **ユーザー作成画面 (`/user/create`)**: 新規プレイヤーの作成。
-2. **プレイ画面 (`/play`)**: ダンジョン探索のメイン画面。
-3. **管理画面 (`/admin`)**: 世界設定、アイテム設定、メニュー管理など。
+## 画面構成とルーティング
+アプリケーションは以下のルートで構成されています。
+
+- `/user/create`: **ユーザー作成画面**
+  - 新規プレイヤーの作成を行います。
+- `/play`: **プレイ画面**
+  - ダンジョン探索のメイン画面です。
+- `/admin`: **管理画面**
+  - 世界設定、アイテム設定、メニュー管理などを行います。
+  - `/admin/menu`: 管理メニューを表示します。
+  - `/admin/menu/menu`: 世界設定（WorldComponent）を表示します（子ルート）。
 
 ## ゲームメカニクス
+
 ### プレイヤー属性
-- **HP**: 体力。0になるとゲームオーバー（の実装が想定される）。
-- **スタミナ**: 行動（移動等）によって消費される。スタミナが切れると代わりにHPが減少する。
+- **HP**: 体力。0になるとゲームオーバーが想定されます。
+- **スタミナ**: 行動（移動等）によって消費されます。スタミナが切れると代わりにHPが減少します。
 - **ゴールド**: ゲーム内通貨。
 
 ### 行動とスタミナ
 - 移動やアイテム取得などの行動にはインターバル（`actionInterval`）が設定されており、連続した高速な行動は制限されます。
-- 一定時間（3秒ごと）でスタミナが自動回復します。
+- `IntervalService` により、3秒ごとにスタミナが自動回復します。
 
 ### 操作方法
-- **移動**: `ArrowUp`, `ArrowDown`, `ArrowLeft`, `ArrowRight` および `h`, `j`, `k`, `l`, `2`, `4`, `6`, `8`
+- **移動**:
+  - キーボード: `ArrowUp`, `ArrowDown`, `ArrowLeft`, `ArrowRight`
+  - Viライク: `h`, `j`, `k`, `l`
+  - テンキー: `2`, `4`, `6`, `8`
 - **アイテム取得**: `g`
 - **階段の上り下り**: `<` (上), `>` (下)
 
-## API仕様 (コードより推論)
+## APIリファレンス
+
+### ユーザー管理
 - `GET /api/user/name/{name}/exist`: ユーザー名の存在確認。
-    - レスポンス: `boolean`
+  - レスポンス: `boolean`
 - `POST /api/user/name/{name}`: ユーザー作成。
-    - レスポンス: `string` (作成されたユーザーのID)
+  - レスポンス: `string` (作成されたユーザーのID)
+
+### プレイヤー情報
 - `GET /api/player/{userId}`: プレイヤー情報の取得。
-    - レスポンス: `Player`
-- `GET /api/fields/{userId}/now`: フィールドの現在の状態取得。
-    - レスポンス: `DisplayData[]`
-- `GET /api/fields/{userId}/info`: ダンジョン情報の取得。
-    - レスポンス: `DungeonInfo`
+  - レスポンス: `Player`
 - `PUT /api/player/{userId}/command/{command}`: 移動やアクションのコマンド送信。
-    - コマンド: `top`, `down`, `right`, `left`, `pickup`, `downStairs`, `upStairs`
-    - レスポンス (pickup以外): `{ [name: string]: boolean }`
-    - レスポンス (pickup): `PickUpResult`
+  - コマンド: `top`, `down`, `right`, `left`, `pickup`, `downStairs`, `upStairs`
+  - レスポンス (pickup以外): `{ [name: string]: boolean }`
+  - レスポンス (pickup): `PickUpResult`
+
+### フィールド・ダンジョン
+- `GET /api/fields/{userId}/now`: フィールドの現在の状態取得。
+  - レスポンス: `DisplayData[]`
+- `GET /api/fields/{userId}/info`: ダンジョン情報の取得。
+  - レスポンス: `DungeonInfo`
 - `POST /api/player/{userId}/command/dungeon/default`: ダンジョンへの入場。
-    - レスポンス: (なし/空オブジェクト)
+- `GET /api/fields/{userId}` (SSE): フィールドのリアルタイム更新。
+  - ストリーム要素: `DisplayData`
 
 ## データモデル
+
 ### Player
-- `id`: string (ユーザーID)
-- `name`: string (ユーザー名)
-- `gold`: number (所持ゴールド)
-- `actionTime`: number (最終行動時刻のタイムスタンプ)
+```typescript
+{
+  id: string;        // ユーザーID
+  name: string;      // ユーザー名
+  gold: number;      // 所持ゴールド
+  actionTime: number; // 最終行動時刻のタイムスタンプ
+}
+```
 
 ### DisplayData
-- `position`: DisplayPoint
-- `data`: string[] (描画データの配列)
-
-### DisplayPoint
-- `x`: number (X座標)
-- `y`: number (Y座標)
+```typescript
+{
+  position: {
+    x: number;
+    y: number;
+  };
+  data: string[];    // 描画データの配列
+}
+```
 
 ### DungeonInfo (mapSet)
-- `name`: string (ダンジョン名)
-- `level`: number (現在の階層)
+```typescript
+{
+  name: string;      // ダンジョン名
+  level: number;     // 現在の階層
+}
+```
 
 ### PickUpResult (resultSet)
 - `result`: boolean (取得成否)
@@ -74,35 +118,34 @@ RogueFは、Angular (v14) を使用して構築されたローグライクゲー
 - `message`: string (エラーメッセージ等, 例: 'NoObjectOnTheFloor')
 
 ## 技術的詳細
+
 ### リアルタイム更新 (SSE)
-- ダンジョンのフィールド情報は `SseFieldService` を通じて `GET /api/fields/{userId}` から Server-Sent Events (SSE) で配信されます。
-- これにより、他のプレイヤーの移動やイベントによるフィールドの変化をリアルタイムに反映します。
+- `SseFieldService` を通じて `GET /api/fields/{userId}` から配信されるイベントを購読します。
+- 他のプレイヤーの移動や環境の変化がリアルタイムに反映されます。
 
 ### セッション管理
-- `StorageService` を使用して、ブラウザの `localStorage` に `playerId` を保存しています。
+- `StorageService` を使用して、ブラウザの `localStorage` に `playerId` を保存します。
 - 初回アクセス時またはユーザー作成時に `playerId` を取得・保存し、以降のAPIリクエストで使用します。
 
-### フロントエンドでの状態保持
+### フロントエンドでの状態管理
 - `PlayerDomain` クラスがプレイヤーの現在の状態（HP、スタミナ等）を管理しています。
-- 現状、HPやスタミナの初期値や最大値は `PlayerDomain` 内でハードコードされており、バックエンドの完全な同期は今後の課題となっています。
+- 現状、HPやスタミナの初期値や最大値は `PlayerDomain` 内にハードコードされています。
 
-## テスト状況
-現状、以下の理由により複数の単体テストが失敗しています（修正が必要な項目）：
-- **HttpClientModuleの欠落**: 各コンポーネントのテスト用Moduleにおいて `HttpClientTestingModule` がインポートされていないため、`NullInjectorError: No provider for HttpClient!` が発生しています。
-- **期待値の不一致**: `AppComponent` のテストで、実際のタイトル `'rogueF'` と期待値 `'rogue-f'` が異なっています。
-- **テンプレートの不一致**: `AppComponent` のテストで、存在しないHTML要素（`.content span`）を検証しようとしています。
-- **アニメーションの欠落**: `StatusBarComponent` のテストで、`BrowserAnimationsModule` がインポートされていないためアニメーションの検証に失敗しています。
+## 開発状況と課題
 
-## 不足している情報 (確実に実装するために必要)
-1. **バックエンドモデルとの完全な同期**:
-   - 現状、フロントエンドで定義されている `Player` などの型がバックエンドの完全な仕様と一致しているか確認が必要。
-   - 特にHP、スタミナ、経験値などの属性をバックエンドから取得・反映する仕組みの導入。
-2. **エラーハンドリング**:
-   - APIがエラー（4xx, 5xx）を返した場合の共通的な処理方針。
-   - ネットワーク切断時の挙動（SSEの再接続ロジックなど）。
-3. **ゲームルール詳細**:
-   - モンスターとの戦闘メカニクス（現状のフロントエンドコードには移動とアイテム取得以外のロジックが少ない）。
-   - レベルアップの仕組みや経験値の概念。
-   - アイテムの種類と効果の定義。
-4. **管理画面の機能**:
-   - `admin` 以下のコンポーネント（`item`, `menu`, `world`）の具体的な要件と機能。
+### 既知のバグ・不整合
+- **管理画面メニュー**: `MenuComponent` において、テンプレート上は3項目（Dungeon, Item, World）存在しますが、内部の `isSelected` 配列が2要素で初期化されており、インデックスの不整合が発生しています。
+
+### テスト状況
+現在、以下の理由により複数の単体テストが失敗しています：
+- **HttpClientModuleの欠落**: `HttpClientTestingModule` がインポートされていない。
+- **Routerの欠落**: `RouterTestingModule` がインポートされていない。
+- **期待値の不一致**: `AppComponent` のタイトル検証（`rogueF` vs `rogue-f`）。
+- **DOM要素の不在**: `AppComponent` で存在しない `.content span` を探している。
+- **アニメーションモジュールの欠落**: `BrowserAnimationsModule` が必要。
+
+### 今後の課題
+1. **バックエンドモデルとの同期**: HP、スタミナ、経験値などの属性をバックエンドから取得・反映する。
+2. **エラーハンドリングの強化**: APIエラーやネットワーク切断（SSE再接続など）への対応。
+3. **ゲームルールの実装**: 戦闘メカニクス、レベルアップ、アイテム効果の詳細実装。
+4. **管理画面の機能拡充**: `admin` 配下の各コンポーネントの要件定義と実装。
