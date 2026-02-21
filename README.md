@@ -1,6 +1,12 @@
 # RogueF
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 13.1.2.
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.0.4.
+
+## Documentation
+
+Project documentation is located in the `docs/` folder:
+- [Specification](docs/specification.md)
+- [Development Status & Issues](docs/development.md)
 
 ## Development server
 
