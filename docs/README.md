@@ -4,13 +4,19 @@
 
 ## ドキュメント構成
 
-### 1. 基本ドキュメント
-- **[specification.md](specification.md)**:
-  プロジェクトの全体像、システム構成、画面構成、ゲームメカニクス、データモデルなどの基本仕様を記述しています。
-- **[development.md](development.md)**:
-  現在の開発状況、既知のバグ、今後の課題など、開発運用面に関する情報を記述しています。
+### 1. 機能・仕様 ([features/](features/))
+ゲームの機能や仕様に関する核となる情報を記述しています。
+- **[ゲーム機能概要](features/Game-Features.md)**: プロジェクト概要、基本操作、ゲームサイクル。
+- **[システム要件](features/System-Requirements.md)**: 動作環境、技術構成、制約事項。
+- **[UI・UX設計](features/UI-UX-Design.md)**: 画面遷移、コンポーネント階層、デザイン方針。
+- **[開発ロードマップ](features/Development-Roadmap.md)**: 開発状況、既知のバグ、今後の課題。
 
-### 2. 技術ガイドライン ([tech/](tech/))
+### 2. 実装詳細 ([implementation/](implementation/))
+特定の機能を実現するための詳細なデータ構造やアルゴリズムを記述しています。
+- **[実装詳細](implementation/Implementation-Details.md)**: クラス設計、APIリファレンス、データモデル。
+- **[最適化戦略](implementation/Optimization-Strategy.md)**: パフォーマンス向上のための手法。
+
+### 3. 技術ガイドライン ([tech/](tech/))
 開発における共通ルールと技術的な方針を定義しています。
 - **[技術スタック](tech/Tech-Stack.md)**: 使用している言語、フレームワーク、ツールのバージョン。
 - **[アーキテクチャ設計](tech/Architecture.md)**: ディレクトリ構造とコンポーネントの責務。
@@ -26,6 +32,6 @@
 
 ## メンテナンス方針
 
-- 新機能の追加や仕様の変更があった場合は、速やかに `specification.md` や関連する技術ドキュメントを更新してください。
-- 開発上の課題やバグを発見した場合は、`development.md` または TODO リストに追記してください。
+- 新機能の追加や仕様の変更があった場合は、関連するドキュメントを更新してください。
+- 開発上の課題やバグを発見した場合は、`Development-Roadmap.md` または TODO リストに追記してください。
 - ドキュメント作成の際は **[仕様書の書き方ルール](tech/Specification-Rule.md)** に従ってください。
