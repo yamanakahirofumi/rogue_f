@@ -10,6 +10,7 @@
 - **[システム要件](features/System-Requirements.md)**: 動作環境、技術構成、制約事項。
 - **[UI・UX設計](features/UI-UX-Design.md)**: 画面遷移、コンポーネント階層、デザイン方針。
 - **[開発ロードマップ](features/Development-Roadmap.md)**: 開発状況、既知のバグ、今後の課題。
+- **[TODOリスト](TODO-Details.md)**: 面白さを向上させるための機能アイデアと技術的課題。
 
 ### 2. 実装詳細 ([implementation/](implementation/))
 特定の機能を実現するための詳細なデータ構造やアルゴリズムを記述しています。
