@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 
 @Component({
   selector: 'app-menu',
@@ -19,7 +19,7 @@ export class MenuComponent implements OnInit {
   }
 
   private initIsSelected() {
-    this.isSelected = [false, false];
+    this.isSelected = [false, false, false];
   }
 
   keyupEvent(event: any) {
