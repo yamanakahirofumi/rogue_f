@@ -7,6 +7,7 @@
 ### 1. 機能・仕様 ([features/](features/))
 ゲームの機能や仕様に関する核となる情報を記述しています。
 - **[ゲーム機能概要](features/Game-Features.md)**: プロジェクト概要、基本操作、ゲームサイクル。
+- **[戦闘システム](features/Combat-System.md)**: リアルタイム制バトル、ダメージ計算、モンスターAI。
 - **[システム要件](features/System-Requirements.md)**: 動作環境、技術構成、制約事項。
 - **[UI・UX設計](features/UI-UX-Design.md)**: 画面遷移、コンポーネント階層、デザイン方針。
 - **[開発ロードマップ](features/Development-Roadmap.md)**: 開発状況、既知のバグ、今後の課題。
