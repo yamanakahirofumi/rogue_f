@@ -36,6 +36,15 @@
   id: string;        // ユーザーID
   name: string;      // ユーザー名
   gold: number;      // 所持ゴールド
+  level: number;     // レベル
+  exp: number;       // 現在の累積経験値
+  nextExp: number;   // 次レベルまでに必要な累計経験値
+  hp: number;        // 現在のHP
+  maxHp: number;     // 最大HP
+  stamina: number;   // 現在のスタミナ
+  maxStamina: number; // 最大スタミナ
+  attack: number;    // 攻撃力
+  defense: number;   // 防御力
   actionTime: number; // 最終行動時刻のタイムスタンプ
 }
 ```

@@ -7,6 +7,15 @@ describe('Player', () => {
         name: "name",
         actionTime: 0,
         gold: 0,
+        level: 1,
+        exp: 0,
+        nextExp: 100,
+        hp: 100,
+        maxHp: 100,
+        stamina: 100,
+        maxStamina: 100,
+        attack: 10,
+        defense: 5,
       })
     ).toBeTruthy();
   });
