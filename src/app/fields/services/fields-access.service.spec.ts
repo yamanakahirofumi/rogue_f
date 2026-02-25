@@ -1,4 +1,5 @@
 import { TestBed } from '@angular/core/testing';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 import { FieldsAccessService } from './fields-access.service';
 
@@ -6,7 +7,9 @@ describe('FieldsAccessService', () => {
   let service: FieldsAccessService;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({});
+    TestBed.configureTestingModule({
+      imports: [ HttpClientTestingModule ]
+    });
     service = TestBed.inject(FieldsAccessService);
   });
 
