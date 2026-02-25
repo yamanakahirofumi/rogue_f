@@ -1,5 +1,9 @@
 # RogueF
 
+RogueFは、サーバー側で主要なロジックを処理するローグライクゲームの**フロントエンド（UI）アプリケーション**です。このリポジトリは、Angularを使用して構築されたユーザーインターフェース部分のみを担当します。
+
+複数の管理者が個別にサーバーを立ち上げ、それらが「信頼関係」を結ぶことで、プレイヤーが世界間を自由に行き来できる分散型マルチプレイ体験を目指しています。
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.0.4.
 
 ## Documentation
