@@ -14,6 +14,8 @@ describe('Player', () => {
         maxHp: 100,
         stamina: 100,
         maxStamina: 100,
+        satiety: 100,
+        maxSatiety: 100,
         attack: 10,
         defense: 5,
       })
