@@ -9,6 +9,8 @@ declare class Player {
   maxHp: number;
   stamina: number;
   maxStamina: number;
+  satiety: number;
+  maxSatiety: number;
   attack: number;
   defense: number;
   actionTime: number;
