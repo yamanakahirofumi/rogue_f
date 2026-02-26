@@ -13,5 +13,8 @@ declare class Player {
   maxSatiety: number;
   attack: number;
   defense: number;
+  agility: number;
+  dexterity: number;
+  speed: number;
   actionTime: number;
 }
