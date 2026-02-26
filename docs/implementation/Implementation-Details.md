@@ -43,8 +43,13 @@
   maxHp: number;     // 最大HP
   stamina: number;   // 現在のスタミナ
   maxStamina: number; // 最大スタミナ
+  satiety: number;   // 現在の満腹度
+  maxSatiety: number; // 最大満腹度
   attack: number;    // 攻撃力
   defense: number;   // 防御力
+  agility: number;   // 敏捷性（攻撃速度に影響）
+  dexterity: number; // 器用さ（命中率に影響）
+  speed: number;     // 素早さ（回避率に影響）
   actionTime: number; // 最終行動時刻のタイムスタンプ
 }
 ```

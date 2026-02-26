@@ -18,6 +18,9 @@ describe('Player', () => {
         maxSatiety: 100,
         attack: 10,
         defense: 5,
+        agility: 10,
+        dexterity: 10,
+        speed: 10,
       })
     ).toBeTruthy();
   });
