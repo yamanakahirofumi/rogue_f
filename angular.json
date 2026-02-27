@@ -68,10 +68,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "rogueF:build:production"
+              "buildTarget": "rogueF:build:production"
             },
             "development": {
-              "browserTarget": "rogueF:build:development"
+              "buildTarget": "rogueF:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -79,7 +79,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "rogueF:build"
+            "buildTarget": "rogueF:build"
           }
         },
         "test": {
