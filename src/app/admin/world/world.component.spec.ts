@@ -1,7 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 
 import { WorldComponent } from './world.component';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('WorldComponent', () => {
   let component: WorldComponent;
@@ -9,9 +10,10 @@ describe('WorldComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ HttpClientTestingModule ],
-      declarations: [ WorldComponent ]
-    })
+    declarations: [WorldComponent],
+    imports: [],
+    providers: [provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
+})
     .compileComponents();
   });
 

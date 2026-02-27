@@ -7,25 +7,18 @@ import {MessageComponent} from './fields/message/message.component';
 import {DungeonComponent} from './fields/dungeon/dungeon.component';
 import {StatusBarComponent} from './fields/status-bar/status-bar.component';
 import {CreateUserComponent} from './fields/player/create-user/create-user.component';
-import {HttpClientModule} from "@angular/common/http";
+import { provideHttpClient, withInterceptorsFromDi } from "@angular/common/http";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 
-@NgModule({
-  declarations: [
-    AppComponent,
-    MessageComponent,
-    DungeonComponent,
-    StatusBarComponent,
-    CreateUserComponent
-  ],
-  imports: [
-    BrowserModule,
-    BrowserAnimationsModule,
-    AppRoutingModule,
-    HttpClientModule
-  ],
-  providers: [],
-  bootstrap: [AppComponent]
-})
+@NgModule({ declarations: [
+        AppComponent,
+        MessageComponent,
+        DungeonComponent,
+        StatusBarComponent,
+        CreateUserComponent
+    ],
+    bootstrap: [AppComponent], imports: [BrowserModule,
+        BrowserAnimationsModule,
+        AppRoutingModule], providers: [provideHttpClient(withInterceptorsFromDi())] })
 export class AppModule {
 }
