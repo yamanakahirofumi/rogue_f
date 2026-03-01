@@ -2,9 +2,10 @@ import {Component, OnInit} from '@angular/core';
 import {FieldsAccessService} from '../../fields/services/fields-access.service';
 
 @Component({
-  selector: 'app-world',
-  templateUrl: './world.component.html',
-  styleUrls: ['./world.component.css']
+    selector: 'app-world',
+    templateUrl: './world.component.html',
+    styleUrls: ['./world.component.css'],
+    standalone: false
 })
 export class WorldComponent implements OnInit {
 

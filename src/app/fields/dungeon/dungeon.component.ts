@@ -7,9 +7,10 @@ import {filter, from, mergeMap, mergeMapTo, Observable, of, tap} from "rxjs";
 import {IntervalService} from "../services/interval.service";
 
 @Component({
-  selector: 'app-dungeon',
-  templateUrl: './dungeon.component.html',
-  styleUrls: ['./dungeon.component.css']
+    selector: 'app-dungeon',
+    templateUrl: './dungeon.component.html',
+    styleUrls: ['./dungeon.component.css'],
+    standalone: false
 })
 export class DungeonComponent implements OnInit {
 
