@@ -51,6 +51,9 @@
   dexterity: number; // 器用さ（命中率に影響）
   speed: number;     // 素早さ（回避率に影響）
   actionTime: number; // 最終行動時刻のタイムスタンプ
+  inventory: InventoryItem[]; // 所持アイテムのリスト
+  inventoryCapacity: number;  // インベントリの最大容量
+  statusEffects: string[];    // 付与されている状態異常のリスト
 }
 ```
 

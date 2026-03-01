@@ -17,4 +17,18 @@ declare class Player {
   dexterity: number;
   speed: number;
   actionTime: number;
+  inventory: InventoryItem[];
+  inventoryCapacity: number;
+  statusEffects: string[];
+}
+
+interface InventoryItem {
+  id: string;
+  name: string;
+  originalName: string;
+  type: number;
+  subType: string;
+  description: string;
+  isIdentified: boolean;
+  value: number;
 }
