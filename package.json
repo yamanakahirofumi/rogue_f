@@ -10,6 +10,9 @@
     "doc": "npx compodoc -p tsconfig.doc.json"
   },
   "private": true,
+  "engines": {
+    "node": "^20.19.0 || ^22.12.0 || >=24.0.0"
+  },
   "dependencies": {
     "@angular/animations": "^20.3.17",
     "@angular/common": "^20.3.17",
