@@ -1,20 +1,26 @@
 <div #outer (keyup)="keyupEvent($event)" tabindex="0">
   <app-message [message]="comment"></app-message>
   <div class="flex">
-    <div class="status" *ngIf="player">
-      Name: {{player.getName()}}<br/>
-      HP: {{player.getHp()}} / {{player.getMaxHp()}} <br/>
-      <app-status-bar [second]="1" [value]="player.getHp()" [maxValue]="player.getMaxHp()"></app-status-bar>
-      MP:<br/>
-      <app-status-bar [second]="1" [value]="player.getStamina()"></app-status-bar>
-      Stamina: {{player.getStamina()}} / {{player.getMaxStamina()}} <br/>
-      <app-status-bar [second]="1" [value]="player.getStamina()" [maxValue]="player.getMaxStamina()"></app-status-bar>
-      Action Gage: <br/>
-      <app-status-bar [second]="player.getActionGageRecoveryTimes()" [changeFlg]="statusChangeFlg"></app-status-bar>
-      {{dungeon}} {{level}}階
-    </div>
+    @if (player) {
+      <div class="status">
+        Name: {{player.getName()}}<br/>
+        HP: {{player.getHp()}} / {{player.getMaxHp()}} <br/>
+        <app-status-bar [second]="1" [value]="player.getHp()" [maxValue]="player.getMaxHp()"></app-status-bar>
+        MP:<br/>
+        <app-status-bar [second]="1" [value]="player.getStamina()"></app-status-bar>
+        Stamina: {{player.getStamina()}} / {{player.getMaxStamina()}} <br/>
+        <app-status-bar [second]="1" [value]="player.getStamina()" [maxValue]="player.getMaxStamina()"></app-status-bar>
+        Action Gage: <br/>
+        <app-status-bar [second]="player.getActionGageRecoveryTimes()" [changeFlg]="statusChangeFlg"></app-status-bar>
+        {{dungeon}} {{level}}階
+      </div>
+    }
     <div>
-      <span *ngFor="let line of fieldMap"><span *ngFor="let f of line">{{f}}</span><br/></span>
+      @for (line of fieldMap; track line) {
+        <span>@for (f of line; track f) {
+          <span>{{f}}</span>
+        }<br/></span>
+      }
     </div>
   </div>
 </div>
