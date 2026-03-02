@@ -21,28 +21,26 @@ name: Angular CI
 
 on:
   push:
-    branches: [ main ]
+    branches: [ master ]
   pull_request:
-    branches: [ main ]
+    branches: [ master ]
 
 jobs:
-  build:
+  build-and-test:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
-    - name: Set up Node.js
+    - name: Use Node.js
       uses: actions/setup-node@v4
       with:
-        node-version: '16'
+        node-version: '22'
         cache: 'npm'
     - name: Install dependencies
       run: npm ci
-    - name: Lint
-      run: npx ng lint
     - name: Build
-      run: npx ng build
+      run: npm run build
     - name: Test
-      run: npx ng test --no-watch --no-progress --code-coverage --browsers=ChromeHeadless
+      run: npm test -- --browsers=ChromeHeadless --watch=false
     - name: Upload Coverage
       uses: actions/upload-artifact@v4
       with:
