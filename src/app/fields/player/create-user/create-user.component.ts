@@ -5,9 +5,10 @@ import {StorageService} from "../../services/storage.service";
 import {filter, mergeMap} from "rxjs";
 
 @Component({
-  selector: 'app-create-user',
-  templateUrl: './create-user.component.html',
-  styleUrls: ['./create-user.component.css']
+    selector: 'app-create-user',
+    templateUrl: './create-user.component.html',
+    styleUrls: ['./create-user.component.css'],
+    standalone: false
 })
 export class CreateUserComponent implements AfterViewInit {
 

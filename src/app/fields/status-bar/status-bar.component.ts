@@ -3,10 +3,11 @@ import {progressBar, ProgressBarStatus} from "./progress-bar.anime";
 import {AnimationEvent} from "@angular/animations";
 
 @Component({
-  selector: 'app-status-bar',
-  templateUrl: './status-bar.component.html',
-  styleUrls: ['./status-bar.component.css'],
-  animations: [progressBar]
+    selector: 'app-status-bar',
+    templateUrl: './status-bar.component.html',
+    styleUrls: ['./status-bar.component.css'],
+    animations: [progressBar],
+    standalone: false
 })
 export class StatusBarComponent {
 
