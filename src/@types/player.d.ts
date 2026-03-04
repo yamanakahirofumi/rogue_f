@@ -30,5 +30,7 @@ interface InventoryItem {
   subType: string;
   description: string;
   isIdentified: boolean;
+  isCursed: boolean;
+  isBlessed: boolean;
   value: number;
 }

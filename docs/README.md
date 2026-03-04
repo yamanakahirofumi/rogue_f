@@ -14,6 +14,7 @@
 - **[経験値・レベルアップシステム](features/Leveling-System.md)**: プレイヤーの成長要素、経験値計算式、ステータス成長。
 - **[満腹度システム](features/Hunger-System.md)**: 満腹度の減少、飢餓による影響、食料アイテム。
 - **[インベントリシステム](features/Inventory-System.md)**: アイテムの所持、使用、識別、およびリソース管理。
+- **[アイテム識別システム](features/Item-Identification-System.md)**: アイテムの鑑定、呪い・祝福の状態管理。
 - **[システム要件](features/System-Requirements.md)**: 動作環境、技術構成、制約事項。
 - **[UI・UX設計](features/UI-UX-Design.md)**: 画面遷移、コンポーネント階層、デザイン方針。
 - **[開発ロードマップ](features/Development-Roadmap.md)**: 開発状況、既知のバグ、今後の課題。

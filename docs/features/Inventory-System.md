@@ -33,7 +33,9 @@
 - 不要なアイテムを足元に「置く」または「捨てる」ことができます。
 
 ### 3.4 アイテムの識別
-- [TODO-Details](../TODO-Details.md) にある通り、一部のアイテムは未識別の状態で入手される場合があります。
+詳細は [アイテム識別システム](Item-Identification-System.md) を参照してください。
+
+- 一部のアイテムは未識別の状態で入手される場合があります。
 - 「鑑定の巻物」を使用するか、実際に使用・装備することで正体が判明します。
 
 ## 4. UI・UX 設計
@@ -55,6 +57,8 @@
   subType: string;     // サブカテゴリ（food, scroll, equipment等）
   description: string; // アイテムの説明
   isIdentified: boolean; // 識別済みかどうか
+  isCursed: boolean;     // 呪い状態かどうか
+  isBlessed: boolean;    // 祝福状態かどうか
   value: number;       // 売却価格/購入価格のベース
 }
 ```
