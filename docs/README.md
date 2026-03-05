@@ -10,6 +10,7 @@
 - **[機能仕様書](features/Functional-Specification.md)**: システム構成、二つのダンジョン形式、管理者メリット、世界間連携。
 - **[戦闘システム](features/Combat-System.md)**: リアルタイム制バトル、ダメージ計算、モンスターAI。
 - **[モンスターシステム](features/Monster-System.md)**: モンスターの獲得、繁殖、運用。
+- **[モンスター繁殖システム](features/Monster-Breeding-System.md)**: 卵の生成、遺伝、孵化。
 - **[PKシステム](features/PK-System.md)**: プレイヤーキル、モンスターとしての参戦。
 - **[経験値・レベルアップシステム](features/Leveling-System.md)**: プレイヤーの成長要素、経験値計算式、ステータス成長。
 - **[満腹度システム](features/Hunger-System.md)**: 満腹度の減少、飢餓による影響、食料アイテム。
