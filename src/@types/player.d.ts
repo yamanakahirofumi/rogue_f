@@ -33,4 +33,9 @@ interface InventoryItem {
   isCursed: boolean;
   isBlessed: boolean;
   value: number;
+  attackBonus?: number;
+  defenseBonus?: number;
+  agilityBonus?: number;
+  dexterityBonus?: number;
+  speedBonus?: number;
 }

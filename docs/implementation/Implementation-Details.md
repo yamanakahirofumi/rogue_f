@@ -15,9 +15,16 @@
 - `GET /api/player/{userId}`: プレイヤー情報の取得。
   - レスポンス: `Player`
 - `PUT /api/player/{userId}/command/{command}`: 移動やアクションのコマンド送信。
-  - コマンド: `top`, `down`, `right`, `left`, `pickup`, `downStairs`, `upStairs`
-  - レスポンス (pickup以外): `{ [name: string]: boolean }`
+  - 基本コマンド: `top`, `down`, `right`, `left`, `pickup`, `downStairs`, `upStairs`
+  - 拡張コマンド (予定):
+    - `attack`: 攻撃を実行。
+    - `use/{itemId}`: アイテムを使用。
+    - `equip/{itemId}`: アイテムを装備。
+    - `unequip/{itemId}`: 装備を解除。
+    - `drop/{itemId}`: アイテムを足元に置く。
+  - レスポンス (pickup, attack 以外): `{ [name: string]: boolean }`
   - レスポンス (pickup): `PickUpResult`
+  - レスポンス (attack): `CombatResult` (詳細は別途定義予定)
 
 ### 2.3 フィールド・ダンジョン
 - `GET /api/fields/{userId}/now`: フィールドの現在の状態取得。
@@ -82,6 +89,31 @@
 - `gold`: number (取得したゴールド量, type=1の場合)
 - `itemName`: string (取得したアイテム名, type=2の場合)
 - `message`: string (エラーメッセージ等, 例: 'NoObjectOnTheFloor')
+
+### 3.5 InventoryItem
+```typescript
+{
+  id: string;
+  name: string;
+  originalName: string;
+  type: number;
+  subType: string;
+  description: string;
+  isIdentified: boolean;
+  isCursed: boolean;
+  isBlessed: boolean;
+  value: number;
+  // 装備品の場合の補正値
+  attackBonus?: number;
+  defenseBonus?: number;
+  agilityBonus?: number;
+  dexterityBonus?: number;
+  speedBonus?: number;
+}
+```
+
+### 3.6 CombatResult
+(検討中。ダメージ量、命中・回避、対象の状態変化などを含む想定)
 
 ## 4. 技術的詳細
 
