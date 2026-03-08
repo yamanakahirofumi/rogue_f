@@ -17,14 +17,15 @@
 - `PUT /api/player/{userId}/command/{command}`: 移動やアクションのコマンド送信。
   - 基本コマンド: `top`, `down`, `right`, `left`, `pickup`, `downStairs`, `upStairs`
   - 拡張コマンド (予定):
-    - `attack`: 攻撃を実行。
+    - `attack`: 隣接する敵に攻撃を実行。
+    - `attack/{targetId}`: 指定したIDの対象に攻撃を実行（遠距離攻撃等）。
     - `use/{itemId}`: アイテムを使用。
     - `equip/{itemId}`: アイテムを装備。
     - `unequip/{itemId}`: 装備を解除。
     - `drop/{itemId}`: アイテムを足元に置く。
   - レスポンス (pickup, attack 以外): `{ [name: string]: boolean }`
   - レスポンス (pickup): `PickUpResult`
-  - レスポンス (attack): `CombatResult` (詳細は別途定義予定)
+  - レスポンス (attack): `CombatResult` (詳細は 3.6 参照)
 
 ### 2.3 フィールド・ダンジョン
 - `GET /api/fields/{userId}/now`: フィールドの現在の状態取得。
@@ -113,7 +114,17 @@
 ```
 
 ### 3.6 CombatResult
-(検討中。ダメージ量、命中・回避、対象の状態変化などを含む想定)
+```typescript
+{
+  attackerId: string;  // 攻撃者のID
+  targetId: string;    // 攻撃対象のID
+  isHit: boolean;      // 命中したかどうか
+  damage: number;      // 与えたダメージ量
+  critical: boolean;   // クリティカルヒットかどうか
+  remainingHp: number; // 攻撃後の対象の残りHP
+  isDead: boolean;     // 対象が死亡したかどうか
+}
+```
 
 ## 4. 技術的詳細
 
