@@ -39,3 +39,13 @@ interface InventoryItem {
   dexterityBonus?: number;
   speedBonus?: number;
 }
+
+interface CombatResult {
+  attackerId: string;
+  targetId: string;
+  isHit: boolean;
+  damage: number;
+  critical: boolean;
+  remainingHp: number;
+  isDead: boolean;
+}
