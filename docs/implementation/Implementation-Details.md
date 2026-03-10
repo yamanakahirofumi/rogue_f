@@ -16,7 +16,7 @@
   - レスポンス: `Player`
 - `PUT /api/player/{userId}/command/{command}`: 移動やアクションのコマンド送信。
   - 基本コマンド: `top`, `down`, `right`, `left`, `pickup`, `downStairs`, `upStairs`
-  - 拡張コマンド (予定):
+  - アクションコマンド:
     - `attack`: 隣接する敵に攻撃を実行。
     - `attack/{targetId}`: 指定したIDの対象に攻撃を実行（遠距離攻撃等）。
     - `use/{itemId}`: アイテムを使用。
