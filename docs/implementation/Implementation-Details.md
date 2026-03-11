@@ -72,7 +72,7 @@
     x: number;
     y: number;
   };
-  data: string[];    // 描画データの配列
+  data: string[];    // 描画データの配列（指定した y 行の x 列目以降を上書き）
 }
 ```
 
