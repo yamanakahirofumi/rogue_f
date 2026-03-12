@@ -18,7 +18,8 @@
 - **[ショップシステム](features/Shop-System.md)**: 管理者によるショップ運営、動的な価格決定、アイテムの売買。
 - **[装備システム](features/Equipment-System.md)**: 装備の装着、ステータス補正、および呪いによる固定。
 - **[アイテム識別システム](features/Item-Identification-System.md)**: アイテムの鑑定、呪い・祝福の状態管理。
- - **[状態異常システム](features/Status-Effect-System.md)**: バフ・デバフの種類、効果、および管理方法。
+- **[状態異常システム](features/Status-Effect-System.md)**: バフ・デバフの種類、効果、および管理方法。
+- **[トラップシステム](features/Trap-System.md)**: トラップの種類、発見・解除メカニズム、および管理者による配置。
 - **[システム要件](features/System-Requirements.md)**: 動作環境、技術構成、制約事項。
 - **[UI・UX設計](features/UI-UX-Design.md)**: 画面遷移、コンポーネント階層、デザイン方針。
 - **[開発ロードマップ](features/Development-Roadmap.md)**: 開発状況、既知のバグ、今後の課題。
