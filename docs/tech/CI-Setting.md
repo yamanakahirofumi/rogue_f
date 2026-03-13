@@ -13,7 +13,7 @@ GitHub へのプッシュ（Push）またはプルリクエスト（Pull Request
 4. **ビルドとテスト**：`npm run build` および `npm test` を実行し、プロジェクトのビルドとテストを実施します。
 5. **カバレッジ測定**：テスト実行時にカバレッジレポートを生成します。
 
-### 設定ファイルの例 (`.github/workflows/build.yml`)
+### 設定ファイルの例 (`.github/workflows/ci.yml`)
 以下は、Angular を使用した標準的なワークフロー構成です。
 
 ```yaml
