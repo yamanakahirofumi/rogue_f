@@ -16,7 +16,7 @@
 ## 3. ショップ運営のメカニズム
 
 ### 3.1 商品の選定
-- 管理者は自身の「ストック（倉庫）」から、ショップに陳列するアイテムを選択します。
+- 管理者は自身の「ストック（[倉庫システム](Warehouse-System.md)）」から、ショップに陳列するアイテムを選択します。
 - 一度に陳列できるアイテム数には上限があります（例: 8スロット）。
 
 ### 3.2 価格決定
@@ -45,4 +45,5 @@
 ## 6. 相互参照
 - [機能仕様書](Functional-Specification.md)
 - [インベントリシステム](Inventory-System.md)
+- [倉庫システム](Warehouse-System.md)
 - [実装詳細](../implementation/Implementation-Details.md)
