@@ -16,6 +16,9 @@
   - レスポンス: `Player`
 - `PUT /api/player/{userId}/command/{command}`: 移動やアクションのコマンド送信。
   - 基本コマンド: `top`, `down`, `right`, `left`, `pickup`, `downStairs`, `upStairs`
+  - 探索・解除コマンド:
+    - `search`: 周囲のトラップや隠し通路を探索。
+    - `disarm`: 隣接するトラップの解除を試行。
   - アクションコマンド:
     - `attack`: 隣接する敵に攻撃を実行。
     - `attack/{targetId}`: 指定したIDの対象に攻撃を実行（遠距離攻撃等）。
@@ -59,6 +62,9 @@
   dexterity: number; // 器用さ（命中率に影響）
   speed: number;     // 素早さ（回避率に影響）
   actionTime: number; // 最終行動時刻のタイムスタンプ
+  weaponId?: string;    // 装備中の武器のID
+  armorId?: string;     // 装備中の防具のID
+  accessoryId?: string; // 装備中の装飾品のID
   inventory: InventoryItem[]; // 所持アイテムのリスト
   inventoryCapacity: number;  // インベントリの最大容量
   statusEffects: string[];    // 付与されている状態異常のリスト
@@ -144,4 +150,4 @@
 ### 4.4 フロントエンドでの状態管理
 - `PlayerDomain` クラスがプレイヤーの現在の状態（HP、スタミナ等）を管理しています。
 - 内部的に `CurrentStatus` クラスを持ち、HP/スタミナの動的な変更を扱います。
-- 現状、HPやスタミナの初期値や最大値は `PlayerDomain` 内にハードコードされています。
+- サーバーから取得した `Player` オブジェクトに基づき、HP、スタミナ、最大HP、最大スタミナが初期化されます。

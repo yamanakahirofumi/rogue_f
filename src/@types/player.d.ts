@@ -17,6 +17,9 @@ declare class Player {
   dexterity: number;
   speed: number;
   actionTime: number;
+  weaponId?: string;
+  armorId?: string;
+  accessoryId?: string;
   inventory: InventoryItem[];
   inventoryCapacity: number;
   statusEffects: string[];

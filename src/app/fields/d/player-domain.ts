@@ -12,9 +12,9 @@ export class PlayerDomain {
     this.id = player.id;
     this.name = player.name;
     this.actionTime = new Date().getTime();
-    this.currentStatus = new CurrentStatus(50, 3, 2); //TODO: これで良いなか？
-    this.status['MaxStamina'] = 100;
-    this.status['MaxHp'] = 100;
+    this.currentStatus = new CurrentStatus(player.hp, player.stamina, 2); //TODO: 2は固定で良いのか？
+    this.status['MaxStamina'] = player.maxStamina;
+    this.status['MaxHp'] = player.maxHp;
   }
 
   public getId(): string {
