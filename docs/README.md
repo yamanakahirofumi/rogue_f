@@ -2,9 +2,9 @@
 
 このディレクトリには RogueF プロジェクトの仕様、設計、および開発ガイドラインに関するドキュメントが格納されています。
 
-## ドキュメント構成
+## 1. ドキュメント構成
 
-### 1. 機能・仕様 ([features/](features/))
+### 1.1 機能・仕様 ([features/](features/))
 ゲームの機能や仕様に関する核となる情報を記述しています。
 - **[ゲーム機能概要](features/Game-Features.md)**: プロジェクト概要、基本操作、ゲームサイクル。
 - **[機能仕様書](features/Functional-Specification.md)**: システム構成、二つのダンジョン形式、管理者メリット、世界間連携。
@@ -26,12 +26,12 @@
 - **[開発ロードマップ](features/Development-Roadmap.md)**: 開発状況、既知のバグ、今後の課題。
 - **[TODOリスト](TODO-Details.md)**: 面白さを向上させるための機能アイデアと技術的課題。
 
-### 2. 実装詳細 ([implementation/](implementation/))
+### 1.2 実装詳細 ([implementation/](implementation/))
 特定の機能を実現するための詳細なデータ構造やアルゴリズムを記述しています。
 - **[実装詳細](implementation/Implementation-Details.md)**: クラス設計、APIリファレンス、データモデル。
 - **[最適化戦略](implementation/Optimization-Strategy.md)**: パフォーマンス向上のための手法。
 
-### 3. 技術ガイドライン ([tech/](tech/))
+### 1.3 技術ガイドライン ([tech/](tech/))
 開発における共通ルールと技術的な方針を定義しています。
 - **[技術スタック](tech/Tech-Stack.md)**: 使用している言語、フレームワーク、ツールのバージョン。
 - **[アーキテクチャ設計](tech/Architecture.md)**: ディレクトリ構造とコンポーネントの責務。
@@ -45,7 +45,7 @@
 - **[仕様書の書き方ルール](tech/Specification-Rule.md)**: ドキュメント作成の標準。
 - **[TODOリストの書き方ルール](tech/TODO-Rule.md)**: 課題管理の記述形式。
 
-## メンテナンス方針
+## 2. メンテナンス方針
 
 - 新機能の追加や仕様の変更があった場合は、関連するドキュメントを更新してください。
 - 開発上の課題やバグを発見した場合は、`Development-Roadmap.md` または TODO リストに追記してください。

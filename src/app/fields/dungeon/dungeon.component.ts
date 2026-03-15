@@ -60,7 +60,7 @@ export class DungeonComponent implements OnInit {
     }
   }
 
-  private setDungeonInfo(mapSet: any) {
+  private setDungeonInfo(mapSet: DungeonInfo) {
     this.level = mapSet.level;
     this.dungeon = mapSet.name;
   }
@@ -115,7 +115,7 @@ export class DungeonComponent implements OnInit {
     }
   }
 
-  private pickupComment(resultSet: any): string {
+  private pickupComment(resultSet: PickUpResult): string {
     console.log(resultSet);
 
     if (resultSet.result && resultSet.type === 1) {

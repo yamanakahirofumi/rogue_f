@@ -43,6 +43,19 @@ interface InventoryItem {
   speedBonus?: number;
 }
 
+interface DungeonInfo {
+  name: string;
+  level: number;
+}
+
+interface PickUpResult {
+  result: boolean;
+  type: number;
+  gold?: number;
+  itemName?: string;
+  message: string;
+}
+
 interface CombatResult {
   attackerId: string;
   targetId: string;
