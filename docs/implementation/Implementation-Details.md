@@ -82,7 +82,7 @@
 }
 ```
 
-### 3.3 DungeonInfo (mapSet)
+### 3.3 DungeonInfo
 ```typescript
 {
   name: string;      // ダンジョン名
@@ -90,12 +90,16 @@
 }
 ```
 
-### 3.4 PickUpResult (resultSet)
-- `result`: boolean (取得成否)
-- `type`: number (アイテム種別: 1=ゴールド, 2=アイテム)
-- `gold`: number (取得したゴールド量, type=1の場合)
-- `itemName`: string (取得したアイテム名, type=2の場合)
-- `message`: string (エラーメッセージ等, 例: 'NoObjectOnTheFloor')
+### 3.4 PickUpResult
+```typescript
+{
+  result: boolean;   // 取得成否
+  type: number;      // アイテム種別: 1=ゴールド, 2=アイテム
+  gold?: number;     // 取得したゴールド量 (type=1の場合)
+  itemName?: string; // 取得したアイテム名 (type=2の場合)
+  message: string;   // エラーメッセージ等 (例: 'NoObjectOnTheFloor')
+}
+```
 
 ### 3.5 InventoryItem
 ```typescript

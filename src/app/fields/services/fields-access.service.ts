@@ -14,11 +14,11 @@ export class FieldsAccessService {
     return this.httpClient.get<DisplayData[]>(`/api/fields/${userId}/now`);
   }
 
-  getDungeonInfo(userId: string) {
-    return this.httpClient.get<{ [name: string]: string }>(`api/fields/${userId}/info`);
+  getDungeonInfo(userId: string): Observable<DungeonInfo> {
+    return this.httpClient.get<DungeonInfo>(`api/fields/${userId}/info`);
   }
 
-  private command(userId: string, command: string) {
+  private command(userId: string, command: string): Observable<any> {
     return this.httpClient.put<{ [name: string]: boolean }>(`/api/player/${userId}/command/${command}`, {});
   }
 
@@ -58,11 +58,11 @@ export class FieldsAccessService {
     return this.httpClient.get<Player>(`/api/player/${userId}`);
   }
 
-  gotoDungeon(userId: string) {
+  gotoDungeon(userId: string): Observable<any> {
     return this.httpClient.post(`/api/player/${userId}/command/dungeon/default`, {});
   }
 
-  pickUp(userId: string) {
+  pickUp(userId: string): Observable<PickUpResult> {
     return this.command(userId, 'pickup');
   }
 }
