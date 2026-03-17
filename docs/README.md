@@ -16,6 +16,7 @@
 - **[満腹度システム](features/Hunger-System.md)**: 満腹度の減少、飢餓による影響、食料アイテム。
 - **[インベントリシステム](features/Inventory-System.md)**: アイテムの所持、使用、識別、およびリソース管理。
 - **[ショップシステム](features/Shop-System.md)**: 管理者によるショップ運営、動的な価格決定、アイテムの売買。
+- **[建築システム](features/Construction-System.md)**: 管理者によるダンジョン地形の構築、施設の設置、および資材管理。
 - **[装備システム](features/Equipment-System.md)**: 装備の装着、ステータス補正、および呪いによる固定。
 - **[アイテム識別システム](features/Item-Identification-System.md)**: アイテムの鑑定、呪い・祝福の状態管理。
 - **[状態異常システム](features/Status-Effect-System.md)**: バフ・デバフの種類、効果、および管理方法。
