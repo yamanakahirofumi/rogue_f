@@ -31,6 +31,7 @@
 ### 1.2 実装詳細 ([implementation/](implementation/))
 特定の機能を実現するための詳細なデータ構造やアルゴリズムを記述しています。
 - **[実装詳細](implementation/Implementation-Details.md)**: クラス設計、APIリファレンス、データモデル。
+- **[管理者データモデル](implementation/Admin-Data-Models.md)**: ダンジョン、階層、ショップ、および倉庫の管理用データ構造。
 - **[最適化戦略](implementation/Optimization-Strategy.md)**: パフォーマンス向上のための手法。
 
 ### 1.3 技術ガイドライン ([tech/](tech/))
