@@ -21,6 +21,7 @@ describe('Player', () => {
         agility: 10,
         dexterity: 10,
         speed: 10,
+        luck: 10,
         inventory: [],
         inventoryCapacity: 20,
         statusEffects: [],

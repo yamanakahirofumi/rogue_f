@@ -16,6 +16,7 @@ declare class Player {
   agility: number;
   dexterity: number;
   speed: number;
+  luck: number;
   actionTime: number;
   weaponId?: string;
   armorId?: string;

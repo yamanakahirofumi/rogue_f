@@ -65,6 +65,7 @@
   agility: number;   // 敏捷性（攻撃速度に影響）
   dexterity: number; // 器用さ（命中率に影響）
   speed: number;     // 素早さ（回避率に影響）
+  luck: number;      // 運（トラップ発見率などに影響）
   actionTime: number; // 最終行動時刻のタイムスタンプ
   weaponId?: string;    // 装備中の武器のID
   armorId?: string;     // 装備中の防具のID
