@@ -51,6 +51,7 @@ interface PlacedTrap {
   typeId: string;          // トラップ種別ID
   position: { x: number, y: number };
   isHidden: boolean;       // 初期状態で隠れているか
+  difficulty: number;      // 発見・解除の難易度 (1〜100)
 }
 ```
 
