@@ -24,6 +24,13 @@ interface FloorConfig {
   monsters: PlacedMonster[]; // 配置済みモンスター
   traps: PlacedTrap[];       // 配置済みトラップ
   shops: PlacedShop[];       // 設置済みショップ
+  facilities: PlacedFacility[]; // 設置済み施設
+}
+
+interface PlacedFacility {
+  typeId: string;          // 施設種別ID (recovery_spring, teleport_gate等)
+  position: { x: number, y: number };
+  config?: any;            // 施設固有の設定 (ワープ先座標等)
 }
 
 interface PlacedMonster {
