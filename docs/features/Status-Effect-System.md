@@ -23,7 +23,7 @@
 
 | 名称 | 効果 | 継続条件 / 解除方法 | 備考 |
 | :--- | :--- | :--- | :--- |
-| **再生 (Regeneration)** | 自然回復速度が向上する。 | 一定時間の経過、または特定のアイテム使用。 | |
+| **再生 (Regeneration)** | 自然回復速度が向上する。詳細は [自然回復システム](Natural-Recovery-System.md) 参照。 | 一定時間の経過、または特定のアイテム使用。 | |
 | **満腹 (Satiated)** | HPとスタミナの自然回復速度が 1.2 倍になる。 | 満腹度が 80% 以上の間継続。 | [満腹度システム](Hunger-System.md) 参照。 |
 
 ## 3. 技術的実装
@@ -54,6 +54,7 @@
 
 ## 5. 相互参照
 - [戦闘システム](Combat-System.md)
+- [自然回復システム](Natural-Recovery-System.md)
 - [満腹度システム](Hunger-System.md)
 - [装備システム](Equipment-System.md)
 - [UI・UX設計](UI-UX-Design.md)

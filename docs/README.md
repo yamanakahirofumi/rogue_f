@@ -13,6 +13,7 @@
 - **[モンスター繁殖システム](features/Monster-Breeding-System.md)**: 卵の生成、遺伝、孵化。
 - **[PKシステム](features/PK-System.md)**: プレイヤーキル、モンスターとしての参戦。
 - **[経験値・レベルアップシステム](features/Leveling-System.md)**: プレイヤーの成長要素、経験値計算式、ステータス成長。
+- **[自然回復システム](features/Natural-Recovery-System.md)**: HP、スタミナの自然回復、状態による回復量補正。
 - **[満腹度システム](features/Hunger-System.md)**: 満腹度の減少、飢餓による影響、食料アイテム。
 - **[インベントリシステム](features/Inventory-System.md)**: アイテムの所持、使用、識別、およびリソース管理。
 - **[ショップシステム](features/Shop-System.md)**: 管理者によるショップ運営、動的な価格決定、アイテムの売買。
