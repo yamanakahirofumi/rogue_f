@@ -39,6 +39,13 @@ interface FloorConfig {
   monsters: PlacedMonster[]; // 配置済みモンスター
   traps: PlacedTrap[];       // 配置済みトラップ
   shops: PlacedShop[];       // 設置済みショップ
+  facilities: PlacedFacility[]; // 設置済み施設
+}
+
+interface PlacedFacility {
+  typeId: string;          // 施設種別ID (recovery_spring, teleport_gate等)
+  position: { x: number, y: number };
+  config?: any;            // 施設固有の設定 (ワープ先座標等)
 }
 
 interface PlacedShop {
@@ -118,7 +125,26 @@ interface StoredMaterial {
 }
 ```
 
-## 6. 相互参照
+## 6. 施設と資材の定義
+
+本プロジェクトで使用される具体的な施設および資材の種別 ID の一覧です。
+
+### 6.1 施設種別 (Facility Types)
+| typeId | 名称 | 効果 | 備考 |
+| :--- | :--- | :--- | :--- |
+| `recovery_spring` | 回復の泉 | 触れている間、HP とスタミナが徐々に回復する。 | 自然回復とは別枠。 |
+| `teleport_gate` | 転送門 | 特定の座標（同一階層内）へワープする。 | `config` にワープ先を指定。 |
+| `shop_counter` | ショップカウンター | 隣接して話しかけることでショップ画面を開く。 | [ショップシステム](../features/Shop-System.md) と連動。 |
+
+### 6.2 基本資材 (Basic Materials)
+| typeId | 名称 | 用途 |
+| :--- | :--- | :--- |
+| `wood` | 木材 | 床、扉、簡易的な家具の作成。 |
+| `stone` | 石材 | 壁、強固な構造物の作成。 |
+| `iron` | 鉄材 | 特殊な装置、補強パーツの作成。 |
+| `magic_crystal` | 魔力結晶 | 魔法的な施設（転送門、回復の泉）の核。 |
+
+## 7. 相互参照
 - [機能仕様書](../features/Functional-Specification.md)
 - [管理者システム](../features/Admin-System.md)
 - [倉庫システム](../features/Warehouse-System.md)
