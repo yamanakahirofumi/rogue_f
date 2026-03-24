@@ -83,8 +83,18 @@ interface StoredMonster {
   id: string;
   typeId: string;
   level: number;
-  stats: any;              // 詳細ステータス
+  stats: MonsterStats;     // 詳細ステータス
   traits: string[];        // 継承された特性
+}
+
+interface MonsterStats {
+  hp: number;
+  maxHp: number;
+  attack: number;
+  defense: number;
+  agility: number;
+  dexterity: number;
+  speed: number;
 }
 
 interface StoredItem {

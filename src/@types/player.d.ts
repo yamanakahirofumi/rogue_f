@@ -66,3 +66,14 @@ interface CombatResult {
   remainingHp: number;
   isDead: boolean;
 }
+
+interface SearchResult {
+  foundCount: number;
+  message: string;
+}
+
+interface DisarmResult {
+  result: boolean;
+  isTriggered: boolean;
+  message: string;
+}

@@ -31,12 +31,26 @@
 ### 3.1 データ構造
 `Player` モデル内の `statusEffects: string[]` 配列で管理されます。
 
+#### 状態異常 ID 一覧
+API およびフロントエンドで使用される標準的な状態異常 ID（文字列定数）の定義です。
+
+| ID | 名称 | 種別 |
+| :--- | :--- | :--- |
+| `POISON` | 毒 | 弱体化 |
+| `STUN` | スタン | 弱体化 |
+| `SLOW` | 鈍足 | 弱体化 |
+| `CURSE` | 呪い | 弱体化 |
+| `HUNGRY` | 空腹 | 弱体化 |
+| `STARVING` | 飢餓 | 弱体化 |
+| `REGENERATION` | 再生 | 強化 |
+| `SATIATED` | 満腹 | 強化 |
+
 ```typescript
 // 例: 現在のプレイヤーの状態
 {
   id: "player-123",
   // ...
-  statusEffects: ["Poison", "Slow"], // 毒と鈍足状態
+  statusEffects: ["POISON", "SLOW"], // 毒と鈍足状態
 }
 ```
 
