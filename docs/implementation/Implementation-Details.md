@@ -18,7 +18,9 @@
   - 基本コマンド: `top`, `down`, `right`, `left`, `pickup`, `downStairs`, `upStairs`
   - 探索・解除コマンド:
     - `search`: 周囲のトラップや隠し通路を探索。
+      - レスポンス: `SearchResult`
     - `disarm`: 隣接するトラップの解除を試行。
+      - レスポンス: `DisarmResult`
   - アクションコマンド:
     - `attack`: 隣接する敵に攻撃を実行。
     - `attack/{targetId}`: 指定したIDの対象に攻撃を実行（遠距離攻撃等）。
@@ -26,8 +28,10 @@
     - `equip/{itemId}`: アイテムを装備。
     - `unequip/{itemId}`: 装備を解除。
     - `drop/{itemId}`: アイテムを足元に置く。
-  - レスポンス (pickup, attack 以外): `{ [name: string]: boolean }`
+  - レスポンス (上記以外): `{ [name: string]: boolean }`
   - レスポンス (pickup): `PickUpResult`
+  - レスポンス (search): `SearchResult`
+  - レスポンス (disarm): `DisarmResult`
   - レスポンス (attack): `CombatResult` (詳細は 3.6 参照)
 
 ### 2.3 フィールド・ダンジョン
@@ -138,6 +142,23 @@
   critical: boolean;   // クリティカルヒットかどうか
   remainingHp: number; // 攻撃後の対象の残りHP
   isDead: boolean;     // 対象が死亡したかどうか
+}
+```
+
+### 3.7 SearchResult
+```typescript
+{
+  foundCount: number;  // 発見したトラップ・隠し通路の数
+  message: string;     // 結果メッセージ
+}
+```
+
+### 3.8 DisarmResult
+```typescript
+{
+  result: boolean;     // 解除成否
+  isTriggered: boolean; // 解除失敗時にトラップが発動したか
+  message: string;     // 結果メッセージ
 }
 ```
 
