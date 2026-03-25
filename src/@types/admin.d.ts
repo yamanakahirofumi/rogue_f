@@ -72,6 +72,7 @@ interface WarehouseState {
   monsters: StoredMonster[]; // 保管中のモンスター
   items: StoredItem[];       // 保管中のアイテム
   materials: StoredMaterial[]; // 保管中の建築資材
+  trustNetwork: TrustedServer[]; // 信頼しているサーバー
   capacity: {
     monsterMax: number;
     itemMax: number;
@@ -107,4 +108,18 @@ interface StoredMaterial {
   typeId: string;
   name: string;
   count: number;           // 所持数
+}
+
+interface TrustedServer {
+  serverId: string;        // サーバー固有のID
+  serverName: string;      // サーバー名
+  url: string;             // サーバーのエンドポイントURL
+  trustPolicy: TrustPolicy; // 適用されている信頼ポリシー
+  status: 'active' | 'pending' | 'blocked'; // 信頼関係の状態
+}
+
+interface TrustPolicy {
+  itemTransfer: 'bi-directional' | 'one-way' | 'prohibited'; // アイテム持ち込み制限
+  levelSync: 'full-sync' | 'copy-on-move' | 'reset';        // レベル同期設定
+  canPvp: boolean;         // サーバー間を跨いだPVPの許可
 }

@@ -97,6 +97,7 @@ interface WarehouseState {
   monsters: StoredMonster[]; // 保管中のモンスター
   items: StoredItem[];       // 保管中のアイテム
   materials: StoredMaterial[]; // 保管中の建築資材
+  trustNetwork: TrustedServer[]; // 信頼しているサーバー
   capacity: {
     monsterMax: number;
     itemMax: number;
@@ -154,7 +155,34 @@ interface StoredMaterial {
 | `iron` | 鉄材 | 特殊な装置、補強パーツの作成。 |
 | `magic_crystal` | 魔力結晶 | 魔法的な施設（転送門、回復の泉）の核。 |
 
-## 7. 相互参照
+### 6.3 特殊・装飾資材 (Special & Decoration Materials)
+| typeId | 名称 | 用途 |
+| :--- | :--- | :--- |
+| `trap_parts` | トラップ部品 | 基本的なトラップの作成・強化。 |
+| `obsidian` | 黒曜石 | 強力なトラップや装飾。 |
+| `torch` | 松明 | ダンジョン内の照明。 |
+| `statue` | 彫像 | 装飾および特定の効果（検討中）。 |
+
+## 7. トラストネットワーク (Trust Network)
+他の管理者サーバーとの連携に関するデータを保持します。
+
+```typescript
+interface TrustedServer {
+  serverId: string;        // サーバー固有のID
+  serverName: string;      // サーバー名
+  url: string;             // サーバーのエンドポイントURL
+  trustPolicy: TrustPolicy; // 適用されている信頼ポリシー
+  status: 'active' | 'pending' | 'blocked'; // 信頼関係の状態
+}
+
+interface TrustPolicy {
+  itemTransfer: 'bi-directional' | 'one-way' | 'prohibited'; // アイテム持ち込み制限
+  levelSync: 'full-sync' | 'copy-on-move' | 'reset';        // レベル同期設定
+  canPvp: boolean;         // サーバー間を跨いだPVPの許可
+}
+```
+
+## 8. 相互参照
 - [機能仕様書](../features/Functional-Specification.md)
 - [管理者システム](../features/Admin-System.md)
 - [倉庫システム](../features/Warehouse-System.md)

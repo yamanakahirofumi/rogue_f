@@ -47,6 +47,35 @@
 - 管理者がダンジョンや倉庫を運営するためのデータ構造については、以下のドキュメントを参照してください。
   - **[管理者データモデル](Admin-Data-Models.md)**: ダンジョン設定、階層配置、ショップ運営、および倉庫の状態管理。
 
+### 2.5 管理者向け API (Admin API)
+管理者が世界を構築・運営するためのエンドポイントです。
+
+- **ダンジョン管理**
+  - `POST /api/admin/dungeon`: 新規ダンジョンの作成。
+    - リクエスト: `DungeonConfig` (idはサーバー生成)
+  - `GET /api/admin/dungeons`: 管理者が所有するダンジョン一覧の取得。
+    - レスポンス: `DungeonConfig[]`
+  - `PUT /api/admin/dungeon/{dungeonId}/floor/{floorLevel}`: 特定階層の構成（マップ、配置物）の更新。
+    - リクエスト: `FloorConfig`
+- **倉庫・リソース管理**
+  - `GET /api/admin/warehouse`: 倉庫の状態（モンスター、アイテム、資材）を取得。
+    - レスポンス: `WarehouseState`
+  - `POST /api/admin/warehouse/monster/breed`: モンスターの繁殖を実行。
+    - リクエスト: `{ parentId1: string, parentId2: string }`
+    - レスポンス: `StoredMonster` (生成された卵/幼体)
+- **ショップ管理**
+  - `POST /api/admin/shop`: ダンジョン内にショップを新規設置。
+    - リクエスト: `ShopConfig`
+  - `PUT /api/admin/shop/{shopId}/slots`: ショップの陳列商品と価格を更新。
+    - リクエスト: `ShopSlot[]`
+- **トラストネットワーク (世界間連携)**
+  - `GET /api/admin/trust-network`: 信頼関係にあるサーバーの一覧を取得。
+    - レスポンス: `TrustedServer[]`
+  - `POST /api/admin/trust-network/server`: 新しいサーバーとの信頼関係を構築（申請）。
+    - リクエスト: `{ serverUrl: string, policy: TrustPolicy }`
+  - `PUT /api/admin/trust-network/server/{serverId}`: 信頼ポリシーの更新。
+    - リクエスト: `TrustPolicy`
+
 ## 3. データモデル
 
 ### 3.1 Player
