@@ -99,6 +99,8 @@
   dexterity: number; // 器用さ（命中率に影響）
   speed: number;     // 素早さ（回避率に影響）
   luck: number;      // 運（トラップ発見率などに影響）
+  monsterLevel?: number; // モンスター形態のレベル (PK用)
+  monsterExp?: number;   // モンスター形態の累積経験値 (PK用)
   actionTime: number; // 最終行動時刻のタイムスタンプ
   weaponId?: string;    // 装備中の武器のID
   armorId?: string;     // 装備中の防具のID

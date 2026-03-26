@@ -17,6 +17,8 @@ declare class Player {
   dexterity: number;
   speed: number;
   luck: number;
+  monsterLevel?: number;
+  monsterExp?: number;
   actionTime: number;
   weaponId?: string;
   armorId?: string;
