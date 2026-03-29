@@ -96,6 +96,7 @@ interface MonsterStats {
   agility: number;
   dexterity: number;
   speed: number;
+  luck: number;
 }
 
 interface StoredItem {
