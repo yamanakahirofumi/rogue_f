@@ -109,6 +109,8 @@ interface StoredMonster {
   id: string;
   typeId: string;
   level: number;
+  exp: number;             // 現在の累積経験値
+  nextExp: number;         // 次レベルまでの必要累積経験値
   stats: MonsterStats;     // 詳細ステータス
   traits: string[];        // 継承された特性
 }
@@ -163,6 +165,18 @@ interface StoredMaterial {
 | `obsidian` | 黒曜石 | 探索 (深層) | 強力なトラップや装飾。 | 希少な硬質素材。 |
 | `torch` | 松明 | 探索/木材合成 | ダンジョン内の照明。 | 視界の確保に影響。 |
 | `statue` | 彫像 | 探索/石材合成 | 装飾、特殊効果（予定）。 | 容量を 5 消費する。 |
+
+### 6.4 トラップ種別 (Trap Types)
+| typeId | 名称 | 設置コスト (資材) | 設置コスト (ゴールド) | 容量消費 | 難易度 |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| `spikes` | トゲの床 | 石材 (`stone`) × 5 | 500 | 2 | 20 |
+| `landmine` | 地雷 | 鉄材 (`iron`) × 5, トラップ部品 × 3 | 1,500 | 4 | 50 |
+| `poison_needle` | 毒矢 | トラップ部品 × 5 | 800 | 3 | 35 |
+| `alarm` | 警報 | トラップ部品 × 3 | 1,000 | 2 | 25 |
+| `slow_trap` | 鈍足の罠 | 魔力結晶 (`magic_crystal`) × 2 | 1,200 | 3 | 40 |
+| `teleport_trap` | ワープの罠 | 魔力結晶 (`magic_crystal`) × 5 | 2,000 | 5 | 60 |
+| `summon_trap` | 召喚の罠 | 魔力結晶 (`magic_crystal`) × 10 | 3,000 | 8 | 70 |
+| `equip_remover` | 装備外しの罠 | 鉄材 (`iron`) × 10, 黒曜石 (`obsidian`) × 2 | 2,500 | 6 | 55 |
 
 ## 7. トラストネットワーク (Trust Network)
 他の管理者サーバーとの連携に関するデータを保持します。

@@ -84,6 +84,8 @@ interface StoredMonster {
   id: string;
   typeId: string;
   level: number;
+  exp: number;             // 現在の累積経験値
+  nextExp: number;         // 次レベルまでの必要累積経験値
   stats: MonsterStats;     // 詳細ステータス
   traits: string[];        // 継承された特性
 }
