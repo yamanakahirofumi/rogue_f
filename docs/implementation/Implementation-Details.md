@@ -76,6 +76,18 @@
   - `PUT /api/admin/trust-network/server/{serverId}`: 信頼ポリシーの更新。
     - リクエスト: `TrustPolicy`
 
+### 2.6 管理者介入 API (Admin Intervention API)
+攻略中のプレイヤーに対し、リアルタイムで干渉するためのエンドポイントです。
+
+- **モンスター召喚**
+  - `POST /api/admin/intervention/summon`: 倉庫内のモンスターを攻略中のフロアに即座に召喚。
+    - リクエスト: `{ dungeonId: string, floorLevel: number, monsterId: string, position: { x: number, y: number } }`
+    - レスポンス: `boolean` (召喚成功の成否)
+- **トラップ・効果の発動**
+  - `POST /api/admin/intervention/trigger-trap`: 指定した座標のトラップを強制的に発動、または特殊な環境効果（落雷、落石等）を発生させる。
+    - リクエスト: `{ dungeonId: string, floorLevel: number, position: { x: number, y: number }, effectId?: string }`
+    - レスポンス: `boolean` (発動成功の成否)
+
 ## 3. データモデル
 
 ### 3.1 Player
