@@ -43,9 +43,18 @@ interface FloorConfig {
 }
 
 interface PlacedFacility {
-  typeId: string;          // 施設種別ID (recovery_spring, teleport_gate等)
+  typeId: 'recovery_spring' | 'teleport_gate' | 'shop_counter';
   position: { x: number, y: number };
-  config?: any;            // 施設固有の設定 (ワープ先座標等)
+  config?: RecoverySpringConfig | TeleportGateConfig;
+}
+
+interface RecoverySpringConfig {
+  recoveryRate: number;    // 回復倍率 (標準 1.0)
+}
+
+interface TeleportGateConfig {
+  targetFloor: number;     // ワープ先階層
+  targetPosition: { x: number, y: number }; // ワープ先座標
 }
 
 interface PlacedShop {
