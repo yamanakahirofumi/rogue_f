@@ -19,12 +19,14 @@
   - 探索・解除コマンド:
     - `search`: 周囲のトラップや隠し通路を探索。
       - レスポンス: `SearchResult`
-    - `disarm`: 隣接するトラップの解除を試行。
+    - `disarm`: 足元のトラップの解除を試行。
+    - `disarm/{direction}`: 指定した方向（`top`, `down`, `right`, `left`）に隣接するトラップの解除を試行。
       - レスポンス: `DisarmResult`
   - アクションコマンド:
     - `attack`: 隣接する敵に攻撃を実行。
     - `attack/{targetId}`: 指定したIDの対象に攻撃を実行（遠距離攻撃等）。
     - `use/{itemId}`: アイテムを使用。
+    - `use/{itemId}/{targetId}`: 指定した対象にアイテムを使用。
     - `equip/{itemId}`: アイテムを装備。
     - `unequip/{itemId}`: 装備を解除。
     - `drop/{itemId}`: アイテムを足元に置く。
@@ -77,15 +79,15 @@
     - リクエスト: `TrustPolicy`
 
 ### 2.6 管理者介入 API (Admin Intervention API)
-攻略中のプレイヤーに対し、リアルタイムで干渉するためのエンドポイントです。
+攻略中の特定のプレイヤーに対し、リアルタイムで干渉するためのエンドポイントです。
 
 - **モンスター召喚**
-  - `POST /api/admin/intervention/summon`: 倉庫内のモンスターを攻略中のフロアに即座に召喚。
-    - リクエスト: `{ dungeonId: string, floorLevel: number, monsterId: string, position: { x: number, y: number } }`
+  - `POST /api/admin/intervention/player/{userId}/summon`: 倉庫内のモンスターを対象のプレイヤーが攻略中のフロアに即座に召喚。
+    - リクエスト: `{ monsterId: string, position: { x: number, y: number } }`
     - レスポンス: `boolean` (召喚成功の成否)
 - **トラップ・効果の発動**
-  - `POST /api/admin/intervention/trigger-trap`: 指定した座標のトラップを強制的に発動、または特殊な環境効果（落雷、落石等）を発生させる。
-    - リクエスト: `{ dungeonId: string, floorLevel: number, position: { x: number, y: number }, effectId?: string }`
+  - `POST /api/admin/intervention/player/{userId}/trigger`: 指定した座標のトラップを強制的に発動、または特殊な環境効果（落雷、落石等）を発生させる。
+    - リクエスト: `{ position: { x: number, y: number }, effectId?: string }`
     - レスポンス: `boolean` (発動成功の成否)
 
 ## 3. データモデル
