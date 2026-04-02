@@ -64,6 +64,8 @@
 | :--- | :--- | :--- | :--- | :--- | :--- |
 | `capture_ball` | 捕獲の球 | 野生モンスターを捕獲 | 500 | なし | [モンスターシステム](Monster-System.md) |
 | `orb_intrusion` | 乱入のオーブ | 他者の世界へ乱入 | 1,000 | なし | [PKシステム](PK-System.md) |
+| `incubation_accelerator` | 孵化促進剤 | 孵化時間を大幅に短縮（即時） | 500 | なし | [繁殖システム](Monster-Breeding-System.md) |
+| `mutation_potion` | 変異の薬 | 次回の繁殖での突然変異率を上昇 | 800 | 20 | [繁殖システム](Monster-Breeding-System.md) |
 
 ## 7. 相互参照
 - [インベントリシステム](Inventory-System.md)
