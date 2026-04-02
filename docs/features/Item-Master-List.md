@@ -41,7 +41,7 @@
 | :--- | :--- | :--- | :--- | :--- | :--- |
 | `sword_iron` | 鉄の剣 | +5 | 1,000 | なし | 標準的な武器。 |
 | `sword_steel` | 鋼鉄の剣 | +12 | 3,500 | 50 | 頑丈な剣。 |
-| `dagger_poison` | 毒の短剣 | +3 | 2,500 | 20 | 攻撃時に確率で「毒」付与。 |
+| `dagger_poison` | 毒の短剣 | +3 | 2,500 | 20 | 攻撃時に **20%** の確率で「毒」付与。 |
 
 ### 5.2 防具 (Armor)
 | ID | 名称 | 防御力補正 | 基本価格 | 上限 | 備考 |
@@ -65,7 +65,7 @@
 | `capture_ball` | 捕獲の球 | 野生モンスターを捕獲 | 500 | なし | [モンスターシステム](Monster-System.md) |
 | `orb_intrusion` | 乱入のオーブ | 他者の世界へ乱入 | 1,000 | なし | [PKシステム](PK-System.md) |
 | `incubation_accelerator` | 孵化促進剤 | 孵化時間を大幅に短縮（即時） | 500 | なし | [繁殖システム](Monster-Breeding-System.md) |
-| `mutation_potion` | 変異の薬 | 次回の繁殖での突然変異率を上昇 | 800 | 20 | [繁殖システム](Monster-Breeding-System.md) |
+| `mutation_potion` | 変異の薬 | 次回の繁殖での突然変異率を **+10%** | 800 | 20 | [繁殖システム](Monster-Breeding-System.md) |
 
 ## 7. 相互参照
 - [インベントリシステム](Inventory-System.md)
