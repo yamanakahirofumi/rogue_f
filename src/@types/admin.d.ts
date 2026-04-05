@@ -135,3 +135,41 @@ interface TrustPolicy {
   levelSync: 'full-sync' | 'copy-on-move' | 'reset';        // レベル同期設定
   canPvp: boolean;         // サーバー間を跨いだPVPの許可
 }
+
+interface DungeonEvent {
+  id: string;              // イベント固有ID
+  timestamp: number;       // 発生時刻 (UNIXタイムスタンプ)
+  dungeonId: string;       // 発生したダンジョンのID
+  floorLevel: number;      // 発生した階層
+  type: DungeonEventType;  // イベント種別
+  userId?: string;         // 関連するユーザーID (プレイヤー等)
+  details: any;            // イベント詳細 (種別に応じた構造)
+}
+
+type DungeonEventType =
+  | 'player_entry'         // プレイヤー入場
+  | 'player_exit'          // プレイヤー脱出
+  | 'player_death'         // プレイヤー死亡
+  | 'item_pickup'          // 重要アイテム取得
+  | 'monster_slain'        // モンスター撃破
+  | 'trap_triggered'       // トラップ発動
+  | 'admin_intervention';  // 管理者介入
+
+interface AdminLog {
+  id: string;              // ログ固有ID
+  timestamp: number;       // 操作時刻
+  adminId: string;         // 管理者のユーザーID
+  action: AdminActionType; // 操作種別
+  targetId?: string;       // 対象のID (dungeonId, shopId等)
+  changes: {
+    before: any;           // 変更前
+    after: any;            // 変更後
+  };
+}
+
+type AdminActionType =
+  | 'create_dungeon'       // ダンジョン作成
+  | 'update_floor'         // 階層更新
+  | 'update_shop_price'    // ショップ価格更新
+  | 'update_trust_policy'  // 信頼ポリシー更新
+  | 'intervene_player';    // プレイヤーへの介入

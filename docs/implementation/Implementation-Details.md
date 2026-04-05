@@ -77,6 +77,13 @@
     - リクエスト: `{ serverUrl: string, policy: TrustPolicy }`
   - `PUT /api/admin/trust-network/server/{serverId}`: 信頼ポリシーの更新。
     - リクエスト: `TrustPolicy`
+- **ログ管理**
+  - `GET /api/admin/logs/dungeon/{dungeonId}`: 指定したダンジョンのイベントログを取得。
+    - クエリパラメータ: `limit`, `offset`, `type`
+    - レスポンス: `DungeonEvent[]`
+  - `GET /api/admin/logs/actions`: 管理者の操作ログを取得。
+    - クエリパラメータ: `limit`, `offset`, `action`
+    - レスポンス: `AdminLog[]`
 
 ### 2.6 管理者介入 API (Admin Intervention API)
 攻略中の特定のプレイヤーに対し、リアルタイムで干渉するためのエンドポイントです。
