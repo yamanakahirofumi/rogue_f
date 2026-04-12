@@ -120,6 +120,8 @@ interface StoredMonster {
   level: number;
   exp: number;             // 現在の累積経験値
   nextExp: number;         // 次レベルまでの必要累積経験値
+  vigor: number;           // 現在の活力
+  maxVigor: number;        // 最大活力
   stats: MonsterStats;     // 詳細ステータス
   traits: string[];        // 継承された特性
 }
