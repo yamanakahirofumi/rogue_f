@@ -7,6 +7,7 @@
 ### 1.1 機能・仕様 ([features/](features/))
 ゲームの機能や仕様に関する核となる情報を記述しています。
 - **[ゲーム機能概要](features/Game-Features.md)**: プロジェクト概要、基本操作、ゲームサイクル。
+- **[アクションシステム](features/Action-System.md)**: 移動、攻撃、アイテム使用などの行動コストとスタミナ・満腹度消費。
 - **[機能仕様書](features/Functional-Specification.md)**: システム構成、二つのダンジョン形式、管理者メリット、世界間連携。
 - **[戦闘システム](features/Combat-System.md)**: リアルタイム制バトル、ダメージ計算、モンスターAI。
 - **[モンスターシステム](features/Monster-System.md)**: モンスターの獲得、繁殖、運用。
