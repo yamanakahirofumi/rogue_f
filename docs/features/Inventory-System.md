@@ -14,10 +14,13 @@
 ### 2.2 アイテム (Type 2)
 - ダンジョン内で拾得可能な物品です。
 - インベントリのスロットを消費して保持します。
-- 主なサブカテゴリ（予定）:
-    - **食料**: [満腹度システム](Hunger-System.md) に基づき、満腹度を回復させます。
-    - **巻物・薬**: 即時効果や特殊な効果（鑑定など）を発動します。
-    - **装備品**: プレイヤーのステータスを強化します。詳細は [装備システム](Equipment-System.md) を参照してください。
+- 詳細なアイテムの一覧と効果については、**[アイテムマスターリスト](Item-Master-List.md)** を参照してください。
+- 主なサブカテゴリ:
+    - **食料 (food)**: [満腹度システム](Hunger-System.md) に基づき、満腹度を回復させます。
+    - **巻物 (scroll)**: 使用することで即時効果や特殊な効果を発動します。
+    - **薬 (potion)**: 飲むことで回復やステータス変化をもたらします。
+    - **装備品 (weapon, armor, accessory)**: プレイヤーのステータスを強化します。詳細は [装備システム](Equipment-System.md) を参照してください。
+    - **資材 (material)**: 建築や合成に使用します。
 
 ## 3. インベントリの機能
 
@@ -42,24 +45,32 @@
 詳細は [UI・UX設計](UI-UX-Design.md) を参照してください。
 
 - **インベントリ画面**: 現在の所持アイテムを一覧表示します。
-- **アイテム詳細**: アイテムを選択した際、その名称、説明、および実行可能なアクション（使う、捨てる等）を表示します。
-- **ショートカット**: 頻繁に使用するアイテムをクイックアクセススロットに登録できる機能を検討中です。
+- **アイテム詳細**: アイテムを選択した際、その名称、説明、および実行可能なアクション（使う、装備する、捨てる等）を表示します。
+- **クイック使用**: 頻繁に使用するアイテム（食料、回復薬等）を特定のキー入力やボタンで即座に使用できるショートカット機能の提供を想定しています。
 
 ## 5. データモデルの定義
 
 ### 5.1 InventoryItem
+[Player型定義](../../src/@types/player.d.ts) に基づくデータ構造です。
 ```typescript
 {
   id: string;          // アイテム固有のID
   name: string;        // アイテム名（未識別時は「謎の薬」など）
   originalName: string; // 本来のアイテム名
   type: number;        // アイテム種別（2=アイテム）
-  subType: string;     // サブカテゴリ（food, scroll, equipment等）
+  subType: string;     // サブカテゴリ（food, scroll, potion, weapon, armor, accessory, material）
   description: string; // アイテムの説明
   isIdentified: boolean; // 識別済みかどうか
   isCursed: boolean;     // 呪い状態かどうか
   isBlessed: boolean;    // 祝福状態かどうか
   value: number;       // 売却価格/購入価格のベース
+  // 装備品の場合の補正値
+  attackBonus?: number;
+  defenseBonus?: number;
+  agilityBonus?: number;
+  dexterityBonus?: number;
+  speedBonus?: number;
+  capacityUsage?: number;   // 配置時に消費するダンジョン容量
 }
 ```
 
