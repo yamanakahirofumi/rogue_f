@@ -44,6 +44,7 @@ interface InventoryItem {
   agilityBonus?: number;
   dexterityBonus?: number;
   speedBonus?: number;
+  capacityUsage?: number;
 }
 
 interface DungeonInfo {
