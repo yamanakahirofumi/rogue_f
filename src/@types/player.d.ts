@@ -44,6 +44,7 @@ interface InventoryItem {
   agilityBonus?: number;
   dexterityBonus?: number;
   speedBonus?: number;
+  range?: number;
   capacityUsage?: number;
 }
 
