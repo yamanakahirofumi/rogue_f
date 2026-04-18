@@ -70,12 +70,13 @@
   agilityBonus?: number;
   dexterityBonus?: number;
   speedBonus?: number;
+  range?: number;           // 武器の射程
   capacityUsage?: number;   // 配置時に消費するダンジョン容量
 }
 ```
 
 ### 5.2 Player (インベントリ拡張)
-[Playerモデル](../implementation/Implementation-Details.md) に以下の項目を追加することを想定しています。
+[Playerモデル](../implementation/Implementation-Details.md) に基づくインベントリ関連の項目です。
 ```typescript
 {
   // ... 既存の項目

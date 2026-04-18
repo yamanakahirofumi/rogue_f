@@ -181,6 +181,7 @@
   agilityBonus?: number;
   dexterityBonus?: number;
   speedBonus?: number;
+  range?: number;
 }
 ```
 
