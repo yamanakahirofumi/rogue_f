@@ -65,4 +65,20 @@ export class FieldsAccessService {
   pickUp(userId: string): Observable<PickUpResult> {
     return this.command(userId, 'pickup');
   }
+
+  attack(userId: string): Observable<CombatResult> {
+    return this.command(userId, 'attack');
+  }
+
+  search(userId: string): Observable<SearchResult> {
+    return this.command(userId, 'search');
+  }
+
+  disarm(userId: string): Observable<DisarmResult> {
+    return this.command(userId, 'disarm');
+  }
+
+  wait(userId: string): Observable<any> {
+    return this.command(userId, 'wait');
+  }
 }
