@@ -35,7 +35,13 @@ export class DungeonComponent implements OnInit {
       .pipe(mergeMap(it => this.access.getPlayerInfo(it)))
       .subscribe(it => {
         this.player = new PlayerDomain(it)
-        this.interval.getTimer(3).subscribe(() => this.player.addStamina())
+        // 自然回復は10秒(1ティック)ごと
+        this.interval.getTimer(10).subscribe(() => {
+          this.player.recover();
+          this.player.minusSatiety(1); // 10秒ごとに満腹度を 1 減少
+          this.statusChangeFlg = true;
+          setTimeout(() => this.statusChangeFlg = false, 100);
+        })
       });
     this.comment = '';
     this.statusChangeFlg = false;
@@ -66,10 +72,13 @@ export class DungeonComponent implements OnInit {
   }
 
   keyupEvent(event: KeyboardEvent) {
+    const actionConfig = this.getActionConfig(event.key);
+    if (!actionConfig) return;
+
     from([event.key]).pipe(
       filter(() => this.player.isAction()),
       tap(() => {
-        this.player.action();
+        this.player.action(actionConfig.baseInterval, actionConfig.staminaCost);
         this.statusChangeFlg = true;
       }),
       mergeMap(it => this.execKeyEvent(it)),
@@ -79,6 +88,30 @@ export class DungeonComponent implements OnInit {
       this.setField(it);
       this.statusChangeFlg = false
     });
+  }
+
+  private getActionConfig(key: string): { baseInterval: number, staminaCost: number } | null {
+    switch (key) {
+      case 'k': case '8': case 'ArrowUp':
+      case 'j': case '2': case 'ArrowDown':
+      case 'l': case '6': case 'ArrowRight':
+      case 'h': case '4': case 'ArrowLeft':
+        return { baseInterval: 0.5, staminaCost: 1 };
+      case 'a':
+        return { baseInterval: 1.0, staminaCost: 2 };
+      case 'g':
+        return { baseInterval: 0.5, staminaCost: 0 };
+      case 's':
+      case 'd':
+        return { baseInterval: 1.2, staminaCost: 1 };
+      case '<':
+      case '>':
+        return { baseInterval: 1.0, staminaCost: 0 };
+      case '.':
+        return { baseInterval: 0.5, staminaCost: 0 };
+      default:
+        return null;
+    }
   }
 
   private execKeyEvent(key: string): Observable<any> {
@@ -95,21 +128,27 @@ export class DungeonComponent implements OnInit {
       case '6':
       case 'ArrowRight':
         return this.access.right(this.player.getId());
-      // case 'y':
-      //   return this.access.
       case 'h':
       case '4':
       case 'ArrowLeft':
         return this.access.left(this.player.getId());
+      case 'a':
+        return this.access.attack(this.player.getId());
       case 'g':
         return this.access.pickUp(this.player.getId())
           .pipe(tap(it => {
             this.comment = this.pickupComment(it);
           }));
+      case 's':
+        return this.access.search(this.player.getId());
+      case 'd':
+        return this.access.disarm(this.player.getId());
       case '<':
         return this.access.upStairs(this.player.getId());
       case '>':
         return this.access.downStairs(this.player.getId());
+      case '.':
+        return this.access.wait(this.player.getId());
       default:
         return of('a');
     }
