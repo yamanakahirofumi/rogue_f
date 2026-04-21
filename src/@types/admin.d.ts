@@ -145,7 +145,7 @@ interface DungeonEvent {
   floorLevel: number;      // 発生した階層
   type: DungeonEventType;  // イベント種別
   userId?: string;         // 関連するユーザーID (プレイヤー等)
-  details: any;            // イベント詳細 (種別に応じた構造)
+  details: PlayerEntryDetails | PlayerExitDetails | PlayerDeathDetails | ItemPickUpDetails | MonsterSlainDetails | TrapTriggeredDetails | AdminInterventionDetails;
 }
 
 type DungeonEventType =
@@ -156,6 +156,59 @@ type DungeonEventType =
   | 'monster_slain'        // モンスター撃破
   | 'trap_triggered'       // トラップ発動
   | 'admin_intervention';  // 管理者介入
+
+interface PlayerEntryDetails {
+  entranceId: string;
+  position: { x: number; y: number };
+}
+
+interface PlayerExitDetails {
+  exitId: string;
+  reason: 'escaped' | 'cleared';
+  position: { x: number; y: number };
+}
+
+interface PlayerDeathDetails {
+  attackerId?: string;
+  attackerType: 'monster' | 'trap' | 'environment' | 'pker';
+  position: { x: number; y: number };
+  lostGold: number;
+  lostItems: string[];
+}
+
+interface ItemPickUpDetails {
+  itemId: string;
+  itemTypeId: string;
+  itemName: string;
+  position: { x: number; y: number };
+  isGold: boolean;
+  amount?: number;
+}
+
+interface MonsterSlainDetails {
+  monsterId: string;
+  monsterTypeId: string;
+  killerId: string;
+  position: { x: number; y: number };
+  gainedExp: number;
+}
+
+interface TrapTriggeredDetails {
+  trapTypeId: string;
+  position: { x: number; y: number };
+  triggeredBy: string;
+  isFound: boolean;
+  damageDealt?: number;
+  statusEffect?: string;
+}
+
+interface AdminInterventionDetails {
+  actionType: 'summon' | 'trigger';
+  targetUserId: string;
+  position: { x: number; y: number };
+  monsterId?: string;
+  effectId?: string;
+}
 
 interface AdminLog {
   id: string;              // ログ固有ID
