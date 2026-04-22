@@ -64,6 +64,7 @@
   isCursed: boolean;     // 呪い状態かどうか
   isBlessed: boolean;    // 祝福状態かどうか
   value: number;       // 売却価格/購入価格のベース
+  tier: number;        // アイテムの Tier (1, 2, 3)
   // 装備品の場合の補正値
   attackBonus?: number;
   defenseBonus?: number;

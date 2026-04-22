@@ -122,6 +122,8 @@ interface StoredMonster {
   nextExp: number;         // 次レベルまでの必要累積経験値
   vigor: number;           // 現在の活力
   maxVigor: number;        // 最大活力
+  hatchTimeRemaining?: number; // 孵化までの残り時間（分）。卵の状態の場合のみ存在。
+  hatchTimeTotal?: number;     // 孵化に必要な総時間（分）。卵の状態の場合のみ存在。
   stats: MonsterStats;     // 詳細ステータス
   traits: string[];        // 継承された特性
 }

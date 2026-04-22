@@ -19,6 +19,7 @@ declare class Player {
   luck: number;
   monsterLevel?: number;
   monsterExp?: number;
+  monsterNextExp?: number;
   actionTime: number;
   weaponId?: string;
   armorId?: string;
@@ -39,6 +40,7 @@ interface InventoryItem {
   isCursed: boolean;
   isBlessed: boolean;
   value: number;
+  tier: number;        // アイテムの Tier (1, 2, 3)
   attackBonus?: number;
   defenseBonus?: number;
   agilityBonus?: number;
