@@ -34,6 +34,8 @@
 | :--- | :--- | :--- | :--- |
 | `orb_intrusion` | `magic_crystal` × 5 | 2,000 | [PKシステム](PK-System.md) |
 | `capture_ball` | `iron` × 2, `magic_crystal` × 1 | 500 | [モンスターシステム](Monster-System.md) |
+| `mutation_potion` | `demon_blood` × 1, `magic_crystal` × 1 | 800 | [繁殖システム](Monster-Breeding-System.md) |
+| `vigor_drink` | `magic_crystal` × 1, `ration` × 1 | 600 | [繁殖システム](Monster-Breeding-System.md) |
 
 ## 4. 価格とバランス
 合成に必要なゴールドおよび資材の合計価値は、原則として **[アイテムマスターリスト](Item-Master-List.md)** の「基本価格」よりも高めに設定されています。これは、ショップでの流通に頼らず、確実かつ即座にアイテムを入手できるためのコスト（利便性）を反映したものです。

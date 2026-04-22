@@ -122,6 +122,7 @@
   luck: number;      // 運（トラップ発見率などに影響）
   monsterLevel?: number; // モンスター形態のレベル (PK用)
   monsterExp?: number;   // モンスター形態の累積経験値 (PK用)
+  monsterNextExp?: number; // モンスター形態の次レベルまでの必要累計経験値 (PK用)
   actionTime: number; // 最終行動時刻のタイムスタンプ
   weaponId?: string;    // 装備中の武器のID
   armorId?: string;     // 装備中の防具のID
@@ -175,6 +176,7 @@
   isCursed: boolean;
   isBlessed: boolean;
   value: number;
+  tier: number;        // アイテムの Tier (1, 2, 3)
   // 装備品の場合の補正値
   attackBonus?: number;
   defenseBonus?: number;
@@ -266,7 +268,8 @@
 - 地形（水、砂地）や状態異常（鈍足）による補正倍率を基本インターバルに乗算します。
 
 #### 満腹度とスタミナの消費
-- アクションが実行されるごとに、満腹度を **0.2** 減少させます。
+- **時間経過**: **10秒ごと**に満腹度を **1** 減少させます。
+- **アクション消費**: アクションが実行されるごとに、満腹度を **0.2** 減少させます。
 - スタミナはアクションに応じた基本消費量を減少させます。スタミナが不足している場合は HP を消費します。
 
 #### 自然回復の周期処理
