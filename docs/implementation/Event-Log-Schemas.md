@@ -31,8 +31,9 @@
 
 ```typescript
 {
-  attackerId?: string;     // 攻撃者のID（モンスターID等）
-  attackerType: 'monster' | 'trap' | 'environment' | 'pker'; // 死亡原因の種別
+  attackerId?: string;     // 攻撃者の個体ID（モンスターID等）
+  attackerTypeId?: string; // 攻撃者の種別ID（'slime', 'spikes', 'lava' 等）
+  attackerType: 'monster' | 'trap' | 'environment' | 'pker'; // 死亡原因のカテゴリ
   position: { x: number, y: number }; // 死亡座標
   lostGold: number;        // 没収されたゴールド量
   lostItems: string[];     // 没収されたアイテムのIDリスト
