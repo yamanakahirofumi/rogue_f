@@ -195,7 +195,7 @@ interface DungeonEvent {
   floorLevel: number;      // 発生した階層
   type: DungeonEventType;  // イベント種別
   userId?: string;         // 関連するユーザーID (プレイヤー等)
-  details: any;            // イベント詳細。詳細は [イベントログ詳細仕様](Event-Log-Schemas.md) を参照。
+  details: PlayerEntryDetails | PlayerExitDetails | PlayerDeathDetails | ItemPickUpDetails | MonsterSlainDetails | TrapTriggeredDetails | AdminInterventionDetails;
 }
 
 type DungeonEventType =
