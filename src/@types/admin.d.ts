@@ -172,6 +172,7 @@ interface PlayerExitDetails {
 
 interface PlayerDeathDetails {
   attackerId?: string;
+  attackerTypeId?: string;
   attackerType: 'monster' | 'trap' | 'environment' | 'pker';
   position: { x: number; y: number };
   lostGold: number;
