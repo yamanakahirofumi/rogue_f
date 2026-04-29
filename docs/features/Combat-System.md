@@ -78,4 +78,5 @@ RogueFの戦闘は、従来のターン制ローグライクとは異なり、**
 
 ## 5. 相互参照
 - [機能仕様書](Functional-Specification.md)
+ - [視界システム](Visibility-System.md)
 - [実装詳細](../implementation/Implementation-Details.md)
