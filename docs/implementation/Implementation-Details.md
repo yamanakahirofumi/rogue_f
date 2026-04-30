@@ -217,6 +217,84 @@
 }
 ```
 
+### 3.9 DungeonEvent
+```typescript
+{
+  id: string;              // イベント固有ID
+  timestamp: number;       // 発生時刻 (UNIXタイムスタンプ)
+  dungeonId: string;       // 発生したダンジョンのID
+  floorLevel: number;      // 発生した階層
+  type: DungeonEventType;  // イベント種別
+  userId?: string;         // 関連するユーザーID (プレイヤー等)
+  details: PlayerEntryDetails | PlayerExitDetails | PlayerDeathDetails | ItemPickUpDetails | MonsterSlainDetails | TrapTriggeredDetails | AdminInterventionDetails;
+}
+
+type DungeonEventType =
+  | 'player_entry'         // プレイヤー入場
+  | 'player_exit'          // プレイヤー脱出
+  | 'player_death'         // プレイヤー死亡
+  | 'item_pickup'          // 重要アイテム取得
+  | 'monster_slain'        // モンスター撃破
+  | 'trap_triggered'       // トラップ発動
+  | 'admin_intervention';  // 管理者介入
+
+interface PlayerEntryDetails {
+  entranceId: string;      // 入口のID
+  position: { x: number, y: number }; // 出現座標
+}
+
+interface PlayerExitDetails {
+  exitId: string;          // 出口（階段など）のID
+  reason: 'escaped' | 'cleared'; // 脱出の理由
+  position: { x: number, y: number }; // 脱出時の座標
+}
+
+interface PlayerDeathDetails {
+  attackerId?: string;     // 攻撃者の個体ID（モンスターID等）
+  attackerTypeId?: string; // 攻撃者の種別ID（'slime', 'spikes' 等）
+  attackerType: 'monster' | 'trap' | 'environment' | 'pker'; // 死亡原因のカテゴリ
+  position: { x: number, y: number }; // 死亡座標
+  lostGold: number;        // 没収されたゴールド量
+  lostItems: string[];     // 没収されたアイテムのIDリスト
+}
+
+interface ItemPickUpDetails {
+  itemId: string;          // アイテム個体ID
+  itemTypeId: string;      // アイテム種別ID
+  itemName: string;        // アイテム名
+  position: { x: number, y: number }; // 取得座標
+  isGold: boolean;         // ゴールドかどうか
+  amount?: number;         // ゴールドの場合の金額
+}
+
+interface MonsterSlainDetails {
+  monsterId: string;       // モンスター個体ID
+  monsterTypeId: string;   // モンスター種別ID
+  killerId: string;        // 撃破者のID（プレイヤーID等）
+  position: { x: number, y: number }; // 撃破座標
+  gainedExp: number;       // プレイヤーが獲得した経験値
+}
+
+interface TrapTriggeredDetails {
+  trapTypeId: string;      // トラップ種別ID
+  position: { x: number, y: number }; // トラップの座標
+  triggeredBy: string;     // 発動させたエンティティのID
+  isFound: boolean;        // 発動前に発見されていたか
+  damageDealt?: number;    // 与えたダメージ
+  statusEffect?: string;   // 付与された状態異常
+}
+
+interface AdminInterventionDetails {
+  actionType: 'summon' | 'trigger'; // 介入種別
+  targetUserId: string;    // 対象プレイヤーID
+  position: { x: number, y: number }; // 介入地点の座標
+  monsterId?: string;      // 召喚したモンスターのID（summonの場合）
+  effectId?: string;       // 発生させた効果のID（triggerの場合）
+}
+```
+
+詳細は **[イベントログ詳細仕様](Event-Log-Schemas.md)** を参照してください。
+
 ## 4. フィールドマップ記号 (Field Map Symbols)
 ダンジョンの描画データ（`DisplayData`）で使用される主な記号と、それが表すオブジェクトの定義です。
 
