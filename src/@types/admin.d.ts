@@ -28,7 +28,7 @@ interface FloorConfig {
 }
 
 interface PlacedFacility {
-  typeId: 'recovery_spring' | 'teleport_gate' | 'shop_counter';
+  typeId: 'recovery_spring' | 'teleport_gate' | 'shop_counter' | 'torch' | 'statue';
   position: { x: number, y: number };
   config?: RecoverySpringConfig | TeleportGateConfig;
 }
