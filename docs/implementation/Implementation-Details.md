@@ -15,7 +15,7 @@
 - `GET /api/player/{userId}`: プレイヤー情報の取得。
   - レスポンス: `Player`
 - `PUT /api/player/{userId}/command/{command}`: 移動やアクションのコマンド送信。
-  - 基本コマンド: `top`, `down`, `right`, `left`, `pickup`, `downStairs`, `upStairs`, `wait`
+  - 基本コマンド: `top`, `down`, `right`, `left`, `top-right`, `top-left`, `down-right`, `down-left`, `pickup`, `downStairs`, `upStairs`, `wait`
   - 探索・解除コマンド:
     - `search`: 周囲のトラップや隠し通路を探索。
       - レスポンス: `SearchResult`
