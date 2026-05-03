@@ -16,6 +16,8 @@
   - レスポンス: `Player`
 - `PUT /api/player/{userId}/command/{command}`: 移動やアクションのコマンド送信。
   - 基本コマンド: `top`, `down`, `right`, `left`, `top-right`, `top-left`, `down-right`, `down-left`, `pickup`, `downStairs`, `upStairs`, `wait`
+    - `upStairs` (1Fにて): ダンジョンから脱出。
+    - `downStairs` (最終階層にて): ダンジョンをクリア。
   - 探索・解除コマンド:
     - `search`: 周囲のトラップや隠し通路を探索。
       - レスポンス: `SearchResult`
@@ -30,11 +32,19 @@
     - `equip/{itemId}`: アイテムを装備。
     - `unequip/{itemId}`: 装備を解除。
     - `drop/{itemId}`: アイテムを足元に置く。
+  - ショップコマンド:
+    - `buy/{itemId}`: ショップの商品を購入。
+    - `sell/{itemId}`: インベントリのアイテムを売却。
+    - `appraise/{itemId}`: ショップでアイテムを鑑定（鑑定料が必要）。
   - レスポンス (上記以外): `{ [name: string]: boolean }`
   - レスポンス (pickup): `PickUpResult`
   - レスポンス (search): `SearchResult`
   - レスポンス (disarm): `DisarmResult`
-  - レスポンス (attack): `CombatResult` (詳細は 3.6 参照)
+  - レスポンス (attack): `CombatResult`
+  - レスポンス (buy): `BuyResult`
+  - レスポンス (sell): `SellResult`
+  - レスポンス (appraise): `AppraiseResult`
+  - レスポンス (1FのupStairs / 最終階のdownStairs): `DungeonExitResult`
 
 ### 2.3 フィールド・ダンジョン
 - `GET /api/fields/{userId}/now`: フィールドの現在の状態取得。
@@ -95,6 +105,7 @@
 - **トラップ・効果の発動**
   - `POST /api/admin/intervention/player/{userId}/trigger`: 指定した座標のトラップを強制的に発動、または特殊な環境効果（落雷、落石等）を発生させる。
     - リクエスト: `{ position: { x: number, y: number }, effectId?: string }`
+    - `effectId` 例: `lightning` (落雷), `gas_leak` (ガス漏れ), `rock_fall` (落石), `earthquake` (地震)
     - レスポンス: `boolean` (発動成功の成否)
 
 ## 3. データモデル
@@ -149,6 +160,7 @@
 {
   name: string;      // ダンジョン名
   level: number;     // 現在の階層
+  totalFloors: number; // 総階層数
 }
 ```
 
@@ -290,6 +302,42 @@ interface AdminInterventionDetails {
   position: { x: number, y: number }; // 介入地点の座標
   monsterId?: string;      // 召喚したモンスターのID（summonの場合）
   effectId?: string;       // 発生させた効果のID（triggerの場合）
+}
+```
+
+### 3.10 Shop Action Results
+```typescript
+interface BuyResult {
+  result: boolean;      // 購入成否
+  item?: InventoryItem; // 購入したアイテム
+  lostGold?: number;    // 消費したゴールド
+  message: string;      // 結果メッセージ
+}
+
+interface SellResult {
+  result: boolean;      // 売却成否
+  gainedGold?: number;  // 獲得したゴールド
+  message: string;      // 結果メッセージ
+}
+
+interface AppraiseResult {
+  result: boolean;      // 鑑定成否
+  item?: InventoryItem; // 鑑定後のアイテム情報
+  lostGold?: number;    // 消費した鑑定料
+  message: string;      // 結果メッセージ
+}
+```
+
+### 3.11 DungeonExitResult
+```typescript
+interface DungeonExitResult {
+  result: boolean;      // 脱出/クリア成否
+  reason: 'escaped' | 'cleared'; // 理由
+  rewards?: {           // 獲得した報酬（クリア時など）
+    gold: number;
+    items: InventoryItem[];
+  };
+  message: string;      // 結果メッセージ
 }
 ```
 

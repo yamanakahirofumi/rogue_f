@@ -53,6 +53,7 @@ interface InventoryItem {
 interface DungeonInfo {
   name: string;
   level: number;
+  totalFloors: number;
 }
 
 interface PickUpResult {
@@ -81,5 +82,35 @@ interface SearchResult {
 interface DisarmResult {
   result: boolean;
   isTriggered: boolean;
+  message: string;
+}
+
+interface BuyResult {
+  result: boolean;
+  item?: InventoryItem;
+  lostGold?: number;
+  message: string;
+}
+
+interface SellResult {
+  result: boolean;
+  gainedGold?: number;
+  message: string;
+}
+
+interface AppraiseResult {
+  result: boolean;
+  item?: InventoryItem;
+  lostGold?: number;
+  message: string;
+}
+
+interface DungeonExitResult {
+  result: boolean;
+  reason: 'escaped' | 'cleared';
+  rewards?: {
+    gold: number;
+    items: InventoryItem[];
+  };
   message: string;
 }
