@@ -17,6 +17,12 @@ interface DungeonConfig {
   entryFee: number;        // 入場料 (ゴールド)
   totalFloors: number;     // 総階層数
   deathPenalty: DeathPenaltyConfig; // デスペナルティ設定
+  rewards: ClearRewardConfig;       // クリア報酬設定
+}
+
+interface ClearRewardConfig {
+  gold: number;            // 獲得ゴールド
+  itemIds: string[];       // 獲得アイテムのIDリスト (倉庫内ID)
 }
 
 interface DeathPenaltyConfig {
