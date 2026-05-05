@@ -196,6 +196,7 @@
   dexterityBonus?: number;
   speedBonus?: number;
   range?: number;
+  amount?: number;     // 所持数（スタック可能なアイテム用）
 }
 ```
 
