@@ -48,6 +48,7 @@ interface InventoryItem {
   speedBonus?: number;
   range?: number;
   capacityUsage?: number;
+  amount?: number;      // 所持数（スタック可能なアイテム用）
 }
 
 interface DungeonInfo {
