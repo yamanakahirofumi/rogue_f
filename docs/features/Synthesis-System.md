@@ -37,6 +37,12 @@
 | `mutation_potion` | `demon_blood` × 1, `magic_crystal` × 1 | 800 | [繁殖システム](Monster-Breeding-System.md) |
 | `vigor_drink` | `magic_crystal` × 1, `ration` × 1 | 600 | [繁殖システム](Monster-Breeding-System.md) |
 
+### 3.3 高位装備品 (High-Tier Equipment)
+| 生成アイテム | 必要材料 | 必要ゴールド | 参照 |
+| :--- | :--- | :--- | :--- |
+| `armor_magic` | `magic_crystal` × 10, `magic_stone` × 1 | 6,000 | [アイテムマスターリスト](Item-Master-List.md) |
+| `pendant_speed` | `magic_crystal` × 15, `magic_stone` × 2 | 8,000 | [アイテムマスターリスト](Item-Master-List.md) |
+
 ## 4. 価格とバランス
 合成に必要なゴールドおよび資材の合計価値は、原則として **[アイテムマスターリスト](Item-Master-List.md)** の「基本価格」よりも高めに設定されています。これは、ショップでの流通に頼らず、確実かつ即座にアイテムを入手できるためのコスト（利便性）を反映したものです。
 
