@@ -131,6 +131,7 @@
   dexterity: number; // 器用さ（命中率に影響）
   speed: number;     // 素早さ（回避率に影響）
   luck: number;      // 運（トラップ発見率などに影響）
+  attribute: string; // 属性 (Fire, Water, Wood, Light, Dark, None)
   monsterLevel?: number; // モンスター形態のレベル (PK用)
   monsterExp?: number;   // モンスター形態の累積経験値 (PK用)
   monsterNextExp?: number; // モンスター形態の次レベルまでの必要累計経験値 (PK用)
@@ -196,6 +197,7 @@
   dexterityBonus?: number;
   speedBonus?: number;
   range?: number;
+  attribute?: string;  // 属性 (武器・防具用)
   amount?: number;     // 所持数（スタック可能なアイテム用）
 }
 ```
