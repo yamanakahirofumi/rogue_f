@@ -11,6 +11,7 @@
 - **[属性システム](features/Attribute-System.md)**: 属性の相性、ダメージ倍率、および環境効果への耐性。
 - **[拠点システム](features/Base-System.md)**: プレイヤーと管理者の活動のハブとなる安全地帯の役割と施設。
 - **[機能仕様書](features/Functional-Specification.md)**: システム構成、二つのダンジョン形式、管理者メリット、世界間連携。
+- **[ダンジョン生成システム](features/Dungeon-Generation-System.md)**: ランダムダンジョンの生成ロジック、部屋・通路の配置ルール。
 - **[戦闘システム](features/Combat-System.md)**: リアルタイム制バトル、ダメージ計算、モンスターAI。
 - **[モンスターシステム](features/Monster-System.md)**: モンスターの獲得、繁殖、運用。
 - **[モンスター繁殖システム](features/Monster-Breeding-System.md)**: 卵の生成、遺伝、孵化。
