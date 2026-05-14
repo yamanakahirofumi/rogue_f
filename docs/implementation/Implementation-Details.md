@@ -96,7 +96,7 @@
     - レスポンス: `AdminLog[]`
 
 ### 2.6 管理者介入 API (Admin Intervention API)
-攻略中の特定のプレイヤーに対し、リアルタイムで干渉するためのエンドポイントです。
+攻略中の特定のプレイヤーに対し、リアルタイムで干渉するためのエンドポイントです。詳細は **[管理者介入システム](../features/Admin-Intervention-System.md)** を参照してください。
 
 - **モンスター召喚**
   - `POST /api/admin/intervention/player/{userId}/summon`: 倉庫内のモンスターを対象のプレイヤーが攻略中のフロアに即座に召喚。
