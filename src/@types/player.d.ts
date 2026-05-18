@@ -17,6 +17,7 @@ declare class Player {
   dexterity: number;
   speed: number;
   luck: number;
+  attribute: string; // 属性 (Fire, Water, Wood, Light, Dark, None)
   monsterLevel?: number;
   monsterExp?: number;
   monsterNextExp?: number;
@@ -47,6 +48,7 @@ interface InventoryItem {
   dexterityBonus?: number;
   speedBonus?: number;
   range?: number;
+  attribute?: string;  // 属性 (武器・防具用)
   capacityUsage?: number;
   amount?: number;      // 所持数（スタック可能なアイテム用）
 }
