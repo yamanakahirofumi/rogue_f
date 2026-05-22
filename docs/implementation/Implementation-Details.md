@@ -344,6 +344,20 @@ interface DungeonExitResult {
 }
 ```
 
+### 3.12 セーブデータ構造 (Save Data Structure)
+[TODO-Details.md](../TODO-Details.md) に基づき、プレイ状況を保存・再開するためのデータ構造を定義します。
+
+```typescript
+interface SaveData {
+  userId: string;          // プレイヤーID
+  timestamp: number;       // セーブ時刻
+  player: Player;          // プレイヤーのステータス・インベントリ
+  dungeonConfig: DungeonConfig; // 現在攻略中のダンジョン設定
+  warehouse: WarehouseState;    // 管理者の倉庫状態（モンスター、資材等）
+  currentFloor: number;    // 現在の階層レベル
+}
+```
+
 詳細は **[イベントログ詳細仕様](Event-Log-Schemas.md)** を参照してください。
 
 ## 4. フィールドマップ記号 (Field Map Symbols)
