@@ -344,6 +344,20 @@ interface DungeonExitResult {
 }
 ```
 
+### 3.12 SaveData
+ゲームのセーブデータの基本構造です。
+
+```typescript
+{
+  userId: string;        // ユーザーID
+  player: Player;        // プレイヤーの現在の状態
+  dungeonConfig: DungeonConfig; // 現在探索中のダンジョンの構成情報
+  warehouseState: WarehouseState; // 管理者倉庫の状態（モンスター、アイテム等）
+  timestamp: number;     // セーブ時刻
+  version: string;       // データフォーマットのバージョン
+}
+```
+
 詳細は **[イベントログ詳細仕様](Event-Log-Schemas.md)** を参照してください。
 
 ## 4. フィールドマップ記号 (Field Map Symbols)
