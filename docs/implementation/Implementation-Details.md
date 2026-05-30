@@ -344,6 +344,16 @@ interface DungeonExitResult {
 }
 ```
 
+### 3.12 SaveData
+```typescript
+{
+  userId: string;
+  player: Player;
+  dungeonConfig?: DungeonConfig;
+  warehouseState?: WarehouseState;
+}
+```
+
 詳細は **[イベントログ詳細仕様](Event-Log-Schemas.md)** を参照してください。
 
 ## 4. フィールドマップ記号 (Field Map Symbols)
