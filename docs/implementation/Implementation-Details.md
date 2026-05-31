@@ -344,6 +344,18 @@ interface DungeonExitResult {
 }
 ```
 
+### 3.12 SaveData
+ゲームの進行状況を保存するためのデータ構造です。
+
+```typescript
+interface SaveData {
+  userId: string;
+  player: Player;
+  dungeonConfig: DungeonConfig;
+  warehouseState: WarehouseState;
+}
+```
+
 詳細は **[イベントログ詳細仕様](Event-Log-Schemas.md)** を参照してください。
 
 ## 4. フィールドマップ記号 (Field Map Symbols)
