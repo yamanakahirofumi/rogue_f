@@ -123,6 +123,7 @@ interface WarehouseState {
 interface StoredMonster {
   id: string;
   typeId: string;
+  attribute: string;
   level: number;
   exp: number;             // 現在の累積経験値
   nextExp: number;         // 次レベルまでの必要累積経験値
