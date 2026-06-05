@@ -45,5 +45,6 @@
 - [機能仕様書](Functional-Specification.md)
 - [モンスターシステム](Monster-System.md)
 - [モンスター繁殖システム](Monster-Breeding-System.md)
+- [活力システム](Vigor-System.md)
 - [ショップシステム](Shop-System.md)
 - [トラップシステム](Trap-System.md)

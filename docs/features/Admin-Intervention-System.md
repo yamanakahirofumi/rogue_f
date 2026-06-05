@@ -47,5 +47,6 @@
 - [管理者システム](Admin-System.md)
 - [管理者データモデル](../implementation/Admin-Data-Models.md)
 - [実装詳細](../implementation/Implementation-Details.md)
+- [活力システム](Vigor-System.md)
 - [状態異常システム](Status-Effect-System.md)
 - [倉庫システム](Warehouse-System.md)

@@ -69,3 +69,4 @@ PKer が目的を達成し、無事に拠点へ帰還するためのルールで
 ## 7. 相互参照
 - [機能仕様書](Functional-Specification.md)
 - [戦闘システム](Combat-System.md)
+- [活力システム](Vigor-System.md)
