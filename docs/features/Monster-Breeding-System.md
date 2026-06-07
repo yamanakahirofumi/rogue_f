@@ -82,5 +82,6 @@
 - [モンスターシステム](Monster-System.md)
 - [モンスターマスターリスト](Monster-Master-List.md)
 - [モンスター特性リスト](Monster-Trait-List.md)
+- [活力システム](Vigor-System.md)
 - [機能仕様書](Functional-Specification.md)
 - [戦闘システム](Combat-System.md)

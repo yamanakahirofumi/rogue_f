@@ -74,5 +74,6 @@
 - [戦闘システム](Combat-System.md)
 - [モンスター繁殖システム](Monster-Breeding-System.md)
 - [モンスター特性リスト](Monster-Trait-List.md)
+- [活力システム](Vigor-System.md)
 - [倉庫システム](Warehouse-System.md)
 - [PKシステム](PK-System.md)
