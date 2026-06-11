@@ -14,7 +14,7 @@
 - **基本成功率**:
     - 基本資材・装飾品 (`torch`, `statue` 等): **100%**
     - 中位資材・特殊アイテム (`magic_crystal`, `capture_ball`, `orb_intrusion`): **90%**
-    - 高位装備品 (`armor_magic`, `pendant_speed`): **70%** (推定・提案値)
+    - 装備品 (`composite_bow`, `armor_magic`, `sword_magic` 等): **70%**
 - **運 (Luck) によるボーナス**:
     - プレイヤーの「運」ステータスに応じて、基本成功率にボーナスが付与されます。
     - `最終成功率(%) = 基本成功率 + (運 / 5)`
@@ -42,11 +42,14 @@
 | `mutation_potion` | `demon_blood` × 1, `magic_crystal` × 1 | 800 | [繁殖システム](Monster-Breeding-System.md) |
 | `vigor_drink` | `magic_crystal` × 1, `ration` × 1 | 600 | [繁殖システム](Monster-Breeding-System.md) |
 
-### 3.3 高位装備品 (High-Tier Equipment)
+### 3.3 装備品 (Equipment)
 | 生成アイテム | 必要材料 | 必要ゴールド | 参照 |
 | :--- | :--- | :--- | :--- |
+| `composite_bow` | `short_bow` × 1, `iron` × 5 | 1,500 | [アイテムマスターリスト](Item-Master-List.md) |
 | `armor_magic` | `magic_crystal` × 10, `magic_stone` × 1 | 6,000 | [アイテムマスターリスト](Item-Master-List.md) |
 | `pendant_speed` | `magic_crystal` × 15, `magic_stone` × 2 | 8,000 | [アイテムマスターリスト](Item-Master-List.md) |
+| `sword_magic` | `sword_steel` × 1, `magic_stone` × 2 | 5,000 | [アイテムマスターリスト](Item-Master-List.md) |
+| `bow_elven` | `composite_bow` × 1, `magic_stone` × 1 | 4,000 | [アイテムマスターリスト](Item-Master-List.md) |
 
 ## 4. 価格とバランス
 合成に必要なゴールドおよび資材の合計価値は、原則として **[アイテムマスターリスト](Item-Master-List.md)** の「基本価格」よりも高めに設定されています。これは、ショップでの流通に頼らず、確実かつ即座にアイテムを入手できるためのコスト（利便性）を反映したものです。
