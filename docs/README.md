@@ -36,7 +36,7 @@
 - **[装備システム](features/Equipment-System.md)**: 装備の装着、ステータス補正、および呪いによる固定。
 - **[アイテム識別システム](features/Item-Identification-System.md)**: アイテムの鑑定、呪い・祝福の状態管理。
 - **[状態異常システム](features/Status-Effect-System.md)**: バフ・デバフの種類、効果、および管理方法。
-- **[トラップシステム](features/Trap-System.md)**: トラップの種類、発見・解除メカニズム、および管理者による配置。
+- **[トラップシステム](features/Trap-System.md)**: トラップの種類、ダメージ計算、発見・解除メカニズム、および管理者による配置。
 - **[倉庫システム](features/Warehouse-System.md)**: モンスター、アイテム、および資材の保管と管理。
 - **[管理者システム](features/Admin-System.md)**: ダンジョン構築、モンスター・トラップ配置、ショップ経営、世界設定の管理。
 - **[システム要件](features/System-Requirements.md)**: 動作環境、技術構成、制約事項。

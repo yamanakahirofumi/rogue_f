@@ -114,6 +114,8 @@ interface StoredMonster {
 interface MonsterStats {
   hp: number;
   maxHp: number;
+  stamina?: number;
+  maxStamina?: number;
   attack: number;
   defense: number;
   agility: number;
