@@ -25,6 +25,7 @@ describe('Player', () => {
       speed: 10,
       luck: 10,
       attribute: 'None',
+      monsterLevels: {},
       inventory: [],
       inventoryCapacity: 20,
       statusEffects: [],
