@@ -1,4 +1,4 @@
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild, ChangeDetectionStrategy} from '@angular/core';
 import {PlayerDomain} from "../d/player-domain";
 import {FieldsAccessService} from "../services/fields-access.service";
 import {SseFieldService} from "../services/sse-field.service";
@@ -10,6 +10,7 @@ import {IntervalService} from "../services/interval.service";
     selector: 'app-dungeon',
     templateUrl: './dungeon.component.html',
     styleUrls: ['./dungeon.component.css'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class DungeonComponent implements OnInit {

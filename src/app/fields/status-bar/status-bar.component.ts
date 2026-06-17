@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, Input, ChangeDetectionStrategy} from '@angular/core';
 import {progressBar, ProgressBarStatus} from "./progress-bar.anime";
 import {AnimationEvent} from "@angular/animations";
 
@@ -7,6 +7,7 @@ import {AnimationEvent} from "@angular/animations";
     templateUrl: './status-bar.component.html',
     styleUrls: ['./status-bar.component.css'],
     animations: [progressBar],
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class StatusBarComponent {

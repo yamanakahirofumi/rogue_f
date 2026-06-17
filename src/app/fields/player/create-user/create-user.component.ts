@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, ElementRef, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, ViewChild, ChangeDetectionStrategy} from '@angular/core';
 import {Router} from "@angular/router";
 import {FieldsAccessService} from "../../services/fields-access.service";
 import {StorageService} from "../../services/storage.service";
@@ -8,6 +8,7 @@ import {filter, mergeMap} from "rxjs";
     selector: 'app-create-user',
     templateUrl: './create-user.component.html',
     styleUrls: ['./create-user.component.css'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class CreateUserComponent implements AfterViewInit {

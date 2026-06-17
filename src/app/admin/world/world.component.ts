@@ -1,10 +1,11 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ChangeDetectionStrategy} from '@angular/core';
 import {FieldsAccessService} from '../../fields/services/fields-access.service';
 
 @Component({
     selector: 'app-world',
     templateUrl: './world.component.html',
     styleUrls: ['./world.component.css'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class WorldComponent implements OnInit {
