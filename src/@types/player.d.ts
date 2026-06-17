@@ -21,6 +21,7 @@ declare class Player {
   monsterLevel?: number;
   monsterExp?: number;
   monsterNextExp?: number;
+  monsterLevels: { [typeId: string]: number };
   actionTime: number;
   weaponId?: string;
   armorId?: string;

@@ -132,9 +132,10 @@
   speed: number;     // 素早さ（回避率に影響）
   luck: number;      // 運（トラップ発見率などに影響）
   attribute: string; // 属性 (Fire, Water, Wood, Light, Dark, None)
-  monsterLevel?: number; // モンスター形態のレベル (PK用)
-  monsterExp?: number;   // モンスター形態の累積経験値 (PK用)
-  monsterNextExp?: number; // モンスター形態の次レベルまでの必要累計経験値 (PK用)
+  monsterLevel?: number; // モンスター形態の現在のレベル (PK乱入中のみ有効)
+  monsterExp?: number;   // モンスター形態の現在の累積経験値 (PK乱入中のみ有効)
+  monsterNextExp?: number; // モンスター形態の現在の次レベルまでの必要累計経験値 (PK乱入中のみ有効)
+  monsterLevels: { [typeId: string]: number }; // 各モンスター種別ごとの到達レベル (PKメタ・プログレッション)
   actionTime: number; // 最終行動時刻のタイムスタンプ
   weaponId?: string;    // 装備中の武器のID
   armorId?: string;     // 装備中の防具のID
