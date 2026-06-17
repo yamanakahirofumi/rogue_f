@@ -23,6 +23,12 @@
     - 合成に失敗した場合、投入した**材料（資材）はすべて失われます。**
     - 消費したゴールドについては、その **50%** が返金されます。
 
+### 2.3 合成の制限事項 (Restrictions)
+アイテムの性質や世界の状態により、合成に以下の制限が適用される場合があります。
+
+- **サーキュレーション制限**: [アイテムマスターリスト](Item-Master-List.md) において「上限（サーキュレーション制限）」が設定されているアイテムは、世界全体の流通数がその上限に達している場合、新たに合成することができません。
+- **呪いの影響**: 呪われたアイテム（`isCursed: true`）を合成の材料として使用することはできません。合成に使用する素材（特にベースとなる装備品等）は、あらかじめ解呪されている必要があります。
+
 ## 3. 合成レシピ (Recipes)
 
 主な合成レシピの一覧です。各資材の詳細は **[アイテムマスターリスト](Item-Master-List.md)** を参照してください。
@@ -50,6 +56,14 @@
 | `pendant_speed` | `magic_crystal` × 15, `magic_stone` × 2 | 8,000 | [アイテムマスターリスト](Item-Master-List.md) |
 | `sword_magic` | `sword_steel` × 1, `magic_stone` × 2 | 5,000 | [アイテムマスターリスト](Item-Master-List.md) |
 | `bow_elven` | `composite_bow` × 1, `magic_stone` × 1 | 4,000 | [アイテムマスターリスト](Item-Master-List.md) |
+
+### 3.4 薬品・巻物 (Potions & Scrolls)
+| 生成アイテム | 必要材料 | 必要ゴールド | 参照 |
+| :--- | :--- | :--- | :--- |
+| `scroll_identify` | `wood` × 2, `magic_crystal` × 1 | 300 | [アイテムマスターリスト](Item-Master-List.md) |
+| `scroll_uncurse` | `wood` × 2, `magic_crystal` × 1 | 500 | [アイテムマスターリスト](Item-Master-List.md) |
+| `potion_hp_large` | `potion_hp_small` × 2, `magic_crystal` × 1 | 1,000 | [アイテムマスターリスト](Item-Master-List.md) |
+| `potion_stamina` | `ration` × 1, `magic_crystal` × 1 | 400 | [アイテムマスターリスト](Item-Master-List.md) |
 
 ## 4. 価格とバランス
 合成に必要なゴールドおよび資材の合計価値は、原則として **[アイテムマスターリスト](Item-Master-List.md)** の「基本価格」よりも高めに設定されています。これは、ショップでの流通に頼らず、確実かつ即座にアイテムを入手できるためのコスト（利便性）を反映したものです。
