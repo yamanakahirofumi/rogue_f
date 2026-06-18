@@ -55,6 +55,14 @@
 | `sword_magic` | `sword_steel` × 1, `magic_stone` × 2 | 5,000 | [アイテムマスターリスト](Item-Master-List.md) |
 | `bow_elven` | `composite_bow` × 1, `magic_stone` × 1 | 4,000 | [アイテムマスターリスト](Item-Master-List.md) |
 
+### 3.4 消耗品 (Consumables)
+| 生成アイテム | 必要材料 | 必要ゴールド | 備考 |
+| :--- | :--- | :--- | :--- |
+| `scroll_identify` | `wood` × 2, `magic_crystal` × 1 | 300 | 鑑定の巻物。 |
+| `scroll_uncurse` | `wood` × 2, `magic_crystal` × 1 | 500 | 解呪の巻物。 |
+| `potion_hp_large` | `potion_hp_small` × 2, `magic_crystal` × 1 | 1,000 | 回復の薬。 |
+| `potion_stamina` | `ration` × 1, `magic_crystal` × 1 | 400 | スタミナの薬。 |
+
 ## 4. 価格とバランス
 合成に必要なゴールドおよび資材の合計価値は、原則として **[アイテムマスターリスト](Item-Master-List.md)** の「基本価格」よりも高めに設定されています。これは、ショップでの流通に頼らず、確実かつ即座にアイテムを入手できるためのコスト（利便性）を反映したものです。
 
