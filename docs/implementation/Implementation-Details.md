@@ -32,6 +32,8 @@
     - `equip/{itemId}`: アイテムを装備。
     - `unequip/{itemId}`: 装備を解除。
     - `drop/{itemId}`: アイテムを足元に置く。
+    - `skill/{actionId}`: 特殊行動（スキル）を実行。
+    - `skill/{actionId}/{targetId}`: 指定した対象に特殊行動を実行。
   - ショップコマンド:
     - `buy/{itemId}`: ショップの商品を購入。
     - `sell/{itemId}`: インベントリのアイテムを売却。
