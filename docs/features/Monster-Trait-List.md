@@ -35,7 +35,7 @@
 | `alpha_soul` | アルファの魂 | 同階層にいる味方モンスターの攻撃力を +5% する。 | Epic |
 | `iron_will` | 鉄の意志 | スタン状態になる確率を 50% 軽減する。 | Rare |
 | `flying` | 飛行 | 全ての地形トラップ・環境効果（ダメージ、減速）を無視する。 | Rare |
-| `aquatic` | 水棲 | 水地形での移動減速を無視し、回避率が **20%** 向上する。 | Common |
+| `aquatic` | 水棲 | 水地形での移動減速を無視し、回避率が **+20%** 向上する。 | Common |
 | `fire_affinity` | 火属性 | 溶岩によるダメージを無効化する。詳細は [属性システム](Attribute-System.md) 参照。 | Common |
 | `water_affinity` | 水属性 | 水地形による行動インターバル遅延を無効化する。詳細は [属性システム](Attribute-System.md) 参照。 | Common |
 | `wood_affinity` | 木属性 | 砂地による行動インターバル遅延を無効化する。詳細は [属性システム](Attribute-System.md) 参照。 | Common |
