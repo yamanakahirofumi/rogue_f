@@ -49,11 +49,16 @@
 ### 3.3 装備品 (Equipment)
 | 生成アイテム | 必要材料 | 必要ゴールド | 参照 |
 | :--- | :--- | :--- | :--- |
+| `sword_steel` | `sword_iron` × 1, `iron` × 10 | 2,000 | [アイテムマスターリスト](Item-Master-List.md) |
+| `dagger_poison` | `iron` × 5, `demon_blood` × 1 | 1,500 | [アイテムマスターリスト](Item-Master-List.md) |
 | `composite_bow` | `short_bow` × 1, `iron` × 5 | 1,500 | [アイテムマスターリスト](Item-Master-List.md) |
-| `armor_magic` | `magic_crystal` × 10, `magic_stone` × 1 | 6,000 | [アイテムマスターリスト](Item-Master-List.md) |
-| `pendant_speed` | `magic_crystal` × 15, `magic_stone` × 2 | 8,000 | [アイテムマスターリスト](Item-Master-List.md) |
+| `armor_iron` | `armor_leather` × 1, `iron` × 12 | 1,800 | [アイテムマスターリスト](Item-Master-List.md) |
+| `ring_power` | `iron` × 8, `magic_crystal` × 3 | 2,200 | [アイテムマスターリスト](Item-Master-List.md) |
+| `ring_luck` | `magic_crystal` × 8 | 2,800 | [アイテムマスターリスト](Item-Master-List.md) |
 | `sword_magic` | `sword_steel` × 1, `magic_stone` × 2 | 5,000 | [アイテムマスターリスト](Item-Master-List.md) |
 | `bow_elven` | `composite_bow` × 1, `magic_stone` × 1 | 4,000 | [アイテムマスターリスト](Item-Master-List.md) |
+| `armor_magic` | `magic_crystal` × 10, `magic_stone` × 1 | 6,000 | [アイテムマスターリスト](Item-Master-List.md) |
+| `pendant_speed` | `magic_crystal` × 15, `magic_stone` × 2 | 8,000 | [アイテムマスターリスト](Item-Master-List.md) |
 
 ### 3.4 消耗品 (Consumables)
 | 生成アイテム | 必要材料 | 必要ゴールド | 備考 |
@@ -63,16 +68,29 @@
 | `potion_hp_large` | `potion_hp_small` × 2, `magic_crystal` × 1 | 1,000 | 回復の薬。 |
 | `potion_stamina` | `ration` × 1, `magic_crystal` × 1 | 400 | スタミナの薬。 |
 
-## 4. 価格とバランス
+## 4. アイテムの解体 (Item Dismantling)
+不要になったアイテムを解体し、一部の材料を回収することができます。
+
+- **回収ルール**:
+    - アイテムの作成（合成）に使用された資材の **50%**（端数切り捨て）を回収できます。
+    - 解体には費用として、そのアイテムの基本価格の **10%** のゴールドが必要です。
+- **解体可能なアイテム**:
+    - 合成によって作成された装備品、特殊アイテム、および合成資材（`magic_crystal` 等）。
+- **解体不可能なアイテム**:
+    - 純粋な採取・ドロップ資材（`wood`, `stone`, `iron`, `magic_stone`, `demon_blood`）。
+    - 呪われている装備品。
+    - クリア報酬やイベント限定アイテムの一部。
+
+## 5. 価格とバランス
 合成に必要なゴールドおよび資材の合計価値は、原則として **[アイテムマスターリスト](Item-Master-List.md)** の「基本価格」よりも高めに設定されています。これは、ショップでの流通に頼らず、確実かつ即座にアイテムを入手できるためのコスト（利便性）を反映したものです。
 
-## 5. 特殊資材の扱い
+## 6. 特殊資材の扱い
 [管理者データモデル](../implementation/Admin-Data-Models.md) に基づき、以下の特殊資材は特定の強力なアイテムや施設の合成に使用されます。
 
 - **`magic_stone` (魔力石)**: 高度な魔法的効果を持つアイテムの核。
 - **`demon_blood` (魔族の血)**: 生体的な強化や変異を促す薬の材料。
 
-## 6. 相互参照
+## 7. 相互参照
 - [建築システム](Construction-System.md)
 - [管理者データモデル](../implementation/Admin-Data-Models.md)
 - [PKシステム](PK-System.md)
