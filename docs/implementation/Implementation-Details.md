@@ -32,6 +32,8 @@
     - `equip/{itemId}`: アイテムを装備。
     - `unequip/{itemId}`: 装備を解除。
     - `drop/{itemId}`: アイテムを足元に置く。
+    - `throw/{itemId}/{direction}`: アイテムを 8 方向（`top`, `down` 等）のいずれかに投げる。
+    - `throw/{itemId}/{targetId}`: 指定した対象にアイテムを投げる。
     - `skill/{actionId}`: 特殊行動（スキル）を実行。
     - `skill/{actionId}/{targetId}`: 指定した対象に特殊行動を実行。
   - ショップコマンド:
@@ -202,6 +204,7 @@
   range?: number;
   attribute?: string;  // 属性 (武器・防具用)
   amount?: number;     // 所持数（スタック可能なアイテム用）
+  throwAttack?: number; // 投擲時の攻撃力
 }
 ```
 

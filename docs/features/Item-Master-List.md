@@ -74,6 +74,7 @@
 | `incubation_accelerator` | 孵化促進剤 | 孵化時間を大幅に短縮（即時） | 500 | 1 | × (1) | なし | [繁殖システム](Monster-Breeding-System.md) |
 | `mutation_potion` | 変異の薬 | 次回の繁殖での突然変異率を **+10%** | 800 | 2 | × (1) | 20 | [繁殖システム](Monster-Breeding-System.md) |
 | `vigor_drink` | 活力飲料 | モンスターの活力を **50** 回復 | 600 | 1 | × (1) | なし | [繁殖システム](Monster-Breeding-System.md) |
+| `stone_projectile` | 石ころ | 投擲してダメージを与える（攻撃力 5） | 10 | 1 | ○ (99) | なし | [戦闘システム](Combat-System.md) |
 
 ## 7. 資材 (Materials)
 [建築システム](Construction-System.md) や [合成システム](Synthesis-System.md) で使用されるリソースです。
