@@ -49,6 +49,7 @@ interface InventoryItem {
   dexterityBonus?: number;
   speedBonus?: number;
   range?: number;
+  throwAttack?: number;
   attribute?: string;  // 属性 (武器・防具用)
   capacityUsage?: number;
   amount?: number;      // 所持数（スタック可能なアイテム用）
