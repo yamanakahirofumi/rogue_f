@@ -34,6 +34,8 @@
     - `drop/{itemId}`: アイテムを足元に置く。
     - `skill/{actionId}`: 特殊行動（スキル）を実行。
     - `skill/{actionId}/{targetId}`: 指定した対象に特殊行動を実行。
+    - `throw/{itemId}/{direction}`: 指定した方向にアイテムを投げる。
+    - `throw/{itemId}/{targetId}`: 指定した対象にアイテムを投げる。
   - ショップコマンド:
     - `buy/{itemId}`: ショップの商品を購入。
     - `sell/{itemId}`: インベントリのアイテムを売却。
@@ -200,6 +202,7 @@
   dexterityBonus?: number;
   speedBonus?: number;
   range?: number;
+  throwAttack?: number; // 投擲威力
   attribute?: string;  // 属性 (武器・防具用)
   amount?: number;     // 所持数（スタック可能なアイテム用）
 }
