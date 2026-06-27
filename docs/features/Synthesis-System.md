@@ -49,6 +49,9 @@
 ### 3.3 装備品 (Equipment)
 | 生成アイテム | 必要材料 | 必要ゴールド | 参照 |
 | :--- | :--- | :--- | :--- |
+| `sword_iron` | `iron` × 8 | 500 | [アイテムマスターリスト](Item-Master-List.md) |
+| `armor_leather` | `wood` × 10 | 800 | [アイテムマスターリスト](Item-Master-List.md) |
+| `short_bow` | `wood` × 15 | 2,000 | [アイテムマスターリスト](Item-Master-List.md) |
 | `sword_steel` | `sword_iron` × 1, `iron` × 10 | 2,000 | [アイテムマスターリスト](Item-Master-List.md) |
 | `dagger_poison` | `iron` × 5, `demon_blood` × 1 | 1,500 | [アイテムマスターリスト](Item-Master-List.md) |
 | `composite_bow` | `short_bow` × 1, `iron` × 5 | 1,500 | [アイテムマスターリスト](Item-Master-List.md) |
