@@ -43,6 +43,7 @@
 | :--- | :--- | :--- | :--- |
 | `orb_intrusion` | `magic_crystal` × 5 | 2,000 | [PKシステム](PK-System.md) |
 | `capture_ball` | `iron` × 2, `magic_crystal` × 1 | 500 | [モンスターシステム](Monster-System.md) |
+| `incubation_accelerator` | `magic_crystal` × 2, `demon_blood` × 1 | 500 | [繁殖システム](Monster-Breeding-System.md) |
 | `mutation_potion` | `demon_blood` × 1, `magic_crystal` × 1 | 800 | [繁殖システム](Monster-Breeding-System.md) |
 | `vigor_drink` | `magic_crystal` × 1, `ration` × 1 | 600 | [繁殖システム](Monster-Breeding-System.md) |
 
@@ -77,6 +78,7 @@
 - **回収ルール**:
     - アイテムの作成（合成）に使用された資材の **50%**（端数切り捨て）を回収できます。
     - 解体には費用として、そのアイテムの基本価格の **10%** のゴールドが必要です。
+    - **サーキュレーションへの影響**: サーキュレーション制限（流通上限）があるアイテムを解体した場合、世界内の現在の流通カウントから **1 つ減算** されます。
 - **解体可能なアイテム**:
     - 合成によって作成された装備品、特殊アイテム、および合成資材（`magic_crystal` 等）。
 - **解体不可能なアイテム**:
