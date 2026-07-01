@@ -70,6 +70,9 @@
 | :--- | :--- | :--- | :--- |
 | `scroll_identify` | `wood` × 2, `magic_crystal` × 1 | 300 | 鑑定の巻物。 |
 | `scroll_uncurse` | `wood` × 2, `magic_crystal` × 1 | 500 | 解呪の巻物。 |
+| `scroll_light` | `wood` × 2, `magic_crystal` × 2 | 500 | 明かりの巻物。 |
+| `scroll_teleport` | `wood` × 2, `magic_crystal` × 1 | 150 | 高飛びの巻物。 |
+| `scroll_confusion` | `wood` × 2, `magic_crystal` × 2 | 350 | 混乱の巻物。 |
 | `potion_hp_large` | `potion_hp_small` × 2, `magic_crystal` × 1 | 1,000 | 回復の薬。 |
 | `potion_stamina` | `ration` × 1, `magic_crystal` × 1 | 400 | スタミナの薬。 |
 
@@ -81,7 +84,7 @@
     - 解体には費用として、そのアイテムの基本価格の **10%** のゴールドが必要です。
     - **サーキュレーションへの影響**: サーキュレーション制限（流通上限）があるアイテムを解体した場合、世界内の現在の流通カウントから **1 つ減算** されます。
 - **解体可能なアイテム**:
-    - 合成によって作成された装備品、特殊アイテム、および合成資材（`magic_crystal` 等）。
+    - 合成によって作成された装備品、特殊アイテム、消耗品（巻物、薬）、および合成資材（`magic_crystal`, `torch`, `statue` 等）。
 - **解体不可能なアイテム**:
     - 純粋な採取・ドロップ資材（`wood`, `stone`, `iron`, `magic_stone`, `demon_blood`）。
     - 呪われている装備品。
