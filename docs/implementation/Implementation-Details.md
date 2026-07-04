@@ -157,7 +157,7 @@
     x: number;
     y: number;
   };
-  data: string[];    // 描画データの配列（指定した y 行の x 列目以降を上書き）
+  data: string[];    // 描画データの配列。配列の各要素は1行分の文字列を表し、position.y 行目から順に、各行の position.x 列目以降を上書きします。
 }
 ```
 
