@@ -17,12 +17,18 @@ interface DungeonConfig {
   entryFee: number;        // 入場料 (ゴールド)
   totalFloors: number;     // 総階層数
   deathPenalty: DeathPenaltyConfig; // デスペナルティ設定
-  rewards: ClearRewardConfig;       // クリア報酬設定
+  rewards: ClearRewardConfig;       // クリア報酬設定 (1回あたりの報酬)
+  rewardPool: ClearRewardPool;      // 現在の報酬プール残高
 }
 
 interface ClearRewardConfig {
   gold: number;            // 獲得ゴールド
   itemIds: string[];       // 獲得アイテムのIDリスト (倉庫内ID)
+}
+
+interface ClearRewardPool {
+  gold: number;            // プール内の総ゴールド
+  itemIds: string[];       // プール内のアイテムIDリスト (報酬としてプールされた個体ID)
 }
 
 interface DeathPenaltyConfig {

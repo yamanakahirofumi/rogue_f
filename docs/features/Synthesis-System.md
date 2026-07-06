@@ -82,6 +82,9 @@
 | `scroll_confusion` | `wood` × 2, `magic_crystal` × 2 | 350 | 混乱の巻物。 |
 | `potion_hp_large` | `potion_hp_small` × 2, `magic_crystal` × 1 | 1,000 | 回復の薬。 |
 | `potion_stamina` | `ration` × 1, `magic_crystal` × 1 | 400 | スタミナの薬。 |
+| `potion_antidote` | `apple` × 2, `magic_crystal` × 1 | 300 | 毒消し草。 |
+| `potion_eye_drops` | `apple` × 2, `magic_crystal` × 1 | 300 | 目薬。 |
+| `potion_blindness` | `rotten_food` × 2, `magic_crystal` × 1 | 300 | 目潰しの薬。 |
 
 ## 4. アイテムの解体 (Item Dismantling)
 不要になったアイテムを解体し、一部の材料を回収することができます。
