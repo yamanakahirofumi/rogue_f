@@ -43,8 +43,8 @@
 | 生成アイテム | 必要材料 | 必要ゴールド | 備考 |
 | :--- | :--- | :--- | :--- |
 | `magic_crystal` | `iron` × 5 | 1,000 | 上位施設の建設に必須。 |
-| `torch` | `wood` × 2 | 100 | ダンジョン内の照明。 |
-| `statue` | `stone` × 10 | 500 | ダンジョン装飾。容量を 5 消費。 |
+| `torch` | `wood` × 2 | 150 | ダンジョン内の照明。 |
+| `statue` | `stone` × 10 | 800 | ダンジョン装飾。容量を 5 消費。 |
 
 ### 3.2 特殊アイテム
 | 生成アイテム | 必要材料 | 必要ゴールド | 参照 |
@@ -85,6 +85,8 @@
 | `potion_antidote` | `apple` × 2, `magic_crystal` × 1 | 300 | 毒消し草。 |
 | `potion_eye_drops` | `apple` × 2, `magic_crystal` × 1 | 300 | 目薬。 |
 | `potion_blindness` | `rotten_food` × 2, `magic_crystal` × 1 | 300 | 目潰しの薬。 |
+| `potion_clarity` | `apple` × 2, `magic_crystal` × 1 | 400 | 気付け薬。 |
+| `potion_speed` | `large_meat` × 1, `magic_crystal` × 2 | 1,000 | 加速の薬。 |
 
 ## 4. アイテムの解体 (Item Dismantling)
 不要になったアイテムを解体し、一部の材料を回収することができます。
