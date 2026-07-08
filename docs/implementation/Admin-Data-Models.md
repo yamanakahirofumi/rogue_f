@@ -130,6 +130,7 @@ interface StoredMonster {
   id: string;
   typeId: string;
   attribute: string;
+  growthStage: 'larva' | 'adult'; // 成長段階
   level: number;
   exp: number;             // 現在の累積経験値
   nextExp: number;         // 次レベルまでの必要累積経験値
