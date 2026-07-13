@@ -36,6 +36,8 @@
     - `skill/{actionId}/{targetId}`: 指定した対象に特殊行動を実行。
     - `throw/{itemId}/{direction}`: 指定した方向にアイテムを投げる。
     - `throw/{itemId}/{targetId}`: 指定した対象にアイテムを投げる。
+  - コミュニケーションコマンド:
+    - `emote/{emoteId}`: エモートまたはスタンプを送信。詳細は [エモート・スタンプマスターリスト](../features/Emote-Stamp-Master-List.md) 参照。
   - ショップコマンド:
     - `buy/{itemId}`: ショップの商品を購入。
     - `sell/{itemId}`: インベントリのアイテムを売却。
