@@ -32,6 +32,7 @@ interface FloorConfig {
   floorLevel: number;      // 階層番号
   width: number;           // マップ幅
   height: number;          // マップ高さ
+  biomeId: 'cave' | 'forest' | 'ice' | 'lava'; // 現在の階層のバイオームID
   tiles: string[][];       // 地形データ (2次元配列)
   monsters: PlacedMonster[]; // 配置済みモンスター
   traps: PlacedTrap[];       // 配置済みトラップ
