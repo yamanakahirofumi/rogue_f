@@ -25,6 +25,7 @@
 - **[セーブ・ロードシステム](features/Save-Load-System.md)**: プレイ状況の保存、中断・再開、および永続化。
 - **[PKシステム](features/PK-System.md)**: プレイヤーキル、モンスターとしての参戦。
 - **[経験値・レベルアップシステム](features/Leveling-System.md)**: プレイヤーの成長要素、経験値計算式、ステータス成長。
+- **[ランキングシステム](features/Ranking-System.md)**: 各役割における実績の競い合い、シーズン制と報酬、および通知。
 - **[エモート・スタンプマスターリスト](features/Emote-Stamp-Master-List.md)**: プレイヤー間の簡易意思疎通ツールの仕様と一覧。
 - **[ドロップ品・出現システム](features/Loot-and-Spawn-System.md)**: アイテムやゴールドの出現、モンスターのドロップロジック、サーキュレーション制限の適用。
 - **[自然回復システム](features/Natural-Recovery-System.md)**: HP、スタミナの自然回復、状態による回復量補正。
