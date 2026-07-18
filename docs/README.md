@@ -16,6 +16,7 @@
 - **[戦闘システム](features/Combat-System.md)**: リアルタイム制バトル、ダメージ計算、モンスターAI。
 - **[モンスターシステム](features/Monster-System.md)**: モンスターの獲得、繁殖、運用。
 - **[モンスター繁殖システム](features/Monster-Breeding-System.md)**: 卵の生成、遺伝、孵化。
+- **[モンスター遠征システム](features/Monster-Expedition-System.md)**: モンスターの遠征、報酬の獲得、および自動的な育成。
 - **[モンスター特性リスト](features/Monster-Trait-List.md)**: 特性の種類、効果、レアリティ。
 - **[活力システム](features/Vigor-System.md)**: モンスターの活動リソース（活力）の消費と回復。
 - **[モンスターマスターリスト](features/Monster-Master-List.md)**: 全モンスターの詳細仕様、ステータス、AIパターン。
