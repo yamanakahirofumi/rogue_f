@@ -117,6 +117,47 @@ interface StoredMonster {
   hatchTimeTotal?: number;     // 孵化に必要な総時間（分）。卵の状態の場合のみ存在。
   stats: MonsterStats;     // 詳細ステータス
   traits: string[];        // 継承された特性
+  expeditionId?: string;   // 遠征中の場合、遠征セッションID
+  status?: 'idle' | 'placed' | 'expedition'; // モンスターの現在の状態
+}
+
+interface ExpeditionState {
+  id: string;                    // 遠征セッションID
+  destinationId: string;         // 遠征先ID (例: 'cave_tier1', 'forest_tier2', etc.)
+  monsterIds: string[];          // 派遣中のモンスター個体IDリスト
+  startTime: number;             // 開始時刻 (UNIXタイムスタンプ)
+  endTime: number;               // 完了予定時刻 (UNIXタイムスタンプ)
+  status: 'ongoing' | 'completed' | 'claimed'; // 遠征状態
+}
+
+interface ExpeditionDestination {
+  id: string;                    // 目的地固有ID
+  name: string;                  // 目的地名
+  tier: 1 | 2 | 3;               // Tierレベル
+  biomeId: 'cave' | 'forest' | 'ice' | 'lava'; // バイオームID
+  durationMinutes: number;       // 所要時間（分）
+  goldCost: number;              // 必要ゴールドコスト
+  vigorCostPerMonster: number;   // モンスター1体あたりの消費活力 (標準30)
+  requiredLevel: number;         // 要求される最低レベル
+  rewards: {
+    expBase: number;             // 獲得経験値
+    goldMin: number;             // 獲得ゴールドの下限
+    goldMax: number;             // 獲得ゴールドの上限
+    possibleMaterials: {         // 獲得可能な資材のリスト
+      typeId: string;
+      chance: number;            // 獲得確率 (0.0〜1.0)
+      amountMin: number;
+      amountMax: number;
+    }[];
+    possibleItems: {             // 獲得可能なアイテムのリスト
+      itemTypeId: string;
+      chance: number;            // 獲得確率 (0.0〜1.0)
+    }[];
+    possibleEggs: {              // 獲得可能なモンスターの卵リスト
+      monsterTypeId: string;
+      chance: number;            // 獲得確率 (0.0〜1.0)
+    }[];
+  };
 }
 
 interface MonsterStats {
