@@ -9,6 +9,7 @@
 - **[ゲーム機能概要](features/Game-Features.md)**: プロジェクト概要、基本操作、ゲームサイクル。
 - **[アクションシステム](features/Action-System.md)**: 移動、攻撃、アイテム使用などの行動コストとスタミナ・満腹度消費。
 - **[属性システム](features/Attribute-System.md)**: 属性の相性、ダメージ倍率、および環境効果への耐性。
+- **[オーディオ・BGMシステム](features/Audio-System.md)**: 音量設定、エリアやバイオーム、状況に応じた動的BGM遷移、SEの空間音響減衰、および同時再生制限。
 - **[バイオーム・環境システム](features/Biome-System.md)**: 各バイオーム特有の地形生成率、出現モンスターやドロップ率、ステータス等に対する環境補正。
 - **[拠点システム](features/Base-System.md)**: プレイヤーと管理者の活動のハブとなる安全地帯の役割と施設。
 - **[機能仕様書](features/Functional-Specification.md)**: システム構成、二つのダンジョン形式、管理者メリット、世界間連携。
