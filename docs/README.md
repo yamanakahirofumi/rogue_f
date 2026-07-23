@@ -24,6 +24,7 @@
 - **[施設マスターリスト](features/Facility-Master-List.md)**: 全施設のコスト、容量、効果。
 - **[地形マスターリスト](features/Terrain-Master-List.md)**: 各地形の環境効果、属性耐性の影響。
 - **[セーブ・ロードシステム](features/Save-Load-System.md)**: プレイ状況の保存、中断・再開、および永続化。
+- **[オーディオ＆BGMシステム](features/Audio-System.md)**: 音量設定、エリアやバイオーム、危機状況に応じた動的BGM遷移、およびSE空間減衰と同時再生数制限。
 - **[PKシステム](features/PK-System.md)**: プレイヤーキル、モンスターとしての参戦。
 - **[経験値・レベルアップシステム](features/Leveling-System.md)**: プレイヤーの成長要素、経験値計算式、ステータス成長。
 - **[ランキングシステム](features/Ranking-System.md)**: 各役割における実績の競い合い、シーズン制と報酬、および通知。
