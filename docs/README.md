@@ -34,6 +34,7 @@
 - **[インベントリシステム](features/Inventory-System.md)**: アイテムの所持、使用、識別、およびリソース管理。
 - **[ショップシステム](features/Shop-System.md)**: 管理者によるショップ運営、動的な価格決定、アイテムの売買。
 - **[合成システム](features/Synthesis-System.md)**: 資材の組み合わせによるアイテム生成、レシピ管理。
+- **[彫像システム](features/Statue-System.md)**: 配置した彫像への特殊効果の設定、範囲内エンティティへのバフ・デバフ付与。
 - **[派閥システム](features/Faction-System.md)**: エンティティ間の敵対・友好関係、ターゲット優先度。
 - **[視界システム](features/Visibility-System.md)**: プレイヤーの視界半径、視線遮蔽、および照明効果。
 - **[管理者介入システム](features/Admin-Intervention-System.md)**: 管理者によるリアルタイム介入（召喚、特殊効果）の詳細。

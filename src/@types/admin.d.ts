@@ -43,7 +43,11 @@ interface FloorConfig {
 interface PlacedFacility {
   typeId: 'recovery_spring' | 'teleport_gate' | 'shop_counter' | 'synthesis_workshop' | 'torch' | 'statue';
   position: { x: number, y: number };
-  config?: RecoverySpringConfig | TeleportGateConfig;
+  config?: RecoverySpringConfig | TeleportGateConfig | StatueConfig;
+}
+
+interface StatueConfig {
+  effectType: 'dread' | 'guardian' | 'healing' | 'greed' | 'glow'; // 彫像の特殊効果
 }
 
 interface RecoverySpringConfig {
