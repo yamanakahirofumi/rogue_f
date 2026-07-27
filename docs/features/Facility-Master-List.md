@@ -14,9 +14,10 @@
 | `shop_counter` | ショップカウンター | 木材 × 10, 鉄材 × 2 | 2,000 | 10 | ショップ機能の有効化。 |
 | `synthesis_workshop` | 合成工房 | 鉄材 × 10, 魔力結晶 × 5 | 5,000 | 20 | アイテム合成機能の有効化。 |
 | `torch` | 松明 | 木材 × 2 | 150 | 1 | 周囲 3 マスを照らす。 |
-| `statue` | 彫像 | 石材 × 10 | 800 | 5 | 装飾資材。 |
+| `statue` | 彫像 | 石材 × 10 | 800 | 5 | 特殊効果（畏怖、守護、癒やし、強欲、輝き）を設定・付与。詳細は [彫像システム](Statue-System.md) 参照。 |
 
 ## 3. 相互参照
+- [彫像システム (Statue-System.md)](Statue-System.md)
 - [建築システム](Construction-System.md)
 - [管理者データモデル](../implementation/Admin-Data-Models.md)
 - [ショップシステム](Shop-System.md)
