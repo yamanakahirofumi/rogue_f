@@ -1,3 +1,9 @@
+interface AudioSettings {
+  masterVolume: number; // 0〜100
+  bgmVolume: number;    // 0〜100
+  seVolume: number;     // 0〜100
+}
+
 declare class Player {
   id: string;
   name: string;
@@ -29,6 +35,7 @@ declare class Player {
   inventory: InventoryItem[];
   inventoryCapacity: number;
   statusEffects: string[];
+  audioSettings?: AudioSettings; // オーディオ・音量設定（任意、初期設定あり）
 }
 
 interface InventoryItem {
