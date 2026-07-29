@@ -36,6 +36,7 @@ declare class Player {
   inventoryCapacity: number;
   statusEffects: string[];
   audioSettings?: AudioSettings; // オーディオ・音量設定（任意、初期設定あり）
+  unlockedLoreIds?: string[];    // 解放済みのストーリー/世界観IDリスト
 }
 
 interface InventoryItem {
