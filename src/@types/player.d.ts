@@ -36,6 +36,27 @@ declare class Player {
   inventoryCapacity: number;
   statusEffects: string[];
   audioSettings?: AudioSettings; // オーディオ・音量設定（任意、初期設定あり）
+  unlockedLoreIds?: string[];    // 解放されたLoreのIDリスト
+}
+
+interface LoreEntry {
+  id: string;                                                          // ユニークID (例: 'ancient_core_01')
+  title: string;                                                       // タイトル (例: '大いなるコアの記録 1')
+  category: 'history' | 'biography' | 'dungeon_secret' | 'npc_diary';  // カテゴリ
+  unlockedAt?: Date;                                                   // 解放日時
+  hintMessage: string;                                                 // 未解放時のヒントメッセージ
+  content: string[];                                                   // 本文の段落リスト
+}
+
+interface NpcDialogue {
+  id: string;                     // ダイアログID
+  npcId: string;                  // 対象のNPC ID (例: 'merchant_anna')
+  triggerCondition: {
+    requiredPlayerLevel?: number; // 必要なプレイヤーレベル
+    requiredLoreId?: string;      // 必要な解放済みLore ID
+    requiredFloor?: number;       // 必要な到達階層
+  };
+  dialogueLines: string[];        // 会話テキスト
 }
 
 interface InventoryItem {
