@@ -41,9 +41,16 @@ interface FloorConfig {
 }
 
 interface PlacedFacility {
-  typeId: 'recovery_spring' | 'teleport_gate' | 'shop_counter' | 'synthesis_workshop' | 'torch' | 'statue';
+  typeId: 'recovery_spring' | 'teleport_gate' | 'shop_counter' | 'synthesis_workshop' | 'torch' | 'statue' | 'altar';
   position: { x: number, y: number };
-  config?: RecoverySpringConfig | TeleportGateConfig | StatueConfig;
+  config?: RecoverySpringConfig | TeleportGateConfig | StatueConfig | AltarConfig;
+}
+
+interface AltarConfig {
+  deityType: 'ares' | 'athena' | 'demeter' | 'fortuna'; // 捧げられている神
+  divineFavorPoints: number;                           // 蓄積された神の恩寵ポイント
+  lootableGold: number;                                 // 略奪可能な蓄積ゴールド量
+  isDesecrated: boolean;                                // PKerに穢された（略奪された）フラグ
 }
 
 interface StatueConfig {

@@ -35,6 +35,7 @@
 - **[ショップシステム](features/Shop-System.md)**: 管理者によるショップ運営、動的な価格決定、アイテムの売買。
 - **[合成システム](features/Synthesis-System.md)**: 資材の組み合わせによるアイテム生成、レシピ管理。
 - **[彫像システム](features/Statue-System.md)**: 配置した彫像への特殊効果の設定、範囲内エンティティへのバフ・デバフ付与。
+- **[祭壇システム](features/Altar-System.md)**: 祭壇を通じた神々への祈り、捧げ物（恩寵蓄積）、およびPKerによる略奪と神罰。
 - **[派閥システム](features/Faction-System.md)**: エンティティ間の敵対・友好関係、ターゲット優先度。
 - **[視界システム](features/Visibility-System.md)**: プレイヤーの視界半径、視線遮蔽、および照明効果。
 - **[オーディオ・BGMシステム](features/Audio-System.md)**: 音量設定、状況に応じた動的なBGM切り替え、効果音の空間減衰。
