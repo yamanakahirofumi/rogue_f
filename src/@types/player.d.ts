@@ -37,6 +37,21 @@ declare class Player {
   statusEffects: string[];
   audioSettings?: AudioSettings; // オーディオ・音量設定（任意、初期設定あり）
   unlockedLoreIds?: string[];    // 解放されたLoreのIDリスト
+  unlockedTitleIds?: string[];   // アンロックされた称号のIDリスト
+  activeTitleId?: string;        // 現在装備中の称号のID (未装備時は undefined または空文字)
+}
+
+interface TitleEntry {
+  id: string;                                                 // ユニークID (例: 'deep_abyss_diver')
+  name: string;                                               // 称号名 (例: '深淵の探究者')
+  description: string;                                        // 実績解除の条件説明
+  effectDescription: string;                                  // 特殊効果の説明
+  category: 'explorer' | 'admin' | 'pker' | 'special';        // カテゴリ分類
+  unlockCondition: {
+    type: 'max_floor' | 'breed_count' | 'pk_wins' | 'lore_count' | 'gold_spent'; // 解除トリガー種別
+    value: number;                                            // 必要閾値
+  };
+  unlockedAt?: Date;                                          // 解放日時 (未解放時は undefined)
 }
 
 interface LoreEntry {
