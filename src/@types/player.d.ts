@@ -133,6 +133,13 @@ interface DisarmResult {
   message: string;
 }
 
+interface ChestOpenResult {
+  result: 'success' | 'failed_locked' | 'failed_jammed' | 'trap_triggered' | 'mimic_awakened' | 'broken';
+  loot?: InventoryItem;
+  trapDetails?: string; // 罠発動時の詳細など
+  message: string;
+}
+
 interface BuyResult {
   result: boolean;
   item?: InventoryItem;

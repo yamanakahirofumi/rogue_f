@@ -76,6 +76,8 @@
 | `incubation_accelerator` | 孵化促進剤 | 孵化時間を大幅に短縮（即時） | 3 | 500 | 1 | × (1) | なし | [繁殖システム](Monster-Breeding-System.md) |
 | `mutation_potion` | 変異の薬 | 次回の繁殖での突然変異率を **+10%** | 3 | 800 | 2 | × (1) | 20 | [繁殖システム](Monster-Breeding-System.md) |
 | `vigor_drink` | 活力飲料 | モンスターの活力を **50** 回復 | 3 | 600 | 1 | × (1) | なし | [繁殖システム](Monster-Breeding-System.md) |
+| `key_iron` | 鉄の鍵 | 鉄の宝箱を開錠する | 1 | 300 | 1 | ○ (99) | なし | [宝箱・鍵システム](Chest-Key-System.md) |
+| `key_magic` | 魔力の鍵 | 魔力の宝箱を開錠する | 1 | 1,500 | 3 | ○ (99) | なし | [宝箱・鍵システム](Chest-Key-System.md) |
 
 ## 7. 資材 (Materials)
 [建築システム](Construction-System.md) や [合成システム](Synthesis-System.md) で使用されるリソースです。
@@ -106,3 +108,4 @@
 - [ショップシステム](Shop-System.md)
 - [装備システム](Equipment-System.md)
 - [アイテム識別システム](Item-Identification-System.md)
+- [宝箱・鍵システム (Chest-Key-System.md)](Chest-Key-System.md)

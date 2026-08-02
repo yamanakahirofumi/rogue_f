@@ -32,6 +32,7 @@
 - **[自然回復システム](features/Natural-Recovery-System.md)**: HP、スタミナの自然回復、状態による回復量補正。
 - **[満腹度システム](features/Hunger-System.md)**: 満腹度の減少、飢餓による影響、食料アイテム。
 - **[インベントリシステム](features/Inventory-System.md)**: アイテムの所持、使用、識別、およびリソース管理。
+- **[宝箱・鍵システム](features/Chest-Key-System.md)**: ダンジョン内に配置される宝箱の種類、各種鍵、開錠、物理的な破壊およびミミックへの対処メカニズム。
 - **[ショップシステム](features/Shop-System.md)**: 管理者によるショップ運営、動的な価格決定、アイテムの売買。
 - **[合成システム](features/Synthesis-System.md)**: 資材の組み合わせによるアイテム生成、レシピ管理。
 - **[彫像システム](features/Statue-System.md)**: 配置した彫像への特殊効果の設定、範囲内エンティティへのバフ・デバフ付与。
