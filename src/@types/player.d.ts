@@ -39,6 +39,32 @@ declare class Player {
   unlockedLoreIds?: string[];    // 解放されたLoreのIDリスト
   unlockedTitleIds?: string[];   // アンロックされた称号のIDリスト
   activeTitleId?: string;        // 現在装備中の称号のID (未装備時は undefined または空文字)
+  quests?: PlayerQuestProgress[]; // 進行中のクエストリスト
+}
+
+interface QuestEntry {
+  id: string;                                                 // ユニークID (例: 'slime_hunter_01')
+  title: string;                                              // クエストタイトル (例: 'スライムハンター')
+  description: string;                                        // クエストの説明文
+  category: 'explorer' | 'admin' | 'pker';                    // 対象ロール
+  targetType: 'defeat_monster' | 'clear_floor' | 'synthesize_item' | 'earn_gold' | 'trap_kills' | 'use_stamp'; // 目標アクション
+  targetId?: string;                                          // 特定の対象ID (モンスター種別IDやアイテム種別ID等)
+  targetCount: number;                                        // 必要な達成回数
+  rewards: {
+    gold?: number;
+    exp?: number;
+    materials?: { typeId: string; amount: number }[];
+    items?: string[];                                         // 獲得アイテムのIDリスト (アイテムマスターリストに準拠)
+    customStampId?: string;                                   // 特殊スタンプ解放
+  };
+}
+
+interface PlayerQuestProgress {
+  questId: string;                                            // 対象クエストのID
+  currentCount: number;                                       // 現在のカウント
+  status: 'active' | 'completed' | 'claimed';                 // 進行ステータス
+  acceptedAt?: Date;                                          // 受注日時
+  completedAt?: Date;                                         // 達成日時
 }
 
 interface TitleEntry {
