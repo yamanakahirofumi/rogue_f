@@ -41,13 +41,19 @@ interface FloorConfig {
 }
 
 interface PlacedFacility {
-  typeId: 'recovery_spring' | 'teleport_gate' | 'shop_counter' | 'synthesis_workshop' | 'torch' | 'statue';
+  typeId: 'recovery_spring' | 'teleport_gate' | 'shop_counter' | 'synthesis_workshop' | 'torch' | 'statue' | 'altar';
   position: { x: number, y: number };
-  config?: RecoverySpringConfig | TeleportGateConfig | StatueConfig;
+  config?: RecoverySpringConfig | TeleportGateConfig | StatueConfig | AltarConfig;
 }
 
 interface StatueConfig {
   effectType: 'dread' | 'guardian' | 'healing' | 'greed' | 'glow'; // 彫像の特殊効果
+}
+
+interface AltarConfig {
+  deityId: 'ares' | 'athena' | 'demeter' | 'fortuna'; // 祀る神のID
+  favorLevel: number;                                // 信仰度レベル (0〜5)
+  isDesecrated: boolean;                             // 冒涜されているかフラグ
 }
 
 interface RecoverySpringConfig {
