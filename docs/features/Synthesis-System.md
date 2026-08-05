@@ -54,6 +54,8 @@
 | `incubation_accelerator` | `magic_crystal` × 2, `demon_blood` × 1 | 500 | [繁殖システム](Monster-Breeding-System.md) |
 | `mutation_potion` | `demon_blood` × 1, `magic_crystal` × 1 | 800 | [繁殖システム](Monster-Breeding-System.md) |
 | `vigor_drink` | `magic_crystal` × 1, `ration` × 1 | 600 | [繁殖システム](Monster-Breeding-System.md) |
+| `key_iron` | `iron` × 2 | 200 | [宝箱・鍵システム](Chest-Key-System.md) |
+| `key_magic` | `magic_crystal` × 1, `magic_stone` × 1 | 1,000 | [宝箱・鍵システム](Chest-Key-System.md) |
 
 ### 3.3 装備品 (Equipment)
 | 生成アイテム | 必要材料 | 必要ゴールド | 参照 |
@@ -116,3 +118,4 @@
 - [管理者データモデル](../implementation/Admin-Data-Models.md)
 - [PKシステム](PK-System.md)
 - [アイテムマスターリスト](Item-Master-List.md)
+- [宝箱・鍵システム](Chest-Key-System.md)
