@@ -121,3 +121,46 @@ interface PlayerQuestProgress {
 - **管理者・PKerダッシュボード**:
   - ダンジョン管理画面、およびPK参戦用のメニュー画面内に「専任クエスト」のタブを追加。
   - 自分のダンジョンの攻略ログを見ながら、同時にクエスト進捗も一元管理できます。
+
+---
+
+## 7. クエストマスターリスト (Quest Master List)
+
+本システムにおいて、ゲーム開始時またはリセット時にシステムが提供するデフォルトの「クエストマスター定義（QuestEntry）」の一覧です。
+
+### 7.1 探索者向けクエストマスター一覧 (Explorer Quests)
+探索者がダンジョン「フロンティア」で活動する際の目標となるクエストです。
+
+| クエストID | タイトル | 説明 | 目標アクション | 目標対象 (`targetId`) | 達成回数 | 報酬内容 |
+| :--- | :--- | :--- | :--- | :--- | :---: | :--- |
+| `exp_defeat_slime_01` | スライムハンター | スライムを10体撃破する。 | `defeat_monster` | `slime` | 10 | 100G, 50 EXP |
+| `exp_defeat_bat_01` | 洞窟の潜伏者退治 | コウモリを8体撃破する。 | `defeat_monster` | `bat` | 8 | 150G, 80 EXP |
+| `exp_clear_ice_01` | 氷雪の挑戦者 | 氷雪バイオーム（5F）をクリアする。 | `clear_floor` | - | 1 | 800G, 300 EXP, 木材(`wood`) x5, 石材(`stone`) x5 |
+| `exp_synth_antidote_01` | 毒消し草の備え | 合成システムで毒消し草（`potion_antidote`）を3個合成する。 | `synthesize_item` | `potion_antidote` | 3 | 120G, 魔力結晶(`magic_crystal`) x1 |
+| `exp_earn_gold_01` | 財宝コレクター | ゴールドを累計3,000G獲得する。 | `earn_gold` | - | 3000 | 200 EXP, ちからの指輪（`ring_power`） x1 |
+| `exp_use_stamp_01` | コミュニケーション！ | 探索中にスタンプを累計5回使用する。 | `use_stamp` | - | 5 | 50G, 30 EXP |
+
+---
+
+### 7.2 管理者向けクエストマスター一覧 (Administrator Quests)
+ダンジョン管理者が「マイ・ダンジョン」の拡張、経営、防衛、および育成を最適化するためのクエストです。
+
+| クエストID | タイトル | 説明 | 目標アクション | 目標対象 (`targetId`) | 達成回数 | 報酬内容 |
+| :--- | :--- | :--- | :--- | :--- | :---: | :--- |
+| `adm_extend_dungeon_01` | 未知なる領域への拡張 | マイ・ダンジョンを5階層まで拡張する。 | `clear_floor` | - | 5 | 1000G, 魔力結晶(`magic_crystal`) x5, 石材(`stone`) x10 |
+| `adm_trap_kills_01` | デストラップの構築 | 配置したトラップで侵入者（探索者・PKer）を累計5回撃破する。 | `trap_kills` | - | 5 | 500G, 鉄材(`iron`) x5, 魔力結晶(`magic_crystal`) x2 |
+| `adm_shop_sales_01` | 繁盛するダンジョンショップ | ダンジョン内ショップの累計売上ゴールドが10,000Gに達する。 | `earn_gold` | - | 10000 | 松明(`torch`) x10, 彫像(`statue`) x1 |
+| `adm_breed_slime_01` | スライムブリーダー | 繁殖システムでスライム（`slime`）を3回孵化させる。 | `defeat_monster` | `slime` | 3 | 300G, 孵化促進剤（`incubation_accelerator`） x1 |
+| `adm_defeat_invader_01` | 防衛線の死守 | 侵入してきたPKerを自身のモンスターで累計3回返り討ち（撃破）にする。 | `defeat_monster` | `pker` | 3 | 600G, 魔力石(`magic_stone`) x2 |
+
+---
+
+### 7.3 PKer向けクエストマスター一覧 (PKer Quests)
+他プレイヤーのダンジョンへ乱入し、任務を遂行するPKer用のクエストです。
+
+| クエストID | タイトル | 説明 | 目標アクション | 目標対象 (`targetId`) | 達成回数 | 報酬内容 |
+| :--- | :--- | :--- | :--- | :--- | :---: | :--- |
+| `pker_defeat_explorer_01` | 恐怖を刻む者 | 侵入先でレベル10以上の探索者を3回撃破する。 | `defeat_monster` | `explorer` | 3 | 800G, 200 EXP, 乱入のオーブ（`orb_intrusion`） x1 |
+| `pker_use_stamp_01` | 挑発と挨拶 | 侵入中にスタンプを累計5回使用する。 | `use_stamp` | - | 5 | 100G, 50 EXP, 特殊スタンプ（`stamp_skull`）解放 |
+| `pker_defeat_wild_01` | 弱肉強食 | 侵入先のフロアで野生モンスターを10体撃破する。 | `defeat_monster` | `wild` | 10 | 250G, 100 EXP, 活力飲料（`vigor_drink`） x1 |
+| `pker_earn_gold_01` | 略奪の報酬 | 侵入プレイを通じて累計5,000Gを強奪（獲得）する。 | `earn_gold` | - | 5000 | 150 EXP, 魔族の血（`demon_blood`） x2 |
