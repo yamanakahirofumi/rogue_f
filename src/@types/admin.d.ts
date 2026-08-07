@@ -300,3 +300,40 @@ type AdminActionType =
   | 'update_shop_price'    // ショップ価格更新
   | 'update_trust_policy'  // 信頼ポリシー更新
   | 'intervene_player';    // プレイヤーへの介入
+
+interface BalanceConfig {
+  baseItemSpawnLimit: { min: number; max: number };
+  baseGoldSpawnLimit: { min: number; max: number };
+  monsterSpawnInterval: number; // 標準値: 50
+  monsterFloorLimit: number;    // 標準値: 20
+  expGainMultiplier: number;    // 標準値: 1.0
+  goldGainMultiplier: number;   // 標準値: 1.0
+  monsterStatScalingFactor: number; // 標準値: 1.0
+  strayLevelOffset: number;     // 標準値: 0
+  baseShopBuybackRate: number;  // 標準値: 0.3
+  circulationLimitModifier: number; // 標準値: 1.0
+  constructionCostMultiplier: number; // 標準値: 1.0
+  pkMatchLevelRange: number;    // 標準値: 10
+  pkProtectionCooldownMinutes: number; // 標準値: 20
+}
+
+interface BalanceTelemetry {
+  deathHeatmap: {
+    floorLevel: number;
+    position: { x: number; y: number };
+    cause: 'monster' | 'trap' | 'hunger' | 'pker' | 'environment';
+    causeId?: string;
+    timestamp: number;
+  }[];
+  itemUsageStats: {
+    itemId: string;
+    action: 'consumed' | 'sold' | 'synthesized' | 'discarded';
+    count: number;
+  }[];
+  pkWinRatio: {
+    explorerWins: number;
+    pkerWins: number;
+    averageBattleDurationSeconds: number;
+  };
+  matchmakingFailureRate: number;
+}
