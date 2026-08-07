@@ -38,6 +38,7 @@
 - **[合成システム](features/Synthesis-System.md)**: 資材の組み合わせによるアイテム生成、レシピ管理。
 - **[祭壇システム](features/Altar-System.md)**: 四大神を祀る祭壇（altar）を巡る、探索・防衛バフ、冒涜と強力な神罰の戦略的相互作用。
 - **[彫像システム](features/Statue-System.md)**: 配置した彫像への特殊効果の設定、範囲内エンティティへのバフ・デバフ付与。
+- **[釣りシステム](features/Fishing-System.md)**: ダンジョン内の水辺や溶岩、専用施設での釣りメカニズム、エサやバイオームに応じた釣獲物、管理者による釣り堀の設置。
 - **[派閥システム](features/Faction-System.md)**: エンティティ間の敵対・友好関係、ターゲット優先度。
 - **[視界システム](features/Visibility-System.md)**: プレイヤーの視界半径、視線遮蔽、および照明効果。
 - **[オーディオ・BGMシステム](features/Audio-System.md)**: 音量設定、状況に応じた動的なBGM切り替え、効果音の空間減衰。
