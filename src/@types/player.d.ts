@@ -40,6 +40,8 @@ declare class Player {
   unlockedTitleIds?: string[];   // アンロックされた称号のIDリスト
   activeTitleId?: string;        // 現在装備中の称号のID (未装備時は undefined または空文字)
   quests?: PlayerQuestProgress[]; // 進行中のクエストリスト
+  fishingLevel?: number;         // 釣りスキルレベル (任意、初期値 1)
+  fishingExp?: number;           // 釣り熟練度累積経験値 (任意)
 }
 
 interface QuestEntry {

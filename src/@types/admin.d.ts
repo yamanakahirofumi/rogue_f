@@ -41,9 +41,16 @@ interface FloorConfig {
 }
 
 interface PlacedFacility {
-  typeId: 'recovery_spring' | 'teleport_gate' | 'shop_counter' | 'synthesis_workshop' | 'torch' | 'statue' | 'altar';
+  typeId: 'recovery_spring' | 'teleport_gate' | 'shop_counter' | 'synthesis_workshop' | 'torch' | 'statue' | 'altar' | 'fishing_point';
   position: { x: number, y: number };
-  config?: RecoverySpringConfig | TeleportGateConfig | StatueConfig | AltarConfig;
+  config?: RecoverySpringConfig | TeleportGateConfig | StatueConfig | AltarConfig | FishingPointConfig;
+}
+
+interface FishingPointConfig {
+  fishPoolSize: number;       // 現在の残り魚影数 (上限 10, 時間経過で自然回復)
+  allowedBaitTier: number;    // 使用可能なエサの最低/最高 Tier 制限
+  usageFee: number;           // 1キャストあたりの利用料（ゴールド、管理者が設定可能）
+  bonusMultiplier: number;    // レア出現率補正（標準: 1.0, 施設強化で最大 1.5）
 }
 
 interface StatueConfig {
