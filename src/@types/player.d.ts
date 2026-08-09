@@ -4,6 +4,14 @@ interface AudioSettings {
   seVolume: number;     // 0〜100
 }
 
+interface WorldTimeState {
+  timeOfDay: 'day' | 'night';                                  // 現在の時間帯
+  totalTicks: number;                                          // ゲーム全体の累積経過ティック
+  currentTickInCycle: number;                                  // 現在の一日のサイクル内ティック (0〜119)
+  currentWeather: 'clear' | 'rain' | 'fog' | 'blizzard' | 'heatwave'; // 現在の天候
+  weatherTicksRemaining: number;                               // 現在の天候が継続する残りティック数
+}
+
 declare class Player {
   id: string;
   name: string;
@@ -42,6 +50,7 @@ declare class Player {
   quests?: PlayerQuestProgress[]; // 進行中のクエストリスト
   fishingLevel?: number;         // 釣りスキルレベル (任意、初期値 1)
   fishingExp?: number;           // 釣り熟練度累積経験値 (任意)
+  worldTimeState?: WorldTimeState;                             // 現在の階層/ワールドの昼夜・天候状態
 }
 
 interface QuestEntry {
