@@ -90,6 +90,22 @@
 | `potion_clarity` | `apple` × 2, `magic_crystal` × 1 | 400 | 気付け薬。 |
 | `potion_speed` | `large_meat` × 1, `magic_crystal` × 2 | 1,000 | 加速の薬。 |
 
+### 3.5 釣り具・料理 (Fishing Gear & Cooking)
+釣り道具、キャスト時に消費する様々なエサ、および釣り上げた魚を用いた調理用の各種レシピです。
+
+| 生成アイテム | 必要材料 | 必要ゴールド | 備考 |
+| :--- | :--- | :--- | :--- |
+| `rod_wood` | `wood` × 5, `junk_weed` × 2 | 200 | 木製釣り竿。海藻を釣り糸として利用。 |
+| `rod_iron` | `rod_wood` × 1, `iron` × 3, `magic_crystal_shard` × 2 | 800 | 鉄製釣り竿。頑丈で深場にも耐える。 |
+| `rod_magic` | `rod_iron` × 1, `magic_crystal` × 2, `magic_stone` × 1 | 2,000 | 魔力釣り竿。魚影察知が極めて早い最上級竿。 |
+| `bait_glowing` | `bait_worm` × 1, `magic_crystal_shard` × 1 | 50 | 光る虫。暗闇でのヒット率 **+15%**。 |
+| `bait_lava_worm` | `bait_worm` × 1, `fire_stone` × 1 | 100 | 溶岩虫。溶岩バイオーム専用エサ。 |
+| `bait_lure` | `iron` × 1, `magic_crystal_shard` × 1 | 300 | 合成擬似餌。紛失しない限り再利用可能。 |
+| `cooked_cave_salmon` | `fish_cave_salmon` × 1, `torch` × 1 | 100 | 焼き洞窟鮭。満腹度回復、HP微回復。 |
+| `cooked_slime_fish` | `fish_slime` × 1, `torch` × 1 | 50 | スライム蒲焼き。満腹度回復、毒解除。 |
+| `cooked_frozen_cod` | `fish_frozen_cod` × 1, `iron` × 1, `torch` × 1 | 300 | 氷結タラのホイル焼き。満腹度大幅回復、鈍足解除、再生バフ。 |
+| `cooked_magma_eel` | `fish_magma_eel` × 1, `demon_blood` × 1, `torch` × 1 | 600 | マグマウナギの蒲焼き。最大満腹度上昇、加速バフ。 |
+
 ## 4. アイテムの解体 (Item Dismantling)
 不要になったアイテムを解体し、一部の材料を回収することができます。
 
@@ -99,6 +115,7 @@
     - **サーキュレーションへの影響**: サーキュレーション制限（流通上限）があるアイテムを解体した場合、世界内の現在の流通カウントから **1 つ減算** されます。
 - **解体可能なアイテム**:
     - 合成によって作成された装備品、特殊アイテム、消耗品（巻物、薬）、および合成資材（`magic_crystal`, `torch`, `statue` 等）。
+    - 釣りで入手した「空き缶 (`can_empty`)」（解体により `iron` × 1 を獲得可能、解体費用 1G）。
 - **解体不可能なアイテム**:
     - 純粋な採取・ドロップ資材（`wood`, `stone`, `iron`, `magic_stone`, `demon_blood`）。
     - 呪われている装備品。
