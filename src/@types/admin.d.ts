@@ -223,7 +223,23 @@ interface DungeonEvent {
   floorLevel: number;      // 発生した階層
   type: DungeonEventType;  // イベント種別
   userId?: string;         // 関連するユーザーID (プレイヤー等)
-  details: PlayerEntryDetails | PlayerExitDetails | PlayerDeathDetails | ItemPickUpDetails | MonsterSlainDetails | TrapTriggeredDetails | AdminInterventionDetails;
+  details:
+    | PlayerEntryDetails
+    | PlayerExitDetails
+    | PlayerDeathDetails
+    | ItemPickUpDetails
+    | MonsterSlainDetails
+    | TrapTriggeredDetails
+    | AdminInterventionDetails
+    | ChestOpenedDetails
+    | FishingAttemptDetails
+    | AltarInteractionDetails
+    | StatuePlacedDetails
+    | QuestProgressDetails
+    | TitleChangedDetails
+    | WeatherChangedDetails
+    | EmoteStampUsedDetails
+    | BalanceTelemetryDetails;
 }
 
 type DungeonEventType =
@@ -233,7 +249,16 @@ type DungeonEventType =
   | 'item_pickup'          // 重要アイテム取得
   | 'monster_slain'        // モンスター撃破
   | 'trap_triggered'       // トラップ発動
-  | 'admin_intervention';  // 管理者介入
+  | 'admin_intervention'   // 管理者介入
+  | 'chest_opened'         // 宝箱開封・破壊
+  | 'fishing_attempt'      // 釣り実行
+  | 'altar_interaction'    // 祭壇との相互作用
+  | 'statue_placed'        // 彫像設置・撤去
+  | 'quest_progress'       // クエスト進行・達成・報酬受取
+  | 'title_changed'        // 称号解放・装備変更
+  | 'weather_changed'      // 天候変化
+  | 'emote_stamp_used'     // エモート・スタンプ使用
+  | 'balance_telemetry';   // ゲームバランス調整用テレメトリ記録
 
 interface PlayerEntryDetails {
   entranceId: string;
@@ -287,6 +312,76 @@ interface AdminInterventionDetails {
   position: { x: number; y: number };
   monsterId?: string;
   effectId?: string;
+}
+
+interface ChestOpenedDetails {
+  chestType: 'wooden' | 'iron' | 'magic' | 'mimic';           // 宝箱の種類
+  action: 'unlock_hand' | 'unlock_key' | 'smash' | 'inspect';  // 実行したアクション
+  result: 'success' | 'failed_locked' | 'failed_jammed' | 'trap_triggered' | 'mimic_awakened' | 'broken'; // 開封結果
+  itemId?: string;                                            // 獲得したアイテム種別ID (成功時)
+  itemName?: string;                                          // 獲得したアイテム名 (成功時)
+  damageDealt?: number;                                       // 罠やミミック、または破壊時の破片で受けたダメージ
+  position: { x: number; y: number };                         // 宝箱の座標
+}
+
+interface FishingAttemptDetails {
+  rodTypeId: string;                                          // 使用した釣り竿のID (例: 'rod_wood')
+  baitTypeId?: string;                                        // 使用したエサのID (例: 'bait_worm')
+  result: 'success' | 'missed' | 'monster_ambush' | 'no_bait'; // 釣りの結果
+  catchItemTypeId?: string;                                   // 釣り上げたアイテム/魚の種別ID (成功時)
+  fishingLevel: number;                                       // 実行時のプレイヤー釣りレベル
+  position: { x: number; y: number };                         // 釣りポイントの座標
+}
+
+interface AltarInteractionDetails {
+  deityId: 'ares' | 'athena' | 'demeter' | 'fortuna';          // 祀られている神のID
+  action: 'pray' | 'offer_gold' | 'offer_item' | 'desecrate' | 'loot'; // 実行したアクション
+  offerDetails?: {                                            // 捧げ物の詳細
+    itemId?: string;                                          // 捧げたアイテムID
+    goldAmount?: number;                                      // 捧げたゴールド
+  };
+  result: 'divine_blessing' | 'divine_punishment' | 'favor_increased' | 'favor_decreased' | 'loot_success' | 'loot_failed_punished'; // 結果
+  position: { x: number; y: number };                         // 祭壇の座標
+}
+
+interface StatuePlacedDetails {
+  action: 'place' | 'remove';                                 // 設置または撤去
+  effectType: 'dread' | 'guardian' | 'healing' | 'greed' | 'glow'; // 彫像の効果種類
+  position: { x: number; y: number };                         // 設置座標
+}
+
+interface QuestProgressDetails {
+  questId: string;                                            // 対象クエストのID
+  action: 'accept' | 'advance' | 'complete' | 'claim_rewards'; // クエストのアクション
+  progressCount?: number;                                     // 進捗状況 ('advance' 時)
+  rewardsClaimed?: {                                          // 獲得した報酬 ('claim_rewards' 時)
+    gold?: number;
+    exp?: number;
+    materials?: { typeId: string; amount: number }[];
+    items?: string[];
+  };
+}
+
+interface TitleChangedDetails {
+  titleId: string;                                            // 対象の称号ID
+  action: 'unlock' | 'equip' | 'unequip';                     // 称号のアクション
+}
+
+interface WeatherChangedDetails {
+  previousWeather: 'clear' | 'rain' | 'fog' | 'blizzard' | 'heatwave'; // 変更前の天候
+  newWeather: 'clear' | 'rain' | 'fog' | 'blizzard' | 'heatwave';      // 変更後の天候
+}
+
+interface EmoteStampUsedDetails {
+  targetType: 'emote' | 'stamp';                              // エモートまたはスタンプ
+  targetId: string;                                           // エモートIDまたはスタンプID
+  speakerRole: 'explorer' | 'admin' | 'pker';                  // 使用者の役割
+  position: { x: number; y: number };                         // 使用された座標
+}
+
+interface BalanceTelemetryDetails {
+  metricType: 'death' | 'item_usage' | 'pk_win_ratio' | 'matchmaking_failure'; // テレメトリの指標種別
+  details: any;                                               // 指標の詳細データ
 }
 
 interface AdminLog {
