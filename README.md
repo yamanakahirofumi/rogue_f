@@ -9,8 +9,8 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 ## Documentation
 
 Project documentation is located in the `docs/` folder:
-- [Specification](docs/specification.md)
-- [Development Status & Issues](docs/development.md)
+- [RogueF Documentation Index (README.md)](docs/README.md)
+- [RogueF TODO & Task List (TODO-Details.md)](docs/TODO-Details.md)
 
 ## Development server
 
