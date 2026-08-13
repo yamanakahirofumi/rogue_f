@@ -51,6 +51,16 @@ declare class Player {
   fishingLevel?: number;         // 釣りスキルレベル (任意、初期値 1)
   fishingExp?: number;           // 釣り熟練度累積経験値 (任意)
   worldTimeState?: WorldTimeState;                             // 現在の階層/ワールドの昼夜・天候状態
+  bestiaryProgress?: BestiaryEntry[];                          // モンスター図鑑の収集状況
+}
+
+interface BestiaryEntry {
+  monsterTypeId: string;       // 対象モンスターの種別ID (例: 'slime', 'dragon')
+  encounterCount: number;      // 遭遇回数
+  defeatCount: number;         // 撃破回数
+  capturedCount: number;       // 捕獲回数
+  bredCount: number;           // 繁殖（孵化）回数
+  researchLevel: 0 | 1 | 2 | 3; // 現在の調査レベル (0: 未遭遇, 1: 遭遇済, 2: 調査進行, 3: 完全解析)
 }
 
 interface QuestEntry {
