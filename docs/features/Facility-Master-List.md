@@ -16,8 +16,10 @@
 | `torch` | 松明 | 木材 × 2 | 150 | 1 | 周囲 3 マスを照らす。 |
 | `statue` | 彫像 | 石材 × 10 | 800 | 5 | 特殊効果（畏怖、守護、癒やし、強欲、輝き）を設定・付与。詳細は [彫像システム](Statue-System.md) 参照。 |
 | `altar` | 祭壇 | 魔力結晶 × 15, 石材 × 10 | 5,000 | 15 | 四大神を祀り、防衛モンスターへのバフ、神の祝福・神罰等の動的インタラクション。詳細は [祭壇システム](Altar-System.md) 参照。 |
+| `fishing_point` | 釣り堀 | 木材 × 15, 石材 × 5 | 1,200 | 8 | 高レア釣獲率 1.5 倍の専用釣りポイント。設定可能利用料によりゴールド収益化。詳細は [釣りシステム](Fishing-System.md) 参照。 |
 
 ## 3. 相互参照
+- [釣りシステム (Fishing-System.md)](Fishing-System.md)
 - [祭壇システム (Altar-System.md)](Altar-System.md)
 - [彫像システム (Statue-System.md)](Statue-System.md)
 - [建築システム](Construction-System.md)

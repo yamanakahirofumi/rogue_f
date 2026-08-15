@@ -40,6 +40,8 @@
     - `buy/{itemId}`: ショップの商品を購入。
     - `sell/{itemId}`: インベントリのアイテムを売却。
     - `appraise/{itemId}`: ショップでアイテムを鑑定（鑑定料が必要）。
+  - コミュニケーションコマンド:
+    - `PUT /api/player/{userId}/emote/{emoteId}`: エモートまたはスタンプを送信。
   - レスポンス (上記以外): `{ [name: string]: boolean }`
   - レスポンス (pickup): `PickUpResult`
   - レスポンス (search): `SearchResult`
@@ -147,6 +149,15 @@
   inventory: InventoryItem[]; // 所持アイテムのリスト
   inventoryCapacity: number;  // インベントリの最大容量
   statusEffects: string[];    // 付与されている状態異常のリスト
+  audioSettings?: AudioSettings; // 音量設定 (任意)
+  unlockedLoreIds?: string[];    // 解放済みLoreのIDリスト
+  unlockedTitleIds?: string[];   // アンロック済み称号のIDリスト
+  activeTitleId?: string;        // 装備中の称号ID
+  quests?: PlayerQuestProgress[]; // 進行中・完了クエストリスト
+  fishingLevel?: number;         // 釣りスキルレベル
+  fishingExp?: number;           // 釣り熟練経験値
+  worldTimeState?: WorldTimeState; // ワールドの時間帯・天候状態
+  bestiary?: BestiaryEntry[];     // モンスター図鑑エントリー
 }
 ```
 
@@ -409,7 +420,17 @@ interface BalanceTelemetryDetails {
 }
 ```
 
-### 3.10 Shop Action Results
+### 3.10 Chest Open Result
+```typescript
+interface ChestOpenResult {
+  result: 'success' | 'failed_locked' | 'failed_jammed' | 'trap_triggered' | 'mimic_awakened' | 'broken';
+  loot?: InventoryItem;
+  trapDetails?: string; // 罠発動時の詳細など
+  message: string;
+}
+```
+
+### 3.11 Shop Action Results
 ```typescript
 interface BuyResult {
   result: boolean;      // 購入成否
@@ -432,7 +453,7 @@ interface AppraiseResult {
 }
 ```
 
-### 3.11 DungeonExitResult
+### 3.12 DungeonExitResult
 ```typescript
 interface DungeonExitResult {
   result: boolean;      // 脱出/クリア成否
@@ -445,7 +466,7 @@ interface DungeonExitResult {
 }
 ```
 
-### 3.12 SaveData
+### 3.13 SaveData
 ```typescript
 interface SaveData {
   userId: string;          // ユーザーID
@@ -479,6 +500,10 @@ interface SaveData {
 | `~` | 水 (Water) | 移動・行動に時間がかかる。 |
 | `!` | 溶岩 (Lava) | 踏むとダメージを受ける。 |
 | `:` | 砂地 (Sand) | 移動・行動がわずかに遅くなる。 |
+| `C` | 宝箱 (Chest) | 開錠または破壊可能。ミミック潜伏の場合あり。 |
+| `F` | 釣り堀 (Fishing Point) | 管理者が設置可能な専用釣りポイント。 |
+| `A` | 祭壇 (Altar) | 四大神を祀り、祈願、捧げ物、冒涜・略奪が可能。 |
+| `S` | 彫像 (Statue) | 周囲エンティティへのバフ・デバフ効果を発揮。 |
 
 ## 5. 技術的詳細
 
