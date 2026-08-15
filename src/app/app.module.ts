@@ -8,7 +8,6 @@ import {DungeonComponent} from './fields/dungeon/dungeon.component';
 import {StatusBarComponent} from './fields/status-bar/status-bar.component';
 import {CreateUserComponent} from './fields/player/create-user/create-user.component';
 import { provideHttpClient, withInterceptorsFromDi, withXhr } from "@angular/common/http";
-import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 
 @NgModule({ declarations: [
         AppComponent,
@@ -18,7 +17,6 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
         CreateUserComponent
     ],
     bootstrap: [AppComponent], imports: [BrowserModule,
-        BrowserAnimationsModule,
         AppRoutingModule], providers: [provideHttpClient(withXhr(), withInterceptorsFromDi())] })
 export class AppModule {
 }
