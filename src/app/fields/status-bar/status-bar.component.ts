@@ -1,12 +1,9 @@
-import {Component, Input, ChangeDetectionStrategy} from '@angular/core';
-import {progressBar, ProgressBarStatus} from "./progress-bar.anime";
-import {AnimationEvent} from "@angular/animations";
+import { Component, Input, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 
 @Component({
     selector: 'app-status-bar',
     templateUrl: './status-bar.component.html',
     styleUrls: ['./status-bar.component.css'],
-    animations: [progressBar],
     changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
@@ -19,7 +16,6 @@ export class StatusBarComponent {
 
   set second(s: number) {
     this.secondNumber = Math.max(s, 0);
-    this.status = 'after';
   }
 
   @Input()
@@ -30,9 +26,9 @@ export class StatusBarComponent {
   set changeFlg(f: boolean) {
     this.flg = f;
     if (f) {
-      this.status = 'before';
       this._value = 100;
       this._beforeValue = 0;
+      this.resetAndAnimate();
     }
   }
 
@@ -44,16 +40,17 @@ export class StatusBarComponent {
   set value(v: number) {
     this._beforeValue = this._value;
     this._value = v;
-    this.status = 'after';
+    this.updateWidth();
   }
 
   @Input()
-  get maxValue() {
+  get maxValue(): number {
     return this._maxValue;
   }
 
   set maxValue(m: number) {
     this._maxValue = m;
+    this.updateWidth();
   }
 
   private flg: boolean = false;
@@ -61,20 +58,37 @@ export class StatusBarComponent {
   _maxValue: number = 100;
   _beforeValue: number = 0;
   _value: number = 0;
-  status: ProgressBarStatus = 'after';
+  currentWidth: number = 0;
+  isTransitioning: boolean = true;
+  private resetTimeout: ReturnType<typeof setTimeout> | null = null;
 
-  constructor() {
+  constructor(private cdr: ChangeDetectorRef) {
   }
 
-  start(event: AnimationEvent) {
-    if (event.fromState === 'after') {
-      this.status = 'after';
+  private resetAndAnimate(): void {
+    if (this.resetTimeout) {
+      clearTimeout(this.resetTimeout);
     }
+    this.isTransitioning = false;
+    this.currentWidth = this._maxValue > 0 ? (this._beforeValue / this._maxValue) * 100 : 0;
+    this.cdr.markForCheck();
+
+    this.resetTimeout = setTimeout(() => {
+      this.isTransitioning = true;
+      this.updateWidth();
+    }, 0);
   }
 
-  end(event: AnimationEvent) {
+  private updateWidth(): void {
+    if (this._maxValue <= 0) {
+      this.currentWidth = 0;
+    } else {
+      this.currentWidth = Math.min(100, Math.max(0, (this._value / this._maxValue) * 100));
+    }
+    this.cdr.markForCheck();
+  }
+
+  onTransitionEnd(): void {
     this.flg = false;
-    console.log(event);
   }
-
 }

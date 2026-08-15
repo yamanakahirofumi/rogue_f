@@ -2,7 +2,9 @@
   position: absolute;
   height: 1em;
   background-color: white;
-  width: 100%;
+  width: 0%;
+  transition-property: width;
+  transition-timing-function: ease-in;
 }
 
 .all {
