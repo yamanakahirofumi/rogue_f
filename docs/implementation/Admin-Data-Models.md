@@ -56,9 +56,26 @@ interface FloorConfig {
 }
 
 interface PlacedFacility {
-  typeId: 'recovery_spring' | 'teleport_gate' | 'shop_counter' | 'synthesis_workshop' | 'torch' | 'statue';
+  typeId: 'recovery_spring' | 'teleport_gate' | 'shop_counter' | 'synthesis_workshop' | 'torch' | 'statue' | 'altar' | 'fishing_point';
   position: { x: number, y: number };
-  config?: RecoverySpringConfig | TeleportGateConfig;
+  config?: RecoverySpringConfig | TeleportGateConfig | StatueConfig | AltarConfig | FishingPointConfig;
+}
+
+interface FishingPointConfig {
+  fishPoolSize: number;       // 現在の残り魚影数 (上限 10, 時間経過で自然回復)
+  allowedBaitTier: number;    // 使用可能なエサの最低/最高 Tier 制限
+  usageFee: number;           // 1キャストあたりの利用料（ゴールド、管理者が設定可能）
+  bonusMultiplier: number;    // レア出現率補正（標準: 1.0, 施設強化で最大 1.5）
+}
+
+interface StatueConfig {
+  effectType: 'dread' | 'guardian' | 'healing' | 'greed' | 'glow'; // 彫像の特殊効果
+}
+
+interface AltarConfig {
+  deityId: 'ares' | 'athena' | 'demeter' | 'fortuna'; // 祀る神のID
+  favorLevel: number;                                // 信仰度レベル (0〜5)
+  isDesecrated: boolean;                             // 冒涜されているかフラグ
 }
 
 interface RecoverySpringConfig {
@@ -142,6 +159,8 @@ interface StoredMonster {
   hatchTimeTotal?: number;     // 孵化に必要な総時間（分）。卵の状態の場合のみ存在。
   stats: MonsterStats;     // 詳細ステータス
   traits: string[];        // 継承された特性
+  expeditionId?: string;   // 遠征中の場合、遠征セッションID
+  status?: 'idle' | 'placed' | 'expedition'; // モンスターの現在の状態
 }
 
 interface MonsterStats {
@@ -213,7 +232,23 @@ interface DungeonEvent {
   floorLevel: number;      // 発生した階層
   type: DungeonEventType;  // イベント種別
   userId?: string;         // 関連するユーザーID (プレイヤー等)
-  details: PlayerEntryDetails | PlayerExitDetails | PlayerDeathDetails | ItemPickUpDetails | MonsterSlainDetails | TrapTriggeredDetails | AdminInterventionDetails;
+  details:
+    | PlayerEntryDetails
+    | PlayerExitDetails
+    | PlayerDeathDetails
+    | ItemPickUpDetails
+    | MonsterSlainDetails
+    | TrapTriggeredDetails
+    | AdminInterventionDetails
+    | ChestOpenedDetails
+    | FishingAttemptDetails
+    | AltarInteractionDetails
+    | StatuePlacedDetails
+    | QuestProgressDetails
+    | TitleChangedDetails
+    | WeatherChangedDetails
+    | EmoteStampUsedDetails
+    | BalanceTelemetryDetails;
 }
 
 type DungeonEventType =
@@ -223,7 +258,16 @@ type DungeonEventType =
   | 'item_pickup'          // 重要アイテム取得
   | 'monster_slain'        // モンスター撃破
   | 'trap_triggered'       // トラップ発動
-  | 'admin_intervention';  // 管理者介入
+  | 'admin_intervention'   // 管理者介入
+  | 'chest_opened'         // 宝箱開封・破壊
+  | 'fishing_attempt'      // 釣り実行
+  | 'altar_interaction'    // 祭壇との相互作用
+  | 'statue_placed'        // 彫像設置・撤去
+  | 'quest_progress'       // クエスト進行・達成・報酬受取
+  | 'title_changed'        // 称号解放・装備変更
+  | 'weather_changed'      // 天候変化
+  | 'emote_stamp_used'     // エモート・スタンプ使用
+  | 'balance_telemetry';   // ゲームバランス調整用テレメトリ記録
 
 interface AdminLog {
   id: string;              // ログ固有ID
