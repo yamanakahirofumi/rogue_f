@@ -29,11 +29,16 @@
 
 ### 3.2 施設の設置
 特定の機能を持つ固定オブジェクトを配置できます。
-詳細は [管理者データモデル](../implementation/Admin-Data-Models.md#61-施設種別-facility-types) の `PlacedFacility` を参照してください。
+詳細は [管理者データモデル](../implementation/Admin-Data-Models.md#61-施設種別-facility-types) の `PlacedFacility` および [施設マスターリスト](Facility-Master-List.md) を参照してください。
 
 - **ショップカウンター (`shop_counter`)**: [ショップシステム](Shop-System.md)を稼働させるための施設。
 - **回復の泉 (`recovery_spring`)**: プレイヤーのHPやスタミナを回復させる施設。
 - **転送門 (`teleport_gate`)**: 階層内の特定の地点へのワープポイント。
+- **合成工房 (`synthesis_workshop`)**: アイテム合成機能の有効化。詳細は [合成システム](Synthesis-System.md) を参照。
+- **松明 (`torch`)**: 周囲を照らし視界を確保する照明施設。詳細は [視界システム](Visibility-System.md) を参照。
+- **彫像 (`statue`)**: 範囲内のエンティティに特殊効果（畏怖、守護、癒やし、強欲、輝き）を与える施設。詳細は [彫像システム](Statue-System.md) を参照。
+- **祭壇 (`altar`)**: 四大神を祀り、祈願や奉納、防衛バフ・神罰のトリガーとなる施設。詳細は [祭壇システム](Altar-System.md) を参照。
+- **釣り堀 (`fishing_point`)**: 高レア釣獲率の上昇やゴールド収益化が可能な専用釣りポイント。詳細は [釣りシステム](Fishing-System.md) を参照。
 
 ## 4. 防衛とカスタマイズ
 構築された地形に基づき、侵入者を迎撃するための要素を追加します。
@@ -68,8 +73,13 @@
 
 ## 6. 相互参照
 - [機能仕様書](Functional-Specification.md)
+- [施設マスターリスト](Facility-Master-List.md)
 - [倉庫システム](Warehouse-System.md)
 - [ショップシステム](Shop-System.md)
+- [合成システム](Synthesis-System.md)
+- [彫像システム](Statue-System.md)
+- [祭壇システム](Altar-System.md)
+- [釣りシステム](Fishing-System.md)
 - [モンスターシステム](Monster-System.md)
 - [トラップシステム](Trap-System.md)
 - [地形マスターリスト](Terrain-Master-List.md)
