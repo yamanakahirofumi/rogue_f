@@ -42,7 +42,43 @@
     - `appraise/{itemId}`: ショップでアイテムを鑑定（鑑定料が必要）。
   - コミュニケーションコマンド:
     - `PUT /api/player/{userId}/emote/{emoteId}`: エモートまたはスタンプを送信。
-  - レスポンス (上記以外): `{ [name: string]: boolean }`
+  - 宝箱インタラクティブコマンド:
+    - `PUT /api/player/{userId}/command/chest/unlock-hand`: 手で開ける（ピッキング試行）。
+      - レスポンス: `ChestOpenResult`
+    - `PUT /api/player/{userId}/command/chest/unlock-key/{itemId}`: 鍵を消費して安全に開錠。
+      - レスポンス: `ChestOpenResult`
+    - `PUT /api/player/{userId}/command/chest/smash`: 武器で宝箱を強打して破壊開錠。
+      - レスポンス: `ChestOpenResult`
+    - `PUT /api/player/{userId}/command/chest/inspect`: 宝箱を観察・見破り（ミミック判別・罠検査）。
+      - レスポンス: `{ isMimic: boolean; isTrapped: boolean; message: string }`
+  - 釣りインタラクティブコマンド:
+    - `PUT /api/player/{userId}/command/fish/cast`: 釣りのキャストを実行。
+      - リクエスト: `{ rodItemId: string; baitItemId?: string }`
+      - レスポンス: `FishCastResult`
+    - `PUT /api/player/{userId}/command/fish/hook`: フッキング（タイミング合わせ）を実行。
+      - リクエスト: `{ timingAccuracy: 'perfect' | 'success' | 'failed' }`
+      - レスポンス: `FishingHookResult`
+  - 祭壇インタラクティブコマンド:
+    - `PUT /api/player/{userId}/command/altar/{action}`: 祭壇との相互作用を実行。
+      - `action`: `pray`, `offer-gold`, `offer-item`, `desecrate`, `loot`
+      - リクエスト (offer時): `{ itemId?: string; goldAmount?: number }`
+      - レスポンス: `AltarActionResult`
+  - クエスト管理エンドポイント:
+    - `GET /api/player/{userId}/quests`: 進行中および達成状況クエストの取得。
+      - レスポンス: `PlayerQuestProgress[]`
+    - `POST /api/player/{userId}/quest/{questId}/claim`: 完了したクエストの報酬受取。
+      - レスポンス: `QuestClaimResult`
+  - 称号管理エンドポイント:
+    - `GET /api/player/{userId}/titles`: 獲得済み・未解放の称号一覧取得。
+      - レスポンス: `TitleEntry[]`
+    - `PUT /api/player/{userId}/title/equip/{titleId}`: 称号をアクティブ装備。
+      - レスポンス: `boolean`
+    - `PUT /api/player/{userId}/title/unequip`: 装備中の称号を外す。
+      - レスポンス: `boolean`
+  - モンスター図鑑エンドポイント:
+    - `GET /api/player/{userId}/bestiary`: 解析データ一覧の取得。
+      - レスポンス: `BestiaryEntry[]`
+  - レスポンス (上記移動/一般コマンド): `{ [name: string]: boolean }`
   - レスポンス (pickup): `PickUpResult`
   - レスポンス (search): `SearchResult`
   - レスポンス (disarm): `DisarmResult`
@@ -81,6 +117,23 @@
   - `POST /api/admin/warehouse/monster/breed`: モンスターの繁殖を実行。
     - リクエスト: `{ parentId1: string, parentId2: string }`
     - レスポンス: `StoredMonster` (生成された卵/幼体)
+- **設置施設設定管理**
+  - `PUT /api/admin/dungeon/{dungeonId}/facility/{facilityId}/statue`: 配置済み彫像の特殊効果変更。
+    - リクエスト: `StatueConfig`
+  - `PUT /api/admin/dungeon/{dungeonId}/facility/{facilityId}/altar`: 配置済み祭壇の祀る神・信仰度変更。
+    - リクエスト: `AltarConfig`
+  - `PUT /api/admin/dungeon/{dungeonId}/facility/{facilityId}/fishing`: 配置済み釣り堀の構成（利用料等）変更。
+    - リクエスト: `FishingPointConfig`
+- **モンスター遠征管理**
+  - `GET /api/admin/expedition/destinations`: 派遣可能な遠征目的地一覧の取得。
+    - レスポンス: `ExpeditionDestination[]`
+  - `GET /api/admin/expeditions`: 現在派遣中の遠征隊一覧の取得。
+    - レスポンス: `ExpeditionState[]`
+  - `POST /api/admin/expedition/dispatch`: 遠征隊の派遣開始。
+    - リクエスト: `{ destinationId: string; monsterIds: string[] }`
+    - レスポンス: `ExpeditionState`
+  - `POST /api/admin/expedition/{expeditionId}/claim`: 完了した遠征の報酬受取およびモンスターの帰還。
+    - レスポンス: `ExpeditionClaimResult`
 - **ショップ管理**
   - `POST /api/admin/shop`: ダンジョン内にショップを新規設置。
     - リクエスト: `ShopConfig`
@@ -113,6 +166,15 @@
     - リクエスト: `{ position: { x: number, y: number }, effectId?: string }`
     - `effectId` 例: `lightning` (落雷), `gas_leak` (ガス漏れ), `rock_fall` (落石), `earthquake` (地震)
     - レスポンス: `boolean` (発動成功の成否)
+
+### 2.7 ランキング API (Ranking API)
+プレイヤーの各種ロールにおける実績やスコア順位を取得するエンドポイントです。詳細は **[ランキングシステム](../features/Ranking-System.md)** を参照してください。
+
+- `GET /api/ranking/{category}`: カテゴリ別ランキング一覧の取得。
+  - `category`: `explorer_clear`, `explorer_level`, `admin_lethality`, `admin_popularity`, `pker_slain`, `pker_level`
+  - レスポンス: `RankingResponse`
+- `GET /api/ranking/{category}/me/{userId}`: 指定したユーザーの現在順位と前後エントリーの取得。
+  - レスポンス: `MyRankResponse`
 
 ## 3. データモデル
 
@@ -297,20 +359,20 @@ type DungeonEventType =
 
 interface PlayerEntryDetails {
   entranceId: string;      // 入口のID
-  position: { x: number, y: number }; // 出現座標
+  position: { x: number; y: number }; // 出現座標
 }
 
 interface PlayerExitDetails {
   exitId: string;          // 出口（階段など）のID
   reason: 'escaped' | 'cleared'; // 脱出の理由
-  position: { x: number, y: number }; // 脱出時の座標
+  position: { x: number; y: number }; // 脱出時の座標
 }
 
 interface PlayerDeathDetails {
   attackerId?: string;     // 攻撃者の個体ID（モンスターID等）
   attackerTypeId?: string; // 攻撃者の種別ID（'slime', 'spikes' 等）
   attackerType: 'monster' | 'trap' | 'environment' | 'pker'; // 死亡原因のカテゴリ
-  position: { x: number, y: number }; // 死亡座標
+  position: { x: number; y: number }; // 死亡座標
   lostGold: number;        // 没収されたゴールド量
   lostItems: string[];     // 没収されたアイテムのIDリスト
 }
@@ -319,7 +381,7 @@ interface ItemPickUpDetails {
   itemId: string;          // アイテム個体ID
   itemTypeId: string;      // アイテム種別ID
   itemName: string;        // アイテム名
-  position: { x: number, y: number }; // 取得座標
+  position: { x: number; y: number }; // 取得座標
   isGold: boolean;         // ゴールドかどうか
   amount?: number;         // ゴールドの場合の金額
 }
@@ -328,13 +390,13 @@ interface MonsterSlainDetails {
   monsterId: string;       // モンスター個体ID
   monsterTypeId: string;   // モンスター種別ID
   killerId: string;        // 撃破者のID（プレイヤーID等）
-  position: { x: number, y: number }; // 撃破座標
+  position: { x: number; y: number }; // 撃破座標
   gainedExp: number;       // プレイヤーが獲得した経験値
 }
 
 interface TrapTriggeredDetails {
   trapTypeId: string;      // トラップ種別ID
-  position: { x: number, y: number }; // トラップの座標
+  position: { x: number; y: number }; // トラップの座標
   triggeredBy: string;     // 発動させたエンティティのID
   isFound: boolean;        // 発動前に発見されていたか
   damageDealt?: number;    // 与えたダメージ
@@ -344,7 +406,7 @@ interface TrapTriggeredDetails {
 interface AdminInterventionDetails {
   actionType: 'summon' | 'trigger'; // 介入種別
   targetUserId: string;    // 対象プレイヤーID
-  position: { x: number, y: number }; // 介入地点の座標
+  position: { x: number; y: number }; // 介入地点の座標
   monsterId?: string;      // 召喚したモンスターのID（summonの場合）
   effectId?: string;       // 発生させた効果のID（triggerの場合）
 }
@@ -466,7 +528,193 @@ interface DungeonExitResult {
 }
 ```
 
-### 3.13 SaveData
+### 3.13 Fishing Results
+```typescript
+interface FishCastResult {
+  result: 'waiting' | 'failed_no_bait' | 'failed_invalid_tile';
+  waitTicks?: number;   // ヒット発生までの待機時間（ティック）
+  message: string;
+}
+
+interface FishingHookResult {
+  result: 'success' | 'missed' | 'monster_ambush';
+  loot?: InventoryItem; // 釣り上げた魚・資材・宝箱
+  ambushMonsterId?: string; // モンスター襲撃時の個体/種別ID
+  gainedExp?: number;   // 獲得した釣り熟練経験値
+  message: string;
+}
+```
+
+### 3.14 AltarActionResult
+```typescript
+interface AltarActionResult {
+  result: 'divine_blessing' | 'divine_punishment' | 'favor_increased' | 'favor_decreased' | 'loot_success' | 'loot_failed_punished';
+  grantedEffect?: string; // 付与されたバフ/デバフ名 (DIVINE_BLESSING, DIVINE_PUNISHMENT 等)
+  lootedItems?: InventoryItem[]; // 略奪に成功した場合のアイテム
+  lootedGold?: number;          // 略奪に成功した場合のゴールド
+  favorLevel: number;           // 更新後の信仰度レベル
+  message: string;
+}
+```
+
+### 3.15 Quest Models
+```typescript
+interface QuestEntry {
+  id: string;                                                 // ユニークID (例: 'slime_hunter_01')
+  title: string;                                              // クエストタイトル
+  description: string;                                        // クエストの説明文
+  category: 'explorer' | 'admin' | 'pker';                    // 対象ロール
+  targetType: 'defeat_monster' | 'clear_floor' | 'synthesize_item' | 'earn_gold' | 'trap_kills' | 'use_stamp'; // 目標アクション
+  targetId?: string;                                          // 特定の対象ID
+  targetCount: number;                                        // 必要な達成回数
+  rewards: {
+    gold?: number;
+    exp?: number;
+    materials?: { typeId: string; amount: number }[];
+    items?: string[];                                         // 獲得アイテムのIDリスト
+    customStampId?: string;                                   // 特殊スタンプ解放
+  };
+}
+
+interface PlayerQuestProgress {
+  questId: string;                                            // 対象クエストのID
+  currentCount: number;                                       // 現在のカウント
+  status: 'active' | 'completed' | 'claimed';                 // 進行ステータス
+  acceptedAt?: Date;                                          // 受注日時
+  completedAt?: Date;                                         // 達成日時
+}
+
+interface QuestClaimResult {
+  result: boolean;
+  rewardsClaimed?: {
+    gold?: number;
+    exp?: number;
+    materials?: { typeId: string; amount: number }[];
+    items?: InventoryItem[];
+  };
+  message: string;
+}
+```
+
+### 3.16 Title Models
+```typescript
+interface TitleEntry {
+  id: string;                                                 // ユニークID
+  name: string;                                               // 称号名 (例: '深淵の探究者')
+  description: string;                                        // 実績解除の条件説明
+  effectDescription: string;                                  // 特殊効果の説明
+  category: 'explorer' | 'admin' | 'pker' | 'special';        // カテゴリ分類
+  unlockCondition: {
+    type: 'max_floor' | 'breed_count' | 'pk_wins' | 'lore_count' | 'gold_spent'; // 解除トリガー種別
+    value: number;                                            // 必要閾値
+  };
+  unlockedAt?: Date;                                          // 解放日時 (未解放時は undefined)
+}
+```
+
+### 3.17 BestiaryEntry Model
+```typescript
+interface BestiaryEntry {
+  monsterTypeId: string;      // モンスター種別ID
+  researchLevel: 0 | 1 | 2 | 3; // 現在の研究レベル (0:シルエット, 1:基本解析, 2:詳細解析, 3:完全解析)
+  encounterCount: number;     // 遭遇回数
+  defeatCount: number;        // 撃破回数
+  captureCount: number;       // 捕獲回数
+  breedCount: number;         // 孵化（繁殖）回数
+  unlockedAt?: Date;          // 最初に Level 1 に到達した日時
+}
+```
+
+### 3.18 Expedition Models
+```typescript
+interface ExpeditionDestination {
+  id: string;                    // 目的地固有ID
+  name: string;                  // 目的地名
+  tier: 1 | 2 | 3;               // Tierレベル
+  biomeId: 'cave' | 'forest' | 'ice' | 'lava'; // バイオームID
+  durationMinutes: number;       // 所要時間（分）
+  goldCost: number;              // 必要ゴールドコスト
+  vigorCostPerMonster: number;   // モンスター1体あたりの消費活力 (標準30)
+  requiredLevel: number;         // 要求される最低レベル
+  rewards: {
+    expBase: number;
+    goldMin: number;
+    goldMax: number;
+    possibleMaterials: { typeId: string; chance: number; amountMin: number; amountMax: number }[];
+    possibleItems: { itemTypeId: string; chance: number }[];
+    possibleEggs: { monsterTypeId: string; chance: number }[];
+  };
+}
+
+interface ExpeditionState {
+  id: string;                    // 遠征セッションID
+  destinationId: string;         // 遠征先ID
+  monsterIds: string[];          // 派遣中のモンスター個体IDリスト
+  startTime: number;             // 開始時刻 (UNIXタイムスタンプ)
+  endTime: number;               // 完了予定時刻 (UNIXタイムスタンプ)
+  status: 'ongoing' | 'completed' | 'claimed'; // 遠征状態
+}
+
+interface ExpeditionClaimResult {
+  result: boolean;
+  gainedExp: number;
+  gainedGold: number;
+  materials: { typeId: string; count: number }[];
+  items: InventoryItem[];
+  eggs: StoredMonster[];
+  message: string;
+}
+```
+
+### 3.19 Ranking Models
+```typescript
+interface RankingEntry {
+  rank: number;
+  userId: string;
+  username: string;
+  score: number;
+  title?: string;
+  details?: string;
+  change?: 'up' | 'down' | 'stay' | 'new';
+}
+
+interface RankingResponse {
+  category: 'explorer_clear' | 'explorer_level' | 'admin_lethality' | 'admin_popularity' | 'pker_slain' | 'pker_level';
+  entries: RankingEntry[];
+  totalEntries: number;
+}
+
+interface MyRankResponse {
+  category: string;
+  myEntry?: RankingEntry;
+  surroundingEntries: RankingEntry[];
+}
+```
+
+### 3.20 Story and Lore Models
+```typescript
+interface LoreEntry {
+  id: string;                                                         // ユニークID (例: 'ancient_core_01')
+  title: string;                                                      // タイトル (例: '大いなるコアの記録 1')
+  category: 'history' | 'biography' | 'dungeon_secret' | 'npc_diary'; // カテゴリ
+  unlockedAt?: Date;                                                  // 解放日時
+  hintMessage: string;                                                // 未解放時のヒントメッセージ
+  content: string[];                                                  // 本文の段落リスト
+}
+
+interface NpcDialogue {
+  id: string;                     // ダイアログID
+  npcId: string;                  // 対象のNPC ID (例: 'merchant_anna')
+  triggerCondition: {
+    requiredPlayerLevel?: number; // 必要なプレイヤーレベル
+    requiredLoreId?: string;      // 必要な解放済みLore ID
+    requiredFloor?: number;       // 必要な到達階層
+  };
+  dialogueLines: string[];        // 会話テキスト
+}
+```
+
+### 3.21 SaveData
 ```typescript
 interface SaveData {
   userId: string;          // ユーザーID
