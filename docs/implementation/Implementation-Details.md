@@ -176,6 +176,26 @@
 - `GET /api/ranking/{category}/me/{userId}`: 指定したユーザーの現在順位と前後エントリーの取得。
   - レスポンス: `MyRankResponse`
 
+### 2.8 観戦・リプレイ API (Spectator & Replay API)
+ダンジョンのリアルタイム観戦および過去の攻略ログのリプレイ配信・取得を行うエンドポイントです。詳細は **[リプレイ・観戦システム](../features/Replay-Spectator-System.md)** を参照してください。
+
+- **リアルタイム観戦**
+  - `GET /api/spectate/dungeons`: 観戦可能なアクティブダンジョン一覧の取得。
+    - レスポンス: `SpectatorSession[]`
+  - `GET /api/spectate/dungeon/{dungeonId}` (SSE): 指定ダンジョンのリアルタイム観戦ストリーム。
+    - ストリーム要素: `DisplayData` および リアルタイム `DungeonEvent`
+  - `PUT /api/spectate/dungeon/{dungeonId}/cheer`: 観戦者用声援・リアクションスタンプの送信。
+    - リクエスト: `{ stampId: string; targetUserId?: string }`
+    - レスポンス: `boolean`
+- **リプレイ管理・再生**
+  - `GET /api/replays`: リプレイヘッダー一覧の検索・取得。
+    - クエリパラメータ: `userId`, `dungeonId`, `result`, `limit`, `offset`
+    - レスポンス: `ReplayHeader[]`
+  - `GET /api/replays/{replayId}`: 指定リプレイの完全データ取得。
+    - レスポンス: `ReplayData`
+  - `POST /api/replays/{replayId}/bookmark`: 指定リプレイのお気に入り/ブックマーク登録。
+    - レスポンス: `boolean`
+
 ## 3. データモデル
 
 ### 3.1 Player
@@ -721,6 +741,55 @@ interface SaveData {
   player: Player;          // プレイヤーの動的ステータス
   dungeonConfig: DungeonConfig; // 管理しているダンジョンの設定
   warehouseState: WarehouseState; // 倉庫（ストック）の状態
+}
+```
+
+### 3.22 Replay Models
+```typescript
+interface ReplayHeader {
+  replayId: string;           // リプレイ固有ID
+  dungeonId: string;          // 対象ダンジョンID
+  dungeonName: string;        // ダンジョン名
+  floorCount: number;         // 記録対象の総階層数
+  userId: string;             // プレイヤーユーザーID
+  username: string;           // プレイヤー名
+  role: 'explorer' | 'pker';  // メインプレイヤーのロール
+  seed: number;               // マップ生成シード値
+  startTime: number;          // 開始日時 (UNIXタイムスタンプ)
+  durationTicks: number;      // 総経過ティック数
+  result: 'cleared' | 'escaped' | 'died'; // 攻略結果
+  clearTimeSeconds: number;   // 実経過時間（秒）
+  clientVersion: string;      // 記録時のクライアント/ゲームバージョン
+}
+
+interface ReplayFrame {
+  tick: number;               // 経過ティック数
+  timestamp: number;          // 発生タイムスタンプ
+  commands?: {                // 該当ティックで実行された操作コマンド
+    userId: string;
+    command: string;
+    args?: any;
+  }[];
+  events?: DungeonEvent[];     // 該当ティックで発生したイベントログ
+  entityUpdates?: {           // 位置やステータスに更新があったエンティティ
+    entityId: string;
+    position?: { x: number; y: number };
+    hp?: number;
+    stamina?: number;
+    statusEffects?: string[];
+  }[];
+}
+
+interface ReplayData {
+  header: ReplayHeader;
+  frames: ReplayFrame[];
+}
+
+interface SpectatorSession {
+  dungeonId: string;
+  activeExplorers: { userId: string; username: string; currentFloor: number }[];
+  spectatorCount: number;
+  viewMode: 'full_view' | 'player_los';
 }
 ```
 

@@ -217,3 +217,49 @@ interface DungeonExitResult {
   };
   message: string;
 }
+
+interface ReplayHeader {
+  replayId: string;           // リプレイ固有ID
+  dungeonId: string;          // 対象ダンジョンID
+  dungeonName: string;        // ダンジョン名
+  floorCount: number;         // 記録対象の総階層数
+  userId: string;             // プレイヤーユーザーID
+  username: string;           // プレイヤー名
+  role: 'explorer' | 'pker';  // メインプレイヤーのロール
+  seed: number;               // マップ生成シード値
+  startTime: number;          // 開始日時 (UNIXタイムスタンプ)
+  durationTicks: number;      // 総経過ティック数
+  result: 'cleared' | 'escaped' | 'died'; // 攻略結果
+  clearTimeSeconds: number;   // 実経過時間（秒）
+  clientVersion: string;      // 記録時のクライアント/ゲームバージョン
+}
+
+interface ReplayFrame {
+  tick: number;               // 経過ティック数
+  timestamp: number;          // 発生タイムスタンプ
+  commands?: {                // 該当ティックで実行された操作コマンド
+    userId: string;
+    command: string;
+    args?: any;
+  }[];
+  events?: any[];              // 該当ティックで発生したイベントログ (DungeonEvent)
+  entityUpdates?: {           // 位置やステータスに更新があったエンティティ
+    entityId: string;
+    position?: { x: number; y: number };
+    hp?: number;
+    stamina?: number;
+    statusEffects?: string[];
+  }[];
+}
+
+interface ReplayData {
+  header: ReplayHeader;
+  frames: ReplayFrame[];
+}
+
+interface SpectatorSession {
+  dungeonId: string;
+  activeExplorers: { userId: string; username: string; currentFloor: number }[];
+  spectatorCount: number;
+  viewMode: 'full_view' | 'player_los';
+}
