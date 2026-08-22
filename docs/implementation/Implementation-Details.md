@@ -78,6 +78,10 @@
   - モンスター図鑑エンドポイント:
     - `GET /api/player/{userId}/bestiary`: 解析データ一覧の取得。
       - レスポンス: `BestiaryEntry[]`
+  - オーディオ設定エンドポイント:
+    - `PUT /api/player/{userId}/audio-settings`: 音量設定（マスター・BGM・SE）の更新。
+      - リクエスト: `AudioSettings`
+      - レスポンス: `boolean`
   - レスポンス (上記移動/一般コマンド): `{ [name: string]: boolean }`
   - レスポンス (pickup): `PickUpResult`
   - レスポンス (search): `SearchResult`
@@ -146,6 +150,14 @@
     - リクエスト: `{ serverUrl: string, policy: TrustPolicy }`
   - `PUT /api/admin/trust-network/server/{serverId}`: 信頼ポリシーの更新。
     - リクエスト: `TrustPolicy`
+- **ゲームバランス管理**
+  - `GET /api/admin/balance`: 現在の動的バランス設定の取得。
+    - レスポンス: `BalanceConfig`
+  - `PUT /api/admin/balance`: 動的バランス設定の更新。
+    - リクエスト: `Partial<BalanceConfig>`
+    - レスポンス: `BalanceConfig`
+  - `GET /api/admin/balance/telemetry`: 収集されたバランステレメトリデータの取得。
+    - レスポンス: `BalanceTelemetry`
 - **ログ管理**
   - `GET /api/admin/logs/dungeon/{dungeonId}`: 指定したダンジョンのイベントログを取得。
     - クエリパラメータ: `limit`, `offset`, `type`
@@ -790,6 +802,66 @@ interface SpectatorSession {
   activeExplorers: { userId: string; username: string; currentFloor: number }[];
   spectatorCount: number;
   viewMode: 'full_view' | 'player_los';
+}
+```
+
+### 3.23 AudioSettings
+```typescript
+interface AudioSettings {
+  masterVolume: number; // 0〜100
+  bgmVolume: number;    // 0〜100
+  seVolume: number;     // 0〜100
+}
+```
+
+### 3.24 WorldTimeState
+```typescript
+interface WorldTimeState {
+  timeOfDay: 'day' | 'night';                                  // 現在の時間帯
+  totalTicks: number;                                          // ゲーム全体の累積経過ティック
+  currentTickInCycle: number;                                  // 現在の一日のサイクル内ティック (0〜119)
+  currentWeather: 'clear' | 'rain' | 'fog' | 'blizzard' | 'heatwave'; // 現在の天候
+  weatherTicksRemaining: number;                               // 現在の天候が継続する残りティック数
+}
+```
+
+### 3.25 Game Balance Models
+```typescript
+interface BalanceConfig {
+  baseItemSpawnLimit: { min: number; max: number };
+  baseGoldSpawnLimit: { min: number; max: number };
+  monsterSpawnInterval: number; // 標準値: 50
+  monsterFloorLimit: number;    // 標準値: 20
+  expGainMultiplier: number;    // 標準値: 1.0
+  goldGainMultiplier: number;   // 標準値: 1.0
+  monsterStatScalingFactor: number; // 標準値: 1.0
+  strayLevelOffset: number;     // 標準値: 0
+  baseShopBuybackRate: number;  // 標準値: 0.3
+  circulationLimitModifier: number; // 標準値: 1.0
+  constructionCostMultiplier: number; // 標準値: 1.0
+  pkMatchLevelRange: number;    // 標準値: 10
+  pkProtectionCooldownMinutes: number; // 標準値: 20
+}
+
+interface BalanceTelemetry {
+  deathHeatmap: {
+    floorLevel: number;
+    position: { x: number; y: number };
+    cause: 'monster' | 'trap' | 'hunger' | 'pker' | 'environment';
+    causeId?: string;
+    timestamp: number;
+  }[];
+  itemUsageStats: {
+    itemId: string;
+    action: 'consumed' | 'sold' | 'synthesized' | 'discarded';
+    count: number;
+  }[];
+  pkWinRatio: {
+    explorerWins: number;
+    pkerWins: number;
+    averageBattleDurationSeconds: number;
+  };
+  matchmakingFailureRate: number;
 }
 ```
 
