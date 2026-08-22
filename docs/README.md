@@ -47,6 +47,7 @@
 - **[称号・実績システム](features/Title-System.md)**: 称号および実績の解除条件、装備（アクティブ）時のバフ効果、マルチプレイヤーでの表示とNPC会話への影響。
 - **[クエストシステム](features/Quest-System.md)**: 探索者、ダンジョン管理者、およびPKerそれぞれに向けた目標、進行状況管理、および報酬定義。
 - **[昼夜・天候システム](features/Time-Weather-System.md)**: ゲーム内の時間帯（昼夜）や天候の変化、および各種環境効果、釣りや戦闘への動的影響。
+- **[リプレイ・観戦システム](features/Replay-Spectator-System.md)**: リアルタイム観戦（SSE配信・声援送受信）、ティック単位の差分ログ記録によるリプレイ再生、および殿堂入り・サーバー間共有。
 - **[管理者介入システム](features/Admin-Intervention-System.md)**: 管理者によるリアルタイム介入（召喚、特殊効果）の詳細。
 - **[アイテムマスターリスト](features/Item-Master-List.md)**: 全アイテムの詳細仕様、効果、価格、流通上限。
 - **[建築システム](features/Construction-System.md)**: 管理者によるダンジョン地形の構築、施設の設置、および資材管理。
