@@ -106,6 +106,7 @@ declare class Player {
 ```
 
 ## 7. 相互参照
+- [実装詳細](../implementation/Implementation-Details.md) (`PUT /api/player/{userId}/audio-settings` エンドポイントおよび `AudioSettings` 型定義)
 - [バイオーム・環境システム](Biome-System.md)
 - [PKシステム](PK-System.md)
 - [セーブ・ロードシステム](Save-Load-System.md)

@@ -108,6 +108,7 @@ PKマッチングにおけるターゲット選定ルールを微調整します
 ---
 
 ## 6. 相互参照
+- [実装詳細](../implementation/Implementation-Details.md) (`GET/PUT /api/admin/balance`, `GET /api/admin/balance/telemetry` エンドポイントおよび `BalanceConfig`/`BalanceTelemetry` 型定義)
 - [ドロップ品・出現システム](Loot-and-Spawn-System.md)
 - [アクションシステム](Action-System.md)
 - [戦闘システム](Combat-System.md)
