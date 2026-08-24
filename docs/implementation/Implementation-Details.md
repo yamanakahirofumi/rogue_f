@@ -118,6 +118,18 @@
 - **倉庫・リソース管理**
   - `GET /api/admin/warehouse`: 倉庫の状態（モンスター、アイテム、資材）を取得。
     - レスポンス: `WarehouseState`
+  - `POST /api/admin/warehouse/expand`: 倉庫の保管枠（モンスター/アイテム/資材）を拡張。
+    - リクエスト: `WarehouseExpandRequest`
+    - レスポンス: `WarehouseExpandResult`
+  - `POST /api/admin/warehouse/item/deposit`: プレイヤー所持品または報酬から倉庫へアイテムを保管。
+    - リクエスト: `{ userId: string; itemId: string }`
+    - レスポンス: `boolean`
+  - `POST /api/admin/warehouse/item/withdraw`: 倉庫からプレイヤーインベントリへアイテムを引き出し。
+    - リクエスト: `{ userId: string; itemId: string }`
+    - レスポンス: `InventoryItem`
+  - `POST /api/admin/warehouse/monster/status`: 保管中モンスターの稼働状態更新。
+    - リクエスト: `{ monsterId: string; status: 'idle' | 'placed' | 'expedition' }`
+    - レスポンス: `boolean`
   - `POST /api/admin/warehouse/monster/breed`: モンスターの繁殖を実行。
     - リクエスト: `{ parentId1: string, parentId2: string }`
     - レスポンス: `StoredMonster` (生成された卵/幼体)
@@ -862,6 +874,22 @@ interface BalanceTelemetry {
     averageBattleDurationSeconds: number;
   };
   matchmakingFailureRate: number;
+}
+```
+
+### 3.26 Warehouse Models
+```typescript
+interface WarehouseExpandRequest {
+  targetType: 'monster' | 'item' | 'material'; // 拡張対象の倉庫枠
+  incrementAmount: number;                     // 増加スロット数 (例: モンスター+10, アイテム+20, 資材+1000)
+}
+
+interface WarehouseExpandResult {
+  success: boolean;                            // 拡張成否
+  updatedWarehouseState?: WarehouseState;      // 更新後の倉庫状態
+  consumedGold?: number;                       // 消費したゴールド
+  consumedMaterials?: { typeId: string; amount: number }[]; // 消費した資材リスト
+  message: string;                             // 結果メッセージ
 }
 ```
 

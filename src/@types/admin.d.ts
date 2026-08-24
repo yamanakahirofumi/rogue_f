@@ -439,3 +439,16 @@ interface BalanceTelemetry {
   };
   matchmakingFailureRate: number;
 }
+
+interface WarehouseExpandRequest {
+  targetType: 'monster' | 'item' | 'material'; // 拡張対象の倉庫枠
+  incrementAmount: number;                     // 増加スロット数 (例: モンスター+10, アイテム+20, 資材+1000)
+}
+
+interface WarehouseExpandResult {
+  success: boolean;                            // 拡張成否
+  updatedWarehouseState?: WarehouseState;      // 更新後の倉庫状態
+  consumedGold?: number;                       // 消費したゴールド
+  consumedMaterials?: { typeId: string; amount: number }[]; // 消費した資材リスト
+  message: string;                             // 結果メッセージ
+}
