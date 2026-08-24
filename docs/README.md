@@ -58,7 +58,7 @@
 - **[倉庫システム](features/Warehouse-System.md)**: モンスター、アイテム、および資材の保管と管理。
 - **[管理者システム](features/Admin-System.md)**: ダンジョン構築、モンスター・トラップ配置、ショップ経営、世界設定の管理。
 - **[システム要件](features/System-Requirements.md)**: 動作環境、技術構成、制約事項。
-- **[UI・UX設計](features/UI-UX-Design.md)**: 画面遷移、コンポーネント階層、デザイン方針。
+- **[UI・UX設計](features/UI-UX-Design.md)**: 画面遷移、コンポーネント階層、デザイン方針、および各種拡張機能（宝箱・釣り・祭壇/彫像・クエスト・図鑑・観戦/リプレイ・オーディオ・ゲームバランス・倉庫拡張）のUI詳細。
 - **[開発ロードマップ](features/Development-Roadmap.md)**: 開発状況、既知のバグ、今後の課題。
 - **[TODOリスト](TODO-Details.md)**: 面白さを向上させるための機能アイデアと技術的課題。
 
