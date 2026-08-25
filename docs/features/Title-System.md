@@ -129,7 +129,40 @@ interface TitleEntry {
 
 ---
 
-## 7. 相互参照
+## 7. 称号マスターリスト (Title Master List)
+実装およびマスターデータ構築の基礎となる全12種類の称号の完全定義一覧です。各称号の解除条件パラメータ、装備時のシステム補正効果、およびゲームエンジン内での処理フック（フックタイミング）を定めます。
+
+| 称号ID | 称号名 | カテゴリ | 解除トリガー | 必要閾値 | 装備効果（バフ詳細） | 処理フック (`hookTrigger`) |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| `rookie_explorer` | 新米探索者 | `explorer` | `max_floor` | 5 | 最大HP +5 | `on_stat_calc` |
+| `deep_abyss_diver` | 深淵の探究者 | `explorer` | `max_floor` | 50 | 視野半径 +1マス | `on_visibility_calc` |
+| `indomitable_survivor` | 不屈の生存者 | `explorer` | `low_hp_escape` | 1 | 自然回復時のST回復量 +1 | `on_stamina_recovery` |
+| `trap_destroyer` | トラップデストロイヤー | `explorer` | `trap_disarm_count` | 100 | トラップ解除成功率 +10% | `on_trap_disarm` |
+| `novice_breeder` | 新米ブリーダー | `admin` | `breed_count` | 5 | モンスター孵化時間 10%短縮 | `on_hatch_duration` |
+| `gene_master` | 遺伝子の支配者 | `admin` | `epic_trait_breed` | 1 | 繁殖時突然変異率 +2% | `on_mutation_check` |
+| `killzone_architect` | キルゾーン構築家 | `admin` | `dungeon_kill_count` | 30 | 強欲の彫像ゴールドボーナス +5% (計1.25倍) | `on_gold_bonus` |
+| `wealthy_merchant` | 豪商 | `admin` | `gold_spent` | 100000 | 管理者ショップ仕入れ値 5%割引 | `on_shop_buy` |
+| `shadow_runner` | シャドウランナー | `pker` | `pk_escape_count` | 5 | 野良(Stray)モード移動時消費ST 10%軽減 | `on_stamina_cost` |
+| `calamity_beast` | 災厄の獣 | `pker` | `pk_wins` | 20 | モンスター形態最大ST +5、攻撃力1.05倍 | `on_stat_calc` |
+| `history_witness` | 歴史の目撃者 | `special` | `lore_count` | 15 | 拠点特定NPCの限定ダイアログ解放・親密獲得1.2倍 | `on_npc_dialog` |
+| `trust_bridge` | トラストネットワークの架け橋 | `special` | `migration_count` | 10 | サーバー間キャラ/モンスター移動手数料無料 | `on_migration` |
+
+### 7.1 各処理フックの実行詳細
+- **`on_stat_calc`**: プレイヤーまたはPKerのステータス計算処理実行時に呼び出され、最大HP/STや攻撃倍率を動的に加算・乗算補正します。
+- **`on_visibility_calc`**: 階層開始時および照明計算時に呼び出され、基本視界半径（視界システム参照）を拡張します。
+- **`on_stamina_recovery`**: 10秒毎の自然回復処理（自然回復システム参照）において、ST回復基礎値に定数を直接加算します。
+- **`on_trap_disarm`**: プレイヤーがトラップ解除コマンドを実行した際、最終成功確率計算式に +10% を加算します。
+- **`on_hatch_duration`**: モンスター卵生成時に必要孵化時間を `hatchTimeTotal * 0.90` に減算設定します。
+- **`on_mutation_check`**: モンスター交配時の遺伝判定ロジックにおいて、特性・属性突然変異判定フラグを +2.0% 嵩上げします。
+- **`on_gold_bonus`**: 自ダンジョン内で「強欲の彫像」効果範囲内にてプレイヤー撃破/ドロップが発生した際、ゴールド倍率を 1.20 から 1.25 に上書きします。
+- **`on_shop_buy`**: 管理者による商品仕入れ/補充処理実行時に、卸売コストを 0.95 倍に適用します。
+- **`on_stamina_cost`**: PKerが「Stray」モードで移動コマンドを実行した際、移動コストを `cost * 0.90` に計算します。
+- **`on_npc_dialog`**: 拠点NPCとの会話トリガー検知時、条件一致フラグを解放し親密度加算値を 1.2 倍にします。
+- **`on_migration`**: 他サーバーとの信頼ネットワーク間移行時、移行手数料徴収処理をスキップします。
+
+---
+
+## 8. 相互参照
 - [機能仕様書](Functional-Specification.md)
 - [拠点システム](Base-System.md)
 - [ストーリー・世界観システム](Story-Lore-System.md)
