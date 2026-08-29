@@ -200,7 +200,7 @@ interface StoredMaterial {
 資材の詳細なパラメータ、入手方法、および用途については、**[アイテムマスターリスト](../features/Item-Master-List.md#7-資材-materials)** を参照してください。
 
 ### 6.3 トラップ種別 (Trap Types)
-各トラップの詳細なパラメータについては、**[トラップマスターリスト](../features/Trap-Master-List.md)** を参照してください。
+各トラップの詳細なパラメータおよび `TrapEntry` データ構造については、**[トラップマスターリスト](../features/Trap-Master-List.md)** を参照してください。
 
 ## 7. トラストネットワーク (Trust Network)
 他の管理者サーバーとの連携に関するデータを保持します。

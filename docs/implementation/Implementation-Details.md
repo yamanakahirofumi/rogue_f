@@ -855,7 +855,21 @@ interface TerrainEntry {
 }
 ```
 
-### 3.26 Game Balance Models
+### 3.26 TrapEntry Model
+```typescript
+interface TrapEntry {
+  typeId: string;
+  name: string;
+  attribute: 'none' | 'fire' | 'water' | 'wood' | 'light' | 'dark';
+  costs: { typeId: string; amount: number }[];
+  goldCost: number;
+  capacityCost: number;
+  difficulty: number;
+  effectDescription: string;
+}
+```
+
+### 3.27 Game Balance Models
 ```typescript
 interface BalanceConfig {
   baseItemSpawnLimit: { min: number; max: number };
@@ -895,7 +909,7 @@ interface BalanceTelemetry {
 }
 ```
 
-### 3.27 Warehouse Models
+### 3.28 Warehouse Models
 ```typescript
 interface WarehouseExpandRequest {
   targetType: 'monster' | 'item' | 'material'; // 拡張対象の倉庫枠
