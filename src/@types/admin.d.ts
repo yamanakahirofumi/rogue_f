@@ -40,6 +40,21 @@ interface FloorConfig {
   facilities: PlacedFacility[]; // 設置済み施設
 }
 
+interface TerrainEntry {
+  typeId: 'floor' | 'wall' | 'door' | 'water' | 'lava' | 'sand';
+  name: string;
+  symbol: string;
+  isPassable: boolean;
+  blocksVision: boolean;
+  costs: { typeId: string; amount: number }[];
+  goldCost: number;
+  effect: {
+    intervalMultiplier?: number;
+    damagePerAction?: number;
+    biomeOverride?: string;
+  };
+}
+
 interface PlacedFacility {
   typeId: 'recovery_spring' | 'teleport_gate' | 'shop_counter' | 'synthesis_workshop' | 'torch' | 'statue' | 'altar' | 'fishing_point';
   position: { x: number, y: number };

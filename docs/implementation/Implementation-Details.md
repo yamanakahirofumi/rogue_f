@@ -837,7 +837,25 @@ interface WorldTimeState {
 }
 ```
 
-### 3.25 Game Balance Models
+### 3.25 TerrainEntry Model
+```typescript
+interface TerrainEntry {
+  typeId: 'floor' | 'wall' | 'door' | 'water' | 'lava' | 'sand';
+  name: string;
+  symbol: string;
+  isPassable: boolean;
+  blocksVision: boolean;
+  costs: { typeId: string; amount: number }[];
+  goldCost: number;
+  effect: {
+    intervalMultiplier?: number;
+    damagePerAction?: number;
+    biomeOverride?: string;
+  };
+}
+```
+
+### 3.26 Game Balance Models
 ```typescript
 interface BalanceConfig {
   baseItemSpawnLimit: { min: number; max: number };
@@ -877,7 +895,7 @@ interface BalanceTelemetry {
 }
 ```
 
-### 3.26 Warehouse Models
+### 3.27 Warehouse Models
 ```typescript
 interface WarehouseExpandRequest {
   targetType: 'monster' | 'item' | 'material'; // 拡張対象の倉庫枠
