@@ -55,6 +55,17 @@ interface TerrainEntry {
   };
 }
 
+interface TrapEntry {
+  typeId: string;
+  name: string;
+  attribute: 'none' | 'fire' | 'water' | 'wood' | 'light' | 'dark';
+  costs: { typeId: string; amount: number }[];
+  goldCost: number;
+  capacityCost: number;
+  difficulty: number;
+  effectDescription: string;
+}
+
 interface PlacedFacility {
   typeId: 'recovery_spring' | 'teleport_gate' | 'shop_counter' | 'synthesis_workshop' | 'torch' | 'statue' | 'altar' | 'fishing_point';
   position: { x: number, y: number };
