@@ -318,6 +318,7 @@
   agilityBonus?: number;
   dexterityBonus?: number;
   speedBonus?: number;
+  luckBonus?: number;
   range?: number;
   throwAttack?: number; // 投擲威力
   attribute?: string;  // 属性 (武器・防具用)
