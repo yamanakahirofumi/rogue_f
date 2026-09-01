@@ -46,3 +46,4 @@
   - **リプレイ・観戦システム**: SSEによるリアルタイムダンジョン観戦（全開/限定視界・声援送受信）、ティック単位の差分ログを用いた軽量リプレイ（`ReplayHeader`, `ReplayFrame`, `ReplayData`, `SpectatorSession`）、再生コントロールUI、および殿堂入り・トラストネットワーク共有の仕様策定。
   - **倉庫システム拡張およびリソース操作APIの補完**: 管理者ストックアイテム利用規準の確定、倉庫容量拡張（`POST /api/admin/warehouse/expand`）およびリソース操作用API仕様とデータモデル（`WarehouseExpandRequest`, `WarehouseExpandResult`）の整備。
   - **UI/UX設計仕様の全サブシステム補完**: 観戦・リプレイ操作画面、オーディオ設定パネル、ゲームバランス・テレメトリ調整画面、および倉庫枠拡張ダイアログのUIコンポーネント階層・レイアウト・インタラクション詳細仕様を `UI-UX-Design.md` に追加統合。
+  - **インベントリ整理・スタック制御仕様およびソート・入れ替えAPI定義の補完**: インベントリ内アイテムの自動整列（ソート）における 5 段階優先度ルール、99 個上限のスタック統合・分割ロジック、`InventoryItem` 完全データモデル補完、ならびに操作用 REST API (`PUT /api/player/{userId}/inventory/sort`, `PUT /api/player/{userId}/inventory/swap`) と TypeScript 型定義 (`InventorySortRequest`, `InventorySwapRequest`) の策定・追加。

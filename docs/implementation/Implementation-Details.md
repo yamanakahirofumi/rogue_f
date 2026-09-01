@@ -40,6 +40,13 @@
     - `buy/{itemId}`: ショップの商品を購入。
     - `sell/{itemId}`: インベントリのアイテムを売却。
     - `appraise/{itemId}`: ショップでアイテムを鑑定（鑑定料が必要）。
+  - インベントリ管理コマンド:
+    - `PUT /api/player/{userId}/inventory/sort`: 定義されたソート階層または基準に従いインベントリを自動整列・スタック統合。
+      - リクエスト: `InventorySortRequest`
+      - レスポンス: `InventoryItem[]`
+    - `PUT /api/player/{userId}/inventory/swap`: インベントリ内の 2 つのスロット位置を入れ替え。
+      - リクエスト: `InventorySwapRequest`
+      - レスポンス: `InventoryItem[]`
   - コミュニケーションコマンド:
     - `PUT /api/player/{userId}/emote/{emoteId}`: エモートまたはスタンプを送信。
   - 宝箱インタラクティブコマンド:
@@ -312,17 +319,27 @@
   isBlessed: boolean;
   value: number;
   tier: number;        // アイテムの Tier (1, 2, 3)
-  // 装備品の場合の補正値
+  // 装備品および道具の補正値
   attackBonus?: number;
   defenseBonus?: number;
   agilityBonus?: number;
   dexterityBonus?: number;
   speedBonus?: number;
-  luckBonus?: number;
-  range?: number;
+  luckBonus?: number;  // 運補正値
+  range?: number;      // 武器の射程
   throwAttack?: number; // 投擲威力
   attribute?: string;  // 属性 (武器・防具用)
+  capacityUsage?: number; // ダンジョン配置時に消費する容量
   amount?: number;     // 所持数（スタック可能なアイテム用）
+}
+
+interface InventorySortRequest {
+  sortBy?: 'category' | 'tier' | 'value' | 'name'; // ソート基準
+}
+
+interface InventorySwapRequest {
+  fromIndex: number; // 入れ替え元スロットインデックス
+  toIndex: number;   // 入れ替え先スロットインデックス
 }
 ```
 
