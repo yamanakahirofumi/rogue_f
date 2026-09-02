@@ -147,6 +147,15 @@ interface InventoryItem {
   amount?: number;      // 所持数（スタック可能なアイテム用）
 }
 
+interface InventorySortRequest {
+  sortBy?: 'category' | 'tier' | 'value' | 'name'; // ソート基準 (未指定時はデフォルト優先度階層)
+}
+
+interface InventorySwapRequest {
+  fromIndex: number; // 入れ替え元のインベントリスロットインデックス (0〜19)
+  toIndex: number;   // 入れ替え先のインベントリスロットインデックス (0〜19)
+}
+
 interface DungeonInfo {
   name: string;
   level: number;
