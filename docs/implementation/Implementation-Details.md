@@ -89,6 +89,17 @@
     - `PUT /api/player/{userId}/audio-settings`: 音量設定（マスター・BGM・SE）の更新。
       - リクエスト: `AudioSettings`
       - レスポンス: `boolean`
+  - ロア・世界観情報エンドポイント:
+    - `GET /api/player/{userId}/lore`: 解放状況を含む全ロアエントリー一覧の取得。
+      - レスポンス: `LoreEntry[]`
+    - `GET /api/player/{userId}/lore/{loreId}`: 指定したロアの詳細本文の取得。
+      - レスポンス: `LoreEntry`
+    - `POST /api/player/{userId}/lore/unlock`: （特定イベント達成時等の）ロア解禁リクエスト。
+      - リクエスト: `LoreUnlockRequest`
+      - レスポンス: `LoreUnlockResult`
+  - NPC会話制御エンドポイント:
+    - `GET /api/player/{userId}/npc/{npcId}/dialogue`: プレイヤーの現在状況（レベル、到達階層、解禁済みLore、装備称号）に応じた動的セリフの取得。
+      - レスポンス: `NpcDialogue`
   - レスポンス (上記移動/一般コマンド): `{ [name: string]: boolean }`
   - レスポンス (pickup): `PickUpResult`
   - レスポンス (search): `SearchResult`
@@ -762,6 +773,17 @@ interface LoreEntry {
   unlockedAt?: Date;                                                  // 解放日時
   hintMessage: string;                                                // 未解放時のヒントメッセージ
   content: string[];                                                  // 本文の段落リスト
+}
+
+interface LoreUnlockRequest {
+  loreId: string; // 解禁するロアのID
+}
+
+interface LoreUnlockResult {
+  success: boolean;       // 解禁の成否
+  newlyUnlocked: boolean; // 新規解禁か（既に解禁済みだった場合は false）
+  lore?: LoreEntry;       // 解禁されたロアの情報
+  message: string;        // 結果メッセージ
 }
 
 interface NpcDialogue {

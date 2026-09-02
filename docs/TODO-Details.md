@@ -118,6 +118,6 @@
 - **解決策**: [ゲームバランス調整システム](features/Game-Balance-System.md) にて、ライブチューニングパラメーター、テレメトリ収集、および人間が主導すべき手触り（プレイ感覚）の調整基準を策定済み。
 
 ### [x] ストーリー・世界観システム（Lore）の設計
-- **完了日**: 2026-07-30
+- **完了日**: 2026-07-30 (マスター定義およびAPI補完完了)
 - **概要**: 探索の目的を強化し、プレイヤーを引き込む。
-- **解決策**: [ストーリー・世界観システム](features/Story-Lore-System.md) にて、背景設定、NPCとの動的な会話、ジャーナル画面の仕様、および解放条件の詳細を策定済み。
+- **解決策**: [ストーリー・世界観システム](features/Story-Lore-System.md) にて、背景設定、NPCとの動的な会話、ジャーナル画面の仕様、解放条件、および具体的な「世界観記録マスターリスト（`LoreEntry`）」と「NPC動的会話マスターリスト（`NpcDialogue`）」の定義を完了。また、[実装詳細](implementation/Implementation-Details.md) にてロア閲覧・解禁およびNPC会話取得用REST API群（`GET /api/player/{userId}/lore`, `POST /api/player/{userId}/lore/unlock`, `GET /api/player/{userId}/npc/{npcId}/dialogue`）を補完済み。

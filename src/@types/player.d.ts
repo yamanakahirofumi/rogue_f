@@ -111,6 +111,17 @@ interface LoreEntry {
   content: string[];                                                   // 本文の段落リスト
 }
 
+interface LoreUnlockRequest {
+  loreId: string;                                                      // 解禁するロアのID
+}
+
+interface LoreUnlockResult {
+  success: boolean;                                                    // 解禁の成否
+  newlyUnlocked: boolean;                                              // 新規解禁か（既に解禁済みだった場合は false）
+  lore?: LoreEntry;                                                    // 解禁されたロアの情報
+  message: string;                                                     // 結果メッセージ
+}
+
 interface NpcDialogue {
   id: string;                     // ダイアログID
   npcId: string;                  // 対象のNPC ID (例: 'merchant_anna')
