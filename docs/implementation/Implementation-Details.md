@@ -100,6 +100,17 @@
   - NPC会話制御エンドポイント:
     - `GET /api/player/{userId}/npc/{npcId}/dialogue`: プレイヤーの現在状況（レベル、到達階層、解禁済みLore、装備称号）に応じた動的セリフの取得。
       - レスポンス: `NpcDialogue`
+  - 郵便受け・プレゼント管理エンドポイント:
+    - `GET /api/player/{userId}/mail`: 保管中のメール一覧の取得。
+      - レスポンス: `MailMessage[]`
+    - `POST /api/player/{userId}/mail/{mailId}/claim`: 指定したメールの添付品受取。
+      - レスポンス: `MailClaimResult`
+    - `POST /api/player/{userId}/mail/claim-all`: 全ての未受取メールの添付品一括受取。
+      - レスポンス: `{ claimedCount: number; rewards: MailAttachment; message: string }`
+    - `DELETE /api/player/{userId}/mail/{mailId}`: 指定したメールの個別削除。
+      - レスポンス: `boolean`
+    - `DELETE /api/player/{userId}/mail/clear-read`: 既読・受取済みメールの一括削除。
+      - レスポンス: `{ deletedCount: number }`
   - レスポンス (上記移動/一般コマンド): `{ [name: string]: boolean }`
   - レスポンス (pickup): `PickUpResult`
   - レスポンス (search): `SearchResult`
@@ -962,6 +973,37 @@ interface WarehouseExpandResult {
   consumedGold?: number;                       // 消費したゴールド
   consumedMaterials?: { typeId: string; amount: number }[]; // 消費した資材リスト
   message: string;                             // 結果メッセージ
+}
+```
+
+### 3.29 Mail Models
+```typescript
+interface MailMessage {
+  id: string;                                                // メール固有ID
+  recipientUserId: string;                                    // 受信者のユーザーID
+  senderName: string;                                         // 送信者名 (例: 'システム運営', 'ランキング協会')
+  title: string;                                              // 件名
+  content: string;                                            // 本文
+  category: 'system' | 'ranking' | 'dungeon_overflow' | 'gift'; // メール種別
+  isRead: boolean;                                            // 既読フラグ
+  isClaimed: boolean;                                         // 添付品受取済みフラグ
+  createdAt: Date | string;                                   // 送信日時
+  expiresAt?: Date | string;                                  // 有効期限
+  attachments?: MailAttachment;                               // 添付報酬/アイテム
+}
+
+interface MailAttachment {
+  gold?: number;                                              // 獲得ゴールド
+  exp?: number;                                               // 獲得経験値
+  items?: InventoryItem[];                                    // 獲得アイテムのリスト
+  materials?: { typeId: string; amount: number }[];           // 獲得資材のリスト
+}
+
+interface MailClaimResult {
+  success: boolean;                                           // 受取成否
+  claimedAttachment?: MailAttachment;                         // 受け取った報酬
+  transferredToWarehouse?: boolean;                           // インベントリ超過により倉庫へ転送されたか
+  message: string;                                            // 結果メッセージ
 }
 ```
 
