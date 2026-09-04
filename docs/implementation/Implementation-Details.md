@@ -85,6 +85,17 @@
   - モンスター図鑑エンドポイント:
     - `GET /api/player/{userId}/bestiary`: 解析データ一覧の取得。
       - レスポンス: `BestiaryEntry[]`
+  - メール管理エンドポイント:
+    - `GET /api/player/{userId}/mail`: 受信箱のメール一覧取得。
+      - レスポンス: `MailMessage[]`
+    - `POST /api/player/{userId}/mail/{mailId}/claim`: 指定メールの添付品受取。
+      - レスポンス: `MailClaimResult`
+    - `POST /api/player/{userId}/mail/claim-all`: 全未受取メールの添付品一括受取。
+      - レスポンス: `MailClaimResult`
+    - `DELETE /api/player/{userId}/mail/{mailId}`: 指定メールの削除。
+      - レスポンス: `boolean`
+    - `DELETE /api/player/{userId}/mail/clear-read`: 既読・受取済みメールの一括削除。
+      - レスポンス: `boolean`
   - オーディオ設定エンドポイント:
     - `PUT /api/player/{userId}/audio-settings`: 音量設定（マスター・BGM・SE）の更新。
       - リクエスト: `AudioSettings`
@@ -282,6 +293,7 @@
   fishingExp?: number;           // 釣り熟練経験値
   worldTimeState?: WorldTimeState; // ワールドの時間帯・天候状態
   bestiary?: BestiaryEntry[];     // モンスター図鑑エントリー
+  unreadMailCount?: number;       // 未読/未受取メール件数
 }
 ```
 
