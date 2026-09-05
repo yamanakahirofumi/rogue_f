@@ -52,6 +52,35 @@ declare class Player {
   fishingExp?: number;           // 釣り熟練度累積経験値 (任意)
   worldTimeState?: WorldTimeState;                             // 現在の階層/ワールドの昼夜・天候状態
   bestiary?: BestiaryEntry[];                                  // モンスター図鑑のエントリーリスト
+  unreadMailCount?: number;                                    // 未読/未受取メールの件数 (拠点UI表示用)
+}
+
+interface MailAttachment {
+  type: 'gold' | 'item' | 'material' | 'egg';                  // 添付品の種類
+  typeId?: string;                                             // アイテム/素材/卵の種別ID
+  amount: number;                                              // 数量またはゴールド量
+  itemDetails?: InventoryItem;                                 // 装備品等の詳細パラメータ
+}
+
+interface MailMessage {
+  id: string;                                                  // メール固有ID
+  senderName: string;                                          // 差出人名
+  category: 'system' | 'ranking' | 'dungeon_overflow' | 'gift';// メールカテゴリ
+  title: string;                                               // 件名
+  content: string;                                             // 本文
+  attachments?: MailAttachment[];                              // 添付品リスト
+  isRead: boolean;                                             // 既読フラグ
+  isClaimed: boolean;                                          // 添付受取済みフラグ
+  createdAt: Date | string;                                    // 送信日時
+  expiresAt: Date | string;                                    // 有効期限 (送信より30日後)
+}
+
+interface MailClaimResult {
+  success: boolean;                                            // 受取処理の成否
+  claimedGold: number;                                         // 獲得ゴールド
+  claimedItems: InventoryItem[];                               // 獲得アイテム一覧
+  transferredToWarehouseCount: number;                         // インベントリ超過により倉庫へ自動転送されたアイテム数
+  message: string;                                             // 処理結果メッセージ
 }
 
 interface BestiaryEntry {

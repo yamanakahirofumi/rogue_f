@@ -47,3 +47,4 @@
   - **倉庫システム拡張およびリソース操作APIの補完**: 管理者ストックアイテム利用規準の確定、倉庫容量拡張（`POST /api/admin/warehouse/expand`）およびリソース操作用API仕様とデータモデル（`WarehouseExpandRequest`, `WarehouseExpandResult`）の整備。
   - **UI/UX設計仕様の全サブシステム補完**: 観戦・リプレイ操作画面、オーディオ設定パネル、ゲームバランス・テレメトリ調整画面、および倉庫枠拡張ダイアログのUIコンポーネント階層・レイアウト・インタラクション詳細仕様を `UI-UX-Design.md` に追加統合。
   - **インベントリ整理・スタック制御仕様およびソート・入れ替えAPI定義の補完**: インベントリ内アイテムの自動整列（ソート）における 5 段階優先度ルール、99 個上限のスタック統合・分割ロジック、`InventoryItem` 完全データモデル補完、ならびに操作用 REST API (`PUT /api/player/{userId}/inventory/sort`, `PUT /api/player/{userId}/inventory/swap`) と TypeScript 型定義 (`InventorySortRequest`, `InventorySwapRequest`) の策定・追加。
+  - **メール・プレゼントシステム**: 拠点郵便受けによる各種メッセージ・シーズン報酬・溢れ戦利品の受取、50通枠制限、30日有効期限、インベントリ超過時の倉庫自動転送機能、および管理用API (`/api/player/{userId}/mail`)・データモデル (`MailMessage`, `MailAttachment`, `MailClaimResult`) の策定・追加。
