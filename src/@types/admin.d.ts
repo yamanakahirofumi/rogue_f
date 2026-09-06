@@ -265,7 +265,8 @@ interface DungeonEvent {
     | TitleChangedDetails
     | WeatherChangedDetails
     | EmoteStampUsedDetails
-    | BalanceTelemetryDetails;
+    | BalanceTelemetryDetails
+    | SynthesisEventDetails;
 }
 
 type DungeonEventType =
@@ -284,7 +285,8 @@ type DungeonEventType =
   | 'title_changed'        // 称号解放・装備変更
   | 'weather_changed'      // 天候変化
   | 'emote_stamp_used'     // エモート・スタンプ使用
-  | 'balance_telemetry';   // ゲームバランス調整用テレメトリ記録
+  | 'balance_telemetry'    // ゲームバランス調整用テレメトリ記録
+  | 'synthesis_event';     // アイテム合成・解体イベント
 
 interface PlayerEntryDetails {
   entranceId: string;
@@ -408,6 +410,17 @@ interface EmoteStampUsedDetails {
 interface BalanceTelemetryDetails {
   metricType: 'death' | 'item_usage' | 'pk_win_ratio' | 'matchmaking_failure'; // テレメトリの指標種別
   details: any;                                               // 指標の詳細データ
+}
+
+interface SynthesisEventDetails {
+  action: 'craft' | 'dismantle';                              // 合成または解体
+  recipeId?: string;                                          // 使用したレシピID ('craft' 時)
+  targetTypeId: string;                                       // 対象のアイテム/資材の種別ID
+  result: 'success' | 'failed';                               // 処理結果
+  consumedGold: number;                                       // 消費したゴールド (または解体費用)
+  consumedMaterials?: { typeId: string; amount: number }[];   // 消費された資材リスト ('craft' 時)
+  refundedGold?: number;                                      // 返金されたゴールド ('craft' 失敗時)
+  recoveredMaterials?: { typeId: string; amount: number }[];  // 回収された資材リスト ('dismantle' 成功時)
 }
 
 interface AdminLog {

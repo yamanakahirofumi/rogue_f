@@ -313,3 +313,38 @@ interface SpectatorSession {
   spectatorCount: number;
   viewMode: 'full_view' | 'player_los';
 }
+
+interface SynthesisRecipe {
+  id: string;                                                          // レシピID (生成ターゲットアイテムの種別ID等)
+  targetTypeId: string;                                                // 生成されるアイテムの種別ID
+  targetName: string;                                                  // 生成されるアイテム名
+  category: 'material_consumable' | 'special_item' | 'equipment' | 'fishing_cooking'; // カテゴリ
+  requiredMaterials: { typeId: string; amount: number }[];              // 必要素材のIDと個数
+  requiredGold: number;                                                // 必要ゴールド
+  baseSuccessRate: number;                                             // 基本成功率 (%)
+  description?: string;                                                // 説明文・補足
+}
+
+interface SynthesisCraftRequest {
+  recipeId: string;                                                    // 実行する合成レシピのID
+}
+
+interface SynthesisCraftResult {
+  success: boolean;                                                    // 合成成否
+  craftedItem?: InventoryItem;                                         // 成功時に獲得したアイテム
+  consumedMaterials: { typeId: string; amount: number }[];             // 消費された資材リスト
+  consumedGold: number;                                                // 消費されたゴールド
+  refundedGold: number;                                                // 失敗時に返金されたゴールド (消費額の50%)
+  message: string;                                                     // 結果メッセージ
+}
+
+interface SynthesisDismantleRequest {
+  itemId: string;                                                      // 解体する対象アイテムの個体ID
+}
+
+interface SynthesisDismantleResult {
+  success: boolean;                                                    // 解体成否
+  recoveredMaterials: { typeId: string; amount: number }[];            // 回収された資材リスト (必要資材の50%)
+  consumedGold: number;                                                // 解体費用 (基本価格の10%)
+  message: string;                                                     // 結果メッセージ
+}

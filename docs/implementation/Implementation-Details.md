@@ -111,6 +111,15 @@
   - NPC会話制御エンドポイント:
     - `GET /api/player/{userId}/npc/{npcId}/dialogue`: プレイヤーの現在状況（レベル、到達階層、解禁済みLore、装備称号）に応じた動的セリフの取得。
       - レスポンス: `NpcDialogue`
+  - アイテム合成・解体エンドポイント:
+    - `GET /api/synthesis/recipes`: 全合成レシピ一覧および基本成功率の取得。
+      - レスポンス: `SynthesisRecipe[]`
+    - `POST /api/player/{userId}/synthesis/craft`: 指定したレシピによるアイテム合成（クラフト）を実行。
+      - リクエスト: `SynthesisCraftRequest`
+      - レスポンス: `SynthesisCraftResult`
+    - `POST /api/player/{userId}/synthesis/dismantle`: インベントリ内の不要アイテムの解体（一部資材回収）を実行。
+      - リクエスト: `SynthesisDismantleRequest`
+      - レスポンス: `SynthesisDismantleResult`
   - レスポンス (上記移動/一般コマンド): `{ [name: string]: boolean }`
   - レスポンス (pickup): `PickUpResult`
   - レスポンス (search): `SearchResult`
@@ -421,7 +430,8 @@ interface InventorySwapRequest {
     | TitleChangedDetails
     | WeatherChangedDetails
     | EmoteStampUsedDetails
-    | BalanceTelemetryDetails;
+    | BalanceTelemetryDetails
+    | SynthesisEventDetails;
 }
 
 type DungeonEventType =
@@ -440,7 +450,8 @@ type DungeonEventType =
   | 'title_changed'        // 称号解放・装備変更
   | 'weather_changed'      // 天候変化
   | 'emote_stamp_used'     // エモート・スタンプ使用
-  | 'balance_telemetry';   // ゲームバランス調整用テレメトリ記録
+  | 'balance_telemetry'    // ゲームバランス調整用テレメトリ記録
+  | 'synthesis_event';     // アイテム合成・解体イベント
 
 interface PlayerEntryDetails {
   entranceId: string;      // 入口のID
