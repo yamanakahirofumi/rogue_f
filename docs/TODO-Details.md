@@ -71,6 +71,7 @@
     - [x] モンスター繁殖コスト・孵化時間の定義。
     - [x] モンスター形態への運（Luck）ステータスの追加。
     - [x] 合成工房（Synthesis Workshop）および高位装備レシピの定義。
+    - [x] 合成・解体システムのREST API仕様（`/api/synthesis/recipes`, `/api/player/{userId}/synthesis/craft`, `/api/player/{userId}/synthesis/dismantle`）、TypeScript型定義、およびイベントログ詳細スキーマ（`synthesis_event`）の追加補完。
     - [x] PKシステムの視界・成長ルールおよび召喚・識別の詳細仕様を補完。
 - **解決策**: 各機能仕様書および [実装詳細](implementation/Implementation-Details.md) を更新し、曖昧さを排除済み。
 
