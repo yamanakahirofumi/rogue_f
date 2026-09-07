@@ -225,6 +225,21 @@
 }
 ```
 
+### 2.18 shop_transaction (ショップ取引)
+プレイヤーがショップにてアイテムの購入、売却、または鑑定制を依頼した際に記録されます。
+
+```typescript
+{
+  shopId: string;                                             // ショップID
+  shopType: 'admin' | 'system';                               // ショップ種別
+  action: 'buy' | 'sell' | 'appraise';                        // アクション種別
+  itemId: string;                                             // アイテム個体ID
+  itemName: string;                                           // アイテム名
+  goldAmount: number;                                         // 売買金額または鑑定料
+  position: { x: number; y: number };                         // 取引が行われた座標
+}
+```
+
 ## 3. 相互参照
 - [管理者データモデル](Admin-Data-Models.md)
 - [管理者システム](../features/Admin-System.md)
@@ -237,4 +252,5 @@
 - [称号・実績システム](../features/Title-System.md)
 - [昼夜・天候システム](../features/Time-Weather-System.md)
 - [エモート・スタンプマスターリスト](../features/Emote-Stamp-Master-List.md)
+- [ショップシステム](../features/Shop-System.md)
 - [ゲームバランス調整システム](../features/Game-Balance-System.md)

@@ -37,6 +37,8 @@
     - `throw/{itemId}/{direction}`: 指定した方向にアイテムを投げる。
     - `throw/{itemId}/{targetId}`: 指定した対象にアイテムを投げる。
   - ショップコマンド:
+    - `GET /api/player/{userId}/shop`: 現在接触中または拠点ショップのカタログ情報（陳列アイテム、価格、在庫、管理者買取可能ゴールド、鑑定料率等）の取得。
+      - レスポンス: `ShopCatalogResponse`
     - `buy/{itemId}`: ショップの商品を購入。
     - `sell/{itemId}`: インベントリのアイテムを売却。
     - `appraise/{itemId}`: ショップでアイテムを鑑定（鑑定料が必要）。
@@ -431,7 +433,8 @@ interface InventorySwapRequest {
     | WeatherChangedDetails
     | EmoteStampUsedDetails
     | BalanceTelemetryDetails
-    | SynthesisEventDetails;
+    | SynthesisEventDetails
+    | ShopTransactionDetails;
 }
 
 type DungeonEventType =
@@ -451,7 +454,8 @@ type DungeonEventType =
   | 'weather_changed'      // 天候変化
   | 'emote_stamp_used'     // エモート・スタンプ使用
   | 'balance_telemetry'    // ゲームバランス調整用テレメトリ記録
-  | 'synthesis_event';     // アイテム合成・解体イベント
+  | 'synthesis_event'      // アイテム合成・解体イベント
+  | 'shop_transaction';    // ショップ取引（購入・売却・鑑定）
 
 interface PlayerEntryDetails {
   entranceId: string;      // 入口のID
@@ -590,6 +594,27 @@ interface ChestOpenResult {
 
 ### 3.11 Shop Action Results
 ```typescript
+interface ShopItemListing {
+  id: string;             // スロットID
+  itemId: string;         // アイテム個体ID
+  itemTypeId: string;     // アイテム種別ID
+  name: string;           // アイテム名
+  description: string;    // アイテム説明
+  price: number;          // 販売価格
+  baseMarketPrice: number;// 基本市場価格
+  stockAmount: number;    // 在庫数
+  itemDetails?: InventoryItem; // 詳細データ
+}
+
+interface ShopCatalogResponse {
+  shopId: string;         // ショップID
+  shopName: string;       // 店舗名
+  shopType: 'admin' | 'system'; // 店舗カテゴリ
+  ownerGold?: number;     // 管理者の買取可能ゴールド
+  items: ShopItemListing[]; // 陳列アイテム一覧
+  appraisalFeeRate?: number; // 鑑定料倍率
+}
+
 interface BuyResult {
   result: boolean;      // 購入成否
   item?: InventoryItem; // 購入したアイテム
@@ -608,6 +633,16 @@ interface AppraiseResult {
   item?: InventoryItem; // 鑑定後のアイテム情報
   lostGold?: number;    // 消費した鑑定料
   message: string;      // 結果メッセージ
+}
+
+interface ShopTransactionDetails {
+  shopId: string;         // ショップID
+  shopType: 'admin' | 'system'; // ショップ種別
+  action: 'buy' | 'sell' | 'appraise'; // アクション種別
+  itemId: string;         // アイテム個体ID
+  itemName: string;       // アイテム名
+  goldAmount: number;     // 売買金額または鑑定料
+  position: { x: number; y: number }; // 取引座標
 }
 ```
 

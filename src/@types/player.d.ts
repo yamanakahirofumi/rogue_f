@@ -238,6 +238,27 @@ interface ChestOpenResult {
   message: string;
 }
 
+interface ShopItemListing {
+  id: string;             // スロットID
+  itemId: string;         // アイテム個体ID
+  itemTypeId: string;     // アイテム種別ID
+  name: string;           // アイテム名
+  description: string;    // アイテム説明
+  price: number;          // 販売価格
+  baseMarketPrice: number;// 基本市場価格
+  stockAmount: number;    // 在庫数
+  itemDetails?: InventoryItem; // 詳細データ
+}
+
+interface ShopCatalogResponse {
+  shopId: string;         // ショップID
+  shopName: string;       // 店舗名
+  shopType: 'admin' | 'system'; // 店舗カテゴリ
+  ownerGold?: number;     // 管理者の買取可能ゴールド
+  items: ShopItemListing[]; // 陳列アイテム一覧
+  appraisalFeeRate?: number; // 鑑定料倍率
+}
+
 interface BuyResult {
   result: boolean;
   item?: InventoryItem;
