@@ -133,6 +133,8 @@
 ## 7. 相互参照
 - [建築システム](Construction-System.md)
 - [管理者データモデル](../implementation/Admin-Data-Models.md)
+- [実装詳細](../implementation/Implementation-Details.md)
+- [イベントログ詳細仕様](../implementation/Event-Log-Schemas.md)
 - [PKシステム](PK-System.md)
 - [アイテムマスターリスト](Item-Master-List.md)
 - [宝箱・鍵システム](Chest-Key-System.md)
