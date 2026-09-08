@@ -266,7 +266,8 @@ interface DungeonEvent {
     | WeatherChangedDetails
     | EmoteStampUsedDetails
     | BalanceTelemetryDetails
-    | SynthesisEventDetails;
+    | SynthesisEventDetails
+    | ShopTransactionDetails;
 }
 
 type DungeonEventType =
@@ -286,7 +287,8 @@ type DungeonEventType =
   | 'weather_changed'      // 天候変化
   | 'emote_stamp_used'     // エモート・スタンプ使用
   | 'balance_telemetry'    // ゲームバランス調整用テレメトリ記録
-  | 'synthesis_event';     // アイテム合成・解体イベント
+  | 'synthesis_event'      // アイテム合成・解体イベント
+  | 'shop_transaction';    // ショップ取引（購入・売却・鑑定）
 
 interface PlayerEntryDetails {
   entranceId: string;
@@ -421,6 +423,16 @@ interface SynthesisEventDetails {
   consumedMaterials?: { typeId: string; amount: number }[];   // 消費された資材リスト ('craft' 時)
   refundedGold?: number;                                      // 返金されたゴールド ('craft' 失敗時)
   recoveredMaterials?: { typeId: string; amount: number }[];  // 回収された資材リスト ('dismantle' 成功時)
+}
+
+interface ShopTransactionDetails {
+  shopId: string;                                             // ショップID
+  shopType: 'admin' | 'system';                               // ショップ種別
+  action: 'buy' | 'sell' | 'appraise';                        // アクション種別
+  itemId: string;                                             // アイテム個体ID
+  itemName: string;                                           // アイテム名
+  goldAmount: number;                                         // 売買金額または鑑定料
+  position: { x: number; y: number };                         // 取引座標
 }
 
 interface AdminLog {
