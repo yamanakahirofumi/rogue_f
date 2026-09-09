@@ -240,9 +240,26 @@
 }
 ```
 
+### 2.19 breeding_event (モンスター繁殖・孵化・促進)
+拠点の繁殖場にて管理者がモンスターの繁殖を実行した際、卵が孵化した際、または孵化促進剤を使用して残り時間を短縮した際に記録されます。
+
+```typescript
+{
+  action: 'breed' | 'hatch' | 'accelerate';                   // 処理アクション
+  parentId1?: string;                                         // 親モンスター1の種別/個体ID ('breed' 時)
+  parentId2?: string;                                         // 親モンスター2の種別/個体ID ('breed' 時)
+  eggId?: string;                                             // 卵モンスターID
+  hatchedMonsterTypeId?: string;                             // 孵化したモンスターの種別ID ('hatch' 時)
+  consumedGold?: number;                                      // 消費したゴールド
+  consumedMaterials?: { typeId: string; amount: number }[];   // 消費した資材
+  isMutationOccurred?: boolean;                               // 突然変異が発生したか
+}
+```
+
 ## 3. 相互参照
 - [管理者データモデル](Admin-Data-Models.md)
 - [管理者システム](../features/Admin-System.md)
+- [モンスター繁殖システム](../features/Monster-Breeding-System.md)
 - [合成システム](../features/Synthesis-System.md)
 - [宝箱・鍵システム](../features/Chest-Key-System.md)
 - [釣りシステム](../features/Fishing-System.md)

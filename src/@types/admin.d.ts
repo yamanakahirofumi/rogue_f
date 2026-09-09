@@ -267,7 +267,8 @@ interface DungeonEvent {
     | EmoteStampUsedDetails
     | BalanceTelemetryDetails
     | SynthesisEventDetails
-    | ShopTransactionDetails;
+    | ShopTransactionDetails
+    | BreedingEventDetails;
 }
 
 type DungeonEventType =
@@ -288,7 +289,8 @@ type DungeonEventType =
   | 'emote_stamp_used'     // エモート・スタンプ使用
   | 'balance_telemetry'    // ゲームバランス調整用テレメトリ記録
   | 'synthesis_event'      // アイテム合成・解体イベント
-  | 'shop_transaction';    // ショップ取引（購入・売却・鑑定）
+  | 'shop_transaction'     // ショップ取引（購入・売却・鑑定）
+  | 'breeding_event';      // モンスター繁殖・孵化・促進
 
 interface PlayerEntryDetails {
   entranceId: string;
@@ -502,4 +504,51 @@ interface WarehouseExpandResult {
   consumedGold?: number;                       // 消費したゴールド
   consumedMaterials?: { typeId: string; amount: number }[]; // 消費した資材リスト
   message: string;                             // 結果メッセージ
+}
+
+interface MonsterBreedRequest {
+  parentId1: string;          // 親モンスター1のID
+  parentId2: string;          // 親モンスター2のID
+  useMutationPotion?: boolean; // 変異の薬使用フラグ (+10% 突然変異率)
+}
+
+interface MonsterBreedResult {
+  success: boolean;
+  egg?: StoredMonster;
+  consumedGold: number;
+  consumedMaterials: { typeId: string; amount: number }[];
+  message: string;
+}
+
+interface MonsterHatchRequest {
+  eggId: string;              // 孵化対象の卵モンスターID
+}
+
+interface MonsterHatchResult {
+  success: boolean;
+  hatchedMonster?: StoredMonster;
+  message: string;
+}
+
+interface MonsterAccelerateRequest {
+  eggId: string;              // 促進対象の卵モンスターID
+  acceleratorItemId?: string; // 使用する孵化促進剤のアイテムID
+}
+
+interface MonsterAccelerateResult {
+  success: boolean;
+  remainingMinutes: number;
+  isHatchingReady: boolean;
+  message: string;
+}
+
+interface BreedingEventDetails {
+  action: 'breed' | 'hatch' | 'accelerate'; // 処理アクション
+  parentId1?: string;         // 親モンスター1の種別/個体ID ('breed' 時)
+  parentId2?: string;         // 親モンスター2の種別/個体ID ('breed' 時)
+  eggId?: string;             // 卵モンスターID
+  hatchedMonsterTypeId?: string; // 孵化したモンスターの種別ID ('hatch' 時)
+  consumedGold?: number;      // 消費したゴールド
+  consumedMaterials?: { typeId: string; amount: number }[]; // 消費した資材
+  isMutationOccurred?: boolean; // 突然変異が発生したか
 }

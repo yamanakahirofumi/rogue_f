@@ -92,7 +92,44 @@
     - **配置中の挙動**: ダンジョンに配置されている間は、時間経過による活力の減少は発生しません。
     - **回復**: 活力は、[倉庫システム](Warehouse-System.md)で休息させるか、特定のアイテム（**活力飲料**）で **50 ポイント** 回復させることが可能です。
 
-## 5. 相互参照
+## 5. REST API 仕様
+
+モンスターの繁殖、卵の孵化、および孵化促進剤の適用は以下の REST API を介して処理されます。
+
+### 5.1 モンスター繁殖 API
+- **エンドポイント**: `POST /api/admin/warehouse/monster/breed`
+- **リクエスト**: `MonsterBreedRequest`
+  - `parentId1`: 親モンスター1の個体ID
+  - `parentId2`: 親モンスター2の個体ID
+  - `useMutationPotion?: boolean`: 変異の薬 (`mutation_potion`) を消費して突然変異率を +10% 増加させるフラグ
+- **レスポンス**: `MonsterBreedResult`
+  - `success`: 繁殖処理の成否
+  - `egg?: StoredMonster`: 生成された卵データ (`growthStage = 'larva'`, `hatchTimeRemaining` 設定あり)
+  - `consumedGold`: 消費されたゴールド
+  - `consumedMaterials`: 消費された資材リスト (魔力結晶等)
+  - `message`: 処理結果メッセージ
+
+### 5.2 卵孵化 API
+- **エンドポイント**: `POST /api/admin/warehouse/monster/{eggId}/hatch`
+- **リクエスト**: `MonsterHatchRequest`
+  - `eggId`: 対象の卵モンスターID
+- **レスポンス**: `MonsterHatchResult`
+  - `success`: 孵化の成否（`hatchTimeRemaining == 0` の場合にのみ成功）
+  - `hatchedMonster?: StoredMonster`: 孵化後の幼体モンスターデータ (`growthStage = 'larva'`, 活力50%)
+  - `message`: 処理結果メッセージ
+
+### 5.3 孵化促進 API
+- **エンドポイント**: `POST /api/admin/warehouse/monster/{eggId}/accelerate`
+- **リクエスト**: `MonsterAccelerateRequest`
+  - `eggId`: 対象の卵モンスターID
+  - `acceleratorItemId?: string`: 消費する孵化促進剤 (`incubation_accelerator`) のアイテムID
+- **レスポンス**: `MonsterAccelerateResult`
+  - `success`: 促進の成否
+  - `remainingMinutes`: 処理後の残り孵化時間 (促進成功時は 0)
+  - `isHatchingReady`: 即座に孵化可能かどうか
+  - `message`: 処理結果メッセージ
+
+## 6. 相互参照
 - [モンスターシステム](Monster-System.md)
 - [モンスターマスターリスト](Monster-Master-List.md)
 - [モンスター特性リスト](Monster-Trait-List.md)
