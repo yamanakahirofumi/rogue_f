@@ -27,15 +27,17 @@
   - アクションコマンド:
     - `attack`: 隣接する敵に攻撃を実行。
     - `attack/{targetId}`: 指定したIDの対象に攻撃を実行（遠距離攻撃等）。
-    - `use/{itemId}`: アイテムを使用。
-    - `use/{itemId}/{targetId}`: 指定した対象にアイテムを使用。
+    - `use/{itemId}` / `use/{itemId}/{targetId}`: アイテムを使用（回復、鑑定、高飛び、効果付与等）。
+      - レスポンス: `UseItemResult`
     - `equip/{itemId}`: アイテムを装備。
+      - レスポンス: `EquipResult`
     - `unequip/{itemId}`: 装備を解除。
+      - レスポンス: `UnequipResult`
     - `drop/{itemId}`: アイテムを足元に置く。
-    - `skill/{actionId}`: 特殊行動（スキル）を実行。
-    - `skill/{actionId}/{targetId}`: 指定した対象に特殊行動を実行。
-    - `throw/{itemId}/{direction}`: 指定した方向にアイテムを投げる。
-    - `throw/{itemId}/{targetId}`: 指定した対象にアイテムを投げる。
+      - レスポンス: `DropItemResult`
+    - `skill/{actionId}` / `skill/{actionId}/{targetId}`: 特殊行動（スキル）を実行。
+    - `throw/{itemId}/{direction}` / `throw/{itemId}/{targetId}`: 指定した方向または対象にアイテムを投げる。
+      - レスポンス: `ThrowResult`
   - ショップコマンド:
     - `GET /api/player/{userId}/shop`: 現在接触中または拠点ショップのカタログ情報（陳列アイテム、価格、在庫、管理者買取可能ゴールド、鑑定料率等）の取得。
       - レスポンス: `ShopCatalogResponse`
@@ -127,6 +129,11 @@
   - レスポンス (search): `SearchResult`
   - レスポンス (disarm): `DisarmResult`
   - レスポンス (attack): `CombatResult`
+  - レスポンス (use): `UseItemResult`
+  - レスポンス (equip): `EquipResult`
+  - レスポンス (unequip): `UnequipResult`
+  - レスポンス (drop): `DropItemResult`
+  - レスポンス (throw): `ThrowResult`
   - レスポンス (buy): `BuyResult`
   - レスポンス (sell): `SellResult`
   - レスポンス (appraise): `AppraiseResult`
@@ -413,7 +420,75 @@ interface InventorySwapRequest {
 }
 ```
 
-### 3.9 DungeonEvent
+### 3.9 Item Action Results
+
+#### UseItemResult
+```typescript
+interface UseItemResult {
+  success: boolean;                                            // 使用処理の成否
+  itemId: string;                                              // 使用したアイテムの個体ID
+  itemTypeId: string;                                          // 使用したアイテムの種別ID
+  consumed: boolean;                                           // アイテムが消費・消失したか
+  healedHp?: number;                                           // 回復したHP
+  healedStamina?: number;                                      // 回復したスタミナ
+  recoveredSatiety?: number;                                   // 回復した満腹度
+  appliedStatusEffects?: string[];                             // 付与された状態異常/バフのIDリスト
+  removedStatusEffects?: string[];                             // 解除された状態異常/デバフのIDリスト
+  identifiedItemIds?: string[];                                // 鑑定されたアイテムのIDリスト (鑑定の巻物等)
+  teleportedPosition?: { x: number; y: number };               // テレポート先座標 (高飛びの巻物等)
+  message: string;                                             // 処理結果メッセージ
+}
+```
+
+#### EquipResult
+```typescript
+interface EquipResult {
+  success: boolean;                                            // 装備処理の成否
+  equippedItemId: string;                                      // 装備したアイテムの個体ID
+  slot: 'weapon' | 'armor' | 'accessory';                      // 装着スロット
+  unequippedItemId?: string;                                   // 自動で取り外された以前の装備品ID
+  isCursed: boolean;                                           // 装備品が呪われているか
+  message: string;                                             // 処理結果メッセージ
+}
+```
+
+#### UnequipResult
+```typescript
+interface UnequipResult {
+  success: boolean;                                            // 装備解除処理の成否
+  unequippedItemId: string;                                    // 取り外したアイテムの個体ID
+  slot: 'weapon' | 'armor' | 'accessory';                      // 解除したスロット
+  message: string;                                             // 処理結果メッセージ
+}
+```
+
+#### DropItemResult
+```typescript
+interface DropItemResult {
+  success: boolean;                                            // ドロップ処理の成否
+  itemId: string;                                              // 足元に置いたアイテムの個体ID
+  position: { x: number; y: number };                          // 置かれたマスの座標
+  message: string;                                             // 処理結果メッセージ
+}
+```
+
+#### ThrowResult
+```typescript
+interface ThrowResult {
+  success: boolean;                                            // 投擲処理の成否
+  itemId: string;                                              // 投擲したアイテムの個体ID
+  itemTypeId: string;                                          // 投擲したアイテムの種別ID
+  isHit: boolean;                                              // 対象または障害物に命中したか
+  targetId?: string;                                           // 命中した対象のエンティティID
+  damageDealt?: number;                                        // 与えたダメージ量
+  isBroken: boolean;                                           // 投擲・着弾により破砕・消滅したか（薬等）
+  landedPosition?: { x: number; y: number };                   // 最終的な着地・落下の座標
+  appliedStatusEffects?: string[];                             // 着弾時に付与された状態異常 (毒薬等)
+  message: string;                                             // 処理結果メッセージ
+}
+```
+
+### 3.10 DungeonEvent
 ```typescript
 {
   id: string;              // イベント固有ID

@@ -231,6 +231,57 @@ interface DisarmResult {
   message: string;
 }
 
+interface UseItemResult {
+  success: boolean;                                            // 使用処理の成否
+  itemId: string;                                              // 使用したアイテムの個体ID
+  itemTypeId: string;                                          // 使用したアイテムの種別ID
+  consumed: boolean;                                           // アイテムが消費・消失したか
+  healedHp?: number;                                           // 回復したHP
+  healedStamina?: number;                                      // 回復したスタミナ
+  recoveredSatiety?: number;                                   // 回復した満腹度
+  appliedStatusEffects?: string[];                             // 付与された状態異常/バフのIDリスト
+  removedStatusEffects?: string[];                             // 解除された状態異常/デバフのIDリスト
+  identifiedItemIds?: string[];                                // 鑑定されたアイテムのIDリスト (鑑定の巻物等)
+  teleportedPosition?: { x: number; y: number };               // テレポート先座標 (高飛びの巻物等)
+  message: string;                                             // 処理結果メッセージ
+}
+
+interface EquipResult {
+  success: boolean;                                            // 装備処理の成否
+  equippedItemId: string;                                      // 装備したアイテムの個体ID
+  slot: 'weapon' | 'armor' | 'accessory';                      // 装着スロット
+  unequippedItemId?: string;                                   // 自動で取り外された以前の装備品ID
+  isCursed: boolean;                                           // 装備品が呪われているか
+  message: string;                                             // 処理結果メッセージ
+}
+
+interface UnequipResult {
+  success: boolean;                                            // 装備解除処理の成否
+  unequippedItemId: string;                                    // 取り外したアイテムの個体ID
+  slot: 'weapon' | 'armor' | 'accessory';                      // 解除したスロット
+  message: string;                                             // 処理結果メッセージ
+}
+
+interface DropItemResult {
+  success: boolean;                                            // ドロップ処理の成否
+  itemId: string;                                              // 足元に置いたアイテムの個体ID
+  position: { x: number; y: number };                          // 置かれたマスの座標
+  message: string;                                             // 処理結果メッセージ
+}
+
+interface ThrowResult {
+  success: boolean;                                            // 投擲処理の成否
+  itemId: string;                                              // 投擲したアイテムの個体ID
+  itemTypeId: string;                                          // 投擲したアイテムの種別ID
+  isHit: boolean;                                              // 対象または障害物に命中したか
+  targetId?: string;                                           // 命中した対象のエンティティID
+  damageDealt?: number;                                        // 与えたダメージ量
+  isBroken: boolean;                                           // 投擲・着弾により破砕・消滅したか（薬等）
+  landedPosition?: { x: number; y: number };                   // 最終的な着地・落下の座標
+  appliedStatusEffects?: string[];                             // 着弾時に付与された状態異常 (毒薬等)
+  message: string;                                             // 処理結果メッセージ
+}
+
 interface ChestOpenResult {
   result: 'success' | 'failed_locked' | 'failed_jammed' | 'trap_triggered' | 'mimic_awakened' | 'broken';
   loot?: InventoryItem;
