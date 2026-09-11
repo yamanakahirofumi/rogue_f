@@ -420,3 +420,28 @@ interface SynthesisDismantleResult {
   consumedGold: number;                                                // 解体費用 (基本価格の10%)
   message: string;                                                     // 結果メッセージ
 }
+
+interface SaveData {
+  userId: string;                                                      // ユーザーID
+  player: Player;                                                      // プレイヤーの動的ステータス
+  dungeonConfig: DungeonConfig;                                        // 管理しているダンジョンの設定
+  warehouseState: WarehouseState;                                      // 倉庫（ストック）の状態
+  suspendState?: SuspendSaveState;                                     // 存在する場合、ダンジョン探索中の中断セーブ状態
+}
+
+interface SuspendSaveState {
+  dungeonId: string;                                                   // 探索中ダンジョンのID
+  dungeonName: string;                                                 // ダンジョン名
+  floorLevel: number;                                                  // 中断時点の階層レベル
+  seed: number;                                                        // マップ生成シード値
+  savedAt: number;                                                     // 中断日時のタイムスタンプ (UNIX ms)
+  playerState: Player;                                                 // 中断時点のプレイヤー完全ステータス
+  mapStateSnapshot?: any;                                              // マップ内のアイテム・敵・配置物のスナップショット
+}
+
+interface SaveLoadResult {
+  success: boolean;                                                    // セーブ・ロード処理の成否
+  saveData?: SaveData;                                                 // 取得されたセーブデータ
+  suspendState?: SuspendSaveState;                                     // 復元された中断セーブデータ
+  message: string;                                                     // 処理結果メッセージ
+}

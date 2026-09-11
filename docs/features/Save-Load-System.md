@@ -33,24 +33,69 @@
 ## 4. 保存先とデータ構造
 データはサーバー側のデータベースに保存されることを基本としますが、オフライン対応や通信量削減のため、クライアント側の `localStorage` も補助的に活用します。
 
-### 4.1 データ構造 (SaveData)
-保存されるデータの構造は、[実装詳細](../implementation/Implementation-Details.md#3-12-savedata) の `SaveData` インターフェースに準じます。
+### 4.1 データ構造 (SaveData, SuspendSaveState, SaveLoadResult)
+保存されるデータの構造は、[実装詳細](../implementation/Implementation-Details.md) に規定されている `SaveData`、`SuspendSaveState`、および `SaveLoadResult` インターフェースに準じます。
 
 ```typescript
 interface SaveData {
-  userId: string;          // ユーザーID
-  player: Player;          // プレイヤーの動的ステータス
-  dungeonConfig: DungeonConfig; // 管理しているダンジョンの設定
+  userId: string;                 // ユーザーID
+  player: Player;                 // プレイヤーの動的ステータス
+  dungeonConfig: DungeonConfig;   // 管理しているダンジョンの設定
   warehouseState: WarehouseState; // 倉庫（ストック）の状態
+  suspendState?: SuspendSaveState;// 存在する場合、ダンジョン探索中の中断セーブ状態
+}
+
+interface SuspendSaveState {
+  dungeonId: string;              // 探索中ダンジョンのID
+  dungeonName: string;            // ダンジョン名
+  floorLevel: number;             // 中断時点の階層レベル
+  seed: number;                   // マップ生成シード値
+  savedAt: number;                // 中断日時のタイムスタンプ (UNIX ms)
+  playerState: Player;            // 中断時点のプレイヤー完全ステータス
+  mapStateSnapshot?: any;         // マップ内のアイテム・敵・配置物のスナップショット
+}
+
+interface SaveLoadResult {
+  success: boolean;               // セーブ・ロード処理の成否
+  saveData?: SaveData;            // 取得されたセーブデータ
+  suspendState?: SuspendSaveState;// 復元された中断セーブデータ
+  message: string;                // 処理結果メッセージ
 }
 ```
 
-## 5. ロードのプロセス
+## 5. REST API エンドポイント仕様
+
+セーブ・ロード処理を制御・連携するための REST API を以下のように定義します。
+
+### 5.1 最新セーブデータの取得
+- **エンドポイント**: `GET /api/player/{userId}/save`
+- **目的**: ログイン時またはタイトル画面表示時に、該当ユーザーの最新セーブデータ（拠点の永続データおよび未完了の中断セーブ状態の有無）を取得します。
+- **レスポンス**: `SaveLoadResult`
+
+### 5.2 拠点・手動セーブの実行
+- **エンドポイント**: `POST /api/player/{userId}/save`
+- **目的**: 拠点（町）での施設利用後やセーブコマンド実行時に、最新の `SaveData` を永続化保存します。
+- **リクエスト**: `Partial<SaveData>`
+- **レスポンス**: `SaveLoadResult`
+
+### 5.3 ダンジョン中断セーブの作成
+- **エンドポイント**: `POST /api/player/{userId}/save/suspend`
+- **目的**: ダンジョン探索中に「中断してタイトルへ」を選択した際、現在フロアの完全な状態（`SuspendSaveState`）を一時保存します。
+- **リクエスト**: `{ dungeonId: string; floorLevel: number; seed: number; mapStateSnapshot?: any }`
+- **レスポンス**: `SaveLoadResult`
+
+### 5.4 ダンジョン中断セーブの消去
+- **エンドポイント**: `DELETE /api/player/{userId}/save/suspend`
+- **目的**: 中断データからの再開完了時、またはダンジョン内で死亡（パーマデス発生）した際に、該当ユーザーの中断セーブデータを削除・無効化します。
+- **レスポンス**: `SaveLoadResult`
+
+## 6. ロードのプロセス
 - ログイン時、サーバーから最新の `SaveData` を取得します。
-- 未完了の「中断セーブ」が存在する場合は、タイトル画面に「続きから（探索再開）」の選択肢が表示されます。
+- 未完了の「中断セーブ (`suspendState`)」が存在する場合は、タイトル画面に「続きから（探索再開）」の選択肢が表示されます。
+- 中断セーブから再開した場合、即座に `DELETE /api/player/{userId}/save/suspend` が呼び出され、ワンタイムでの再開を保証します。
 - それ以外の場合は、拠点からスタートします。
 
-## 6. 相互参照
+## 7. 相互参照
 - [機能仕様書](Functional-Specification.md)
 - [実装詳細](../implementation/Implementation-Details.md)
 - [拠点システム](Base-System.md)
