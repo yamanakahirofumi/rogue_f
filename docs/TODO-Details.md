@@ -75,6 +75,7 @@
     - [x] PKシステムの視界・成長ルールおよび召喚・識別の詳細仕様を補完。
     - [x] ショップシステムのカタログ閲覧REST API（`GET /api/player/{userId}/shop`）、鑑定料計算式（`50 + Tier * 50`）、商品自動補充ルール、および取引イベントログ（`shop_transaction`）の補完。
     - [x] モンスター繁殖・孵化・促進処理のREST API仕様（`/api/admin/warehouse/monster/breed`, `/hatch`, `/accelerate`）、TypeScript型定義、およびイベントログ詳細スキーマ（`breeding_event`）の追加補完。
+    - [x] プレイヤーのアイテム操作・投擲・装備アクション（`use`, `equip`, `unequip`, `drop`, `throw`）に対するレスポンス型定義（`UseItemResult`, `EquipResult`, `UnequipResult`, `DropItemResult`, `ThrowResult`）の追加補完。
 - **解決策**: 各機能仕様書および [実装詳細](implementation/Implementation-Details.md) を更新し、曖昧さを排除済み。
 
 ### [x] セーブ・ロード機能
