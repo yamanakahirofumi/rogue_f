@@ -273,6 +273,20 @@
   - `POST /api/replays/{replayId}/bookmark`: 指定リプレイのお気に入り/ブックマーク登録。
     - レスポンス: `boolean`
 
+### 2.9 セーブ・ロード API (Save & Load API)
+プレイヤーのゲーム進行状況の保存・復元・中断データの制御を行うエンドポイントです。詳細は **[セーブ・ロードシステム](../features/Save-Load-System.md)** を参照してください。
+
+- `GET /api/player/{userId}/save`: 最新セーブデータ（永続拠点データおよび未処理の中断セーブの有無）の取得。
+  - レスポンス: `SaveLoadResult`
+- `POST /api/player/{userId}/save`: 拠点や手動セーブ時の `SaveData` 永続化更新。
+  - リクエスト: `Partial<SaveData>`
+  - レスポンス: `SaveLoadResult`
+- `POST /api/player/{userId}/save/suspend`: ダンジョン探索中の中断セーブデータ作成。
+  - リクエスト: `{ dungeonId: string; floorLevel: number; seed: number; mapStateSnapshot?: any }`
+  - レスポンス: `SaveLoadResult`
+- `DELETE /api/player/{userId}/save/suspend`: 再開完了時または死亡時のダンジョン中断セーブ削除。
+  - レスポンス: `SaveLoadResult`
+
 ## 3. データモデル
 
 ### 3.1 Player
@@ -939,13 +953,31 @@ interface NpcDialogue {
 }
 ```
 
-### 3.21 SaveData
+### 3.21 Save & Load Models
 ```typescript
 interface SaveData {
-  userId: string;          // ユーザーID
-  player: Player;          // プレイヤーの動的ステータス
-  dungeonConfig: DungeonConfig; // 管理しているダンジョンの設定
+  userId: string;                 // ユーザーID
+  player: Player;                 // プレイヤーの動的ステータス
+  dungeonConfig: DungeonConfig;   // 管理しているダンジョンの設定
   warehouseState: WarehouseState; // 倉庫（ストック）の状態
+  suspendState?: SuspendSaveState;// 存在する場合、ダンジョン探索中の中断セーブ状態
+}
+
+interface SuspendSaveState {
+  dungeonId: string;              // 探索中ダンジョンのID
+  dungeonName: string;            // ダンジョン名
+  floorLevel: number;             // 中断時点の階層レベル
+  seed: number;                   // マップ生成シード値
+  savedAt: number;                // 中断日時のタイムスタンプ (UNIX ms)
+  playerState: Player;            // 中断時点のプレイヤー完全ステータス
+  mapStateSnapshot?: any;         // マップ内のアイテム・敵・配置物のスナップショット
+}
+
+interface SaveLoadResult {
+  success: boolean;               // セーブ・ロード処理の成否
+  saveData?: SaveData;            // 取得されたセーブデータ
+  suspendState?: SuspendSaveState;// 復元された中断セーブデータ
+  message: string;                // 処理結果メッセージ
 }
 ```
 
