@@ -162,6 +162,9 @@
     - レスポンス: `DungeonConfig[]`
   - `PUT /api/admin/dungeon/{dungeonId}/floor/{floorLevel}`: 特定階層の構成（マップ、配置物）の更新。
     - リクエスト: `FloorConfig`
+  - `DELETE /api/admin/dungeon/{dungeonId}/floor/{floorLevel}/trap`: 指定した階層・座標の配置済みトラップを撤去・解体（設置コストの50%の資材・ゴールドを回収）。
+    - リクエスト: `TrapDismantleRequest`
+    - レスポンス: `TrapDismantleResult`
 - **倉庫・リソース管理**
   - `GET /api/admin/warehouse`: 倉庫の状態（モンスター、アイテム、資材）を取得。
     - レスポンス: `WarehouseState`
