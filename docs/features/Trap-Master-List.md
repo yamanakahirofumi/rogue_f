@@ -20,7 +20,12 @@
 | `summon_trap` | 召喚の罠 | 闇 | `magic_crystal` × 10 | 3,000 | 8 | 70 | 周囲 8 マスに階層 Tier のモンスターを 2〜4 体召喚。 |
 | `equip_remover` | 装備外しの罠 | 光 | `iron` × 10, `magic_stone` × 1 | 2,500 | 6 | 55 | 装備品を 1 つ強制解除（優先度: 武器＞防具＞装飾品。呪いを除く）。 |
 
-## 3. データ構造とデータモデル
+## 3. トラップの撤去・解体による資材・ゴールドの回収
+
+管理者がマイ・ダンジョンに配置したトラップを編集画面から撤去（解体）する場合、設置時に消費した各資材およびゴールドの **50%**（端数切り捨て）が返還されます。
+詳細は [建築システム](Construction-System.md#22-入手方法) および [トラップシステム](Trap-System.md#43-トラップの撤去・解体-dismantling) を参照してください。
+
+## 4. データ構造とデータモデル
 
 ゲームシステムおよび API 等で使用されるトラップマスタ情報の基本データ構造（`TrapEntry`）の定義です。
 TypeScript の型定義は `src/@types/admin.d.ts` に配置されます。
@@ -38,7 +43,7 @@ export interface TrapEntry {
 }
 ```
 
-## 4. 相互参照
+## 5. 相互参照
 - [トラップシステム](Trap-System.md)
 - [管理者データモデル](../implementation/Admin-Data-Models.md)
 - [実装詳細](../implementation/Implementation-Details.md)

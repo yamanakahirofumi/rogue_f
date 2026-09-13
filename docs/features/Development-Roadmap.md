@@ -53,3 +53,6 @@
   - **モンスター繁殖・孵化・促進処理用APIおよびイベントログ仕様の補完**: 拠点繁殖場でのモンスター繁殖・即時孵化促進用 REST API (`/api/admin/warehouse/monster/breed`, `/hatch`, `/accelerate`)、TypeScript型定義 (`MonsterBreedRequest`, `MonsterBreedResult`, `MonsterHatchRequest`, `MonsterHatchResult`, `MonsterAccelerateRequest`, `MonsterAccelerateResult`, `BreedingEventDetails`)、およびイベントログ詳細スキーマ (`breeding_event`) の策定・追加。
   - **アイテム操作・投擲・装備アクションのレスポンス型定義補完**: プレイヤーのアクションコマンド (`use`, `equip`, `unequip`, `drop`, `throw`) に対する構造化レスポンス仕様 (`UseItemResult`, `EquipResult`, `UnequipResult`, `DropItemResult`, `ThrowResult`) および関連機能仕様書 (`Action-System.md`, `Inventory-System.md`, `Equipment-System.md`) への追記補完。
   - **セーブ・ロードシステム REST API 仕様およびデータモデルの補完**: 永続セーブデータおよびダンジョン中断セーブデータの取得・永続化・一時保存・削除用 REST API (`/api/player/{userId}/save` エンドポイント群)、TypeScript 型定義 (`SaveData`, `SuspendSaveState`, `SaveLoadResult`)、および仕様書 (`Save-Load-System.md`, `Implementation-Details.md`) の補完・追加。
+
+### 2026年9月
+- **管理者によるトラップ解体・撤去時の資材回収仕様および REST API の補完**: 管理者がダンジョン編集画面で設置済みトラップを撤去・解体する際の資材・ゴールド回収ルール（設置コストの50%、端数切り捨て）、解体用 REST API エンドポイント (`DELETE /api/admin/dungeon/{dungeonId}/floor/{floorLevel}/trap`)、TypeScript 型定義 (`TrapDismantleRequest`, `TrapDismantleResult`)、および関連仕様書 (`Trap-System.md`, `Trap-Master-List.md`, `Construction-System.md`, `Admin-Data-Models.md`, `Implementation-Details.md`) への追記・同期。

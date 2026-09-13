@@ -105,6 +105,18 @@ interface PlacedTrap {
   isHidden: boolean;       // 初期状態で隠れているか
   difficulty: number;      // 発見・解除の難易度 (1〜100)
 }
+
+interface TrapDismantleRequest {
+  floorLevel: number;                         // 解体対象の階層番号
+  position: { x: number; y: number };         // 解体対象のトラップ座標
+}
+
+interface TrapDismantleResult {
+  success: boolean;                           // 撤去・解体処理の成否
+  recoveredGold: number;                      // 回収されたゴールド (設置コストの50%、端数切り捨て)
+  recoveredMaterials: { typeId: string; amount: number }[]; // 回収された資材リスト (設置コストの50%、端数切り捨て)
+  message: string;                            // 処理結果メッセージ
+}
 ```
 
 ## 4. ショップ設定 (ShopConfig)
