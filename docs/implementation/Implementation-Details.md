@@ -168,6 +168,9 @@
   - `DELETE /api/admin/dungeon/{dungeonId}/floor/{floorLevel}/facility/{facilityId}`: 指定した階層・座標の配置済み施設を撤去・解体（設置コストの50%の資材・ゴールドを回収）。
     - リクエスト: `FacilityDismantleRequest`
     - レスポンス: `FacilityDismantleResult`
+  - `DELETE /api/admin/dungeon/{dungeonId}/floor/{floorLevel}/terrain`: 指定した階層・座標の配置済み特殊地形タイルを撤去・解体して標準床へ初期化（設置コストの50%の資材・ゴールドを回収）。
+    - リクエスト: `TerrainDismantleRequest`
+    - レスポンス: `TerrainDismantleResult`
 - **倉庫・リソース管理**
   - `GET /api/admin/warehouse`: 倉庫の状態（モンスター、アイテム、資材）を取得。
     - レスポンス: `WarehouseState`
@@ -1056,7 +1059,7 @@ interface WorldTimeState {
 }
 ```
 
-### 3.25 TerrainEntry Model
+### 3.25 Terrain Models
 ```typescript
 interface TerrainEntry {
   typeId: 'floor' | 'wall' | 'door' | 'water' | 'lava' | 'sand';
@@ -1071,6 +1074,19 @@ interface TerrainEntry {
     damagePerAction?: number;
     biomeOverride?: string;
   };
+}
+
+interface TerrainDismantleRequest {
+  floorLevel: number;                         // 解体対象の階層番号
+  position: { x: number; y: number };         // 解体対象の地形タイル座標
+  targetTerrainType?: 'floor' | 'wall' | 'door' | 'water' | 'lava' | 'sand'; // 解体対象の地形種別ID (検証用)
+}
+
+interface TerrainDismantleResult {
+  success: boolean;                           // 撤去・解体（標準床への初期化）処理の成否
+  recoveredGold: number;                      // 回収されたゴールド (設置コストの50%、端数切り捨て)
+  recoveredMaterials: { typeId: string; amount: number }[]; // 回収された資材リスト (設置コストの50%、端数切り捨て)
+  message: string;                            // 処理結果メッセージ
 }
 ```
 
