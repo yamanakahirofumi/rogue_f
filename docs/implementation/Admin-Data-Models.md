@@ -117,6 +117,19 @@ interface TrapDismantleResult {
   recoveredMaterials: { typeId: string; amount: number }[]; // 回収された資材リスト (設置コストの50%、端数切り捨て)
   message: string;                            // 処理結果メッセージ
 }
+
+interface FacilityDismantleRequest {
+  floorLevel: number;                         // 解体対象の階層番号
+  facilityId?: string;                        // 解体対象の施設ID (存在する場合)
+  position: { x: number; y: number };         // 解体対象の施設座標
+}
+
+interface FacilityDismantleResult {
+  success: boolean;                           // 撤去・解体処理の成否
+  recoveredGold: number;                      // 回収されたゴールド (設置コストの50%、端数切り捨て)
+  recoveredMaterials: { typeId: string; amount: number }[]; // 回収された資材リスト (設置コストの50%、端数切り捨て)
+  message: string;                            // 処理結果メッセージ
+}
 ```
 
 ## 4. ショップ設定 (ShopConfig)

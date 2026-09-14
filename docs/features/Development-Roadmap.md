@@ -56,3 +56,4 @@
 
 ### 2026年9月
 - **管理者によるトラップ解体・撤去時の資材回収仕様および REST API の補完**: 管理者がダンジョン編集画面で設置済みトラップを撤去・解体する際の資材・ゴールド回収ルール（設置コストの50%、端数切り捨て）、解体用 REST API エンドポイント (`DELETE /api/admin/dungeon/{dungeonId}/floor/{floorLevel}/trap`)、TypeScript 型定義 (`TrapDismantleRequest`, `TrapDismantleResult`)、および関連仕様書 (`Trap-System.md`, `Trap-Master-List.md`, `Construction-System.md`, `Admin-Data-Models.md`, `Implementation-Details.md`) への追記・同期。
+- **管理者による施設解体・撤去時の資材回収仕様および REST API の補完**: 管理者がダンジョン編集画面で設置済み施設（`recovery_spring`, `teleport_gate`, `shop_counter`, `synthesis_workshop`, `torch`, `statue`, `altar`, `fishing_point`）を撤去・解体する際の資材・ゴールド回収ルール（設置コストの50%、端数切り捨て）、解体用 REST API エンドポイント (`DELETE /api/admin/dungeon/{dungeonId}/floor/{floorLevel}/facility/{facilityId}`)、TypeScript 型定義 (`FacilityDismantleRequest`, `FacilityDismantleResult`)、および関連仕様書 (`Construction-System.md`, `Facility-Master-List.md`, `Admin-Data-Models.md`, `Implementation-Details.md`) への追記・同期。
