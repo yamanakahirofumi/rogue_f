@@ -39,9 +39,27 @@
   - 溶岩タイル（`lava` / `!`）に隣接するマスでアイテムドロップ判定が行われた場合、`magic_stone` (魔力石) のドロップ率が **+10%** 向上します。
 - 詳細は **[バイオーム・環境システム](Biome-System.md)** を参照してください。
 
-## 4. データ構造とデータモデル
+## 4. 地形の撤去・解体・初期化による資材・ゴールドの回収
 
-ゲームシステムおよびAPI等で使用される地形マスタ情報の基本データ構造（`TerrainEntry`）の定義です。
+管理者がダンジョン編集画面（`/admin`）にて、配置済みの特殊地形タイルを解体（標準の床 `floor` への初期化）する際、その地形の設置コスト（資材およびゴールド）の **50%**（端数切り捨て）が返還されます。
+
+### 4.1 各地形タイルの回収資材・ゴールド一覧
+設置コストに基づく解体（初期化）時の回収額一覧です。
+
+| typeId | 名称 | 設置コスト (資材 / G) | 解体時回収量 (資材 / G) | 備考 |
+| :--- | :--- | :--- | :--- | :--- |
+| `floor` | 床 | `wood` × 1 / 0G | 回収なし (0) | 標準床（基礎地形のため解体返還なし） |
+| `wall` | 壁 | `stone` × 2 / 0G | `stone` × 1 / 0G | 設置資材の 50% 返還 |
+| `door` | 扉 | `wood` × 5, `iron` × 1 / 0G | `wood` × 2, `iron` × 0 / 0G | 端数切り捨てのため `iron` は 0 |
+| `water` | 水 | `magic_crystal` × 1 / 0G | `magic_crystal` × 0 / 0G | 端数切り捨て (1 * 0.5 = 0.5 → 0) |
+| `lava` | 溶岩 | `demon_blood` × 1 / 0G | `demon_blood` × 0 / 0G | 端数切り捨て (1 * 0.5 = 0.5 → 0) |
+| `sand` | 砂地 | `stone` × 2 / 0G | `stone` × 1 / 0G | 設置資材の 50% 返還 |
+
+※返還された資材は**倉庫（資材ストック）**に、ゴールドは**管理者の所持金**に即座に追加されます。
+
+## 5. データ構造とデータモデル
+
+ゲームシステムおよびAPI等で使用される地形マスタ情報の基本データ構造（`TerrainEntry`）ならびに解体リクエスト/レスポンスモデルの定義です。
 TypeScript の型定義は `src/@types/admin.d.ts` に配置されます。
 
 ```typescript
@@ -59,9 +77,22 @@ export interface TerrainEntry {
     biomeOverride?: string;
   };
 }
+
+export interface TerrainDismantleRequest {
+  floorLevel: number;                         // 解体対象の階層番号
+  position: { x: number; y: number };         // 解体対象の地形タイル座標
+  targetTerrainType?: 'floor' | 'wall' | 'door' | 'water' | 'lava' | 'sand'; // 解体対象の地形種別ID (検証用)
+}
+
+export interface TerrainDismantleResult {
+  success: boolean;                           // 撤去・解体（標準床への初期化）処理の成否
+  recoveredGold: number;                      // 回収されたゴールド (設置コストの50%、端数切り捨て)
+  recoveredMaterials: { typeId: string; amount: number }[]; // 回収された資材リスト (設置コストの50%、端数切り捨て)
+  message: string;                            // 処理結果メッセージ
+}
 ```
 
-## 5. 相互参照
+## 6. 相互参照
 - [建築システム](Construction-System.md)
 - [戦闘システム](Combat-System.md)
 - [属性システム](Attribute-System.md)

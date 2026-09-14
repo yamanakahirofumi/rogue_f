@@ -124,6 +124,19 @@ interface TrapDismantleResult {
   message: string;                            // 処理結果メッセージ
 }
 
+interface TerrainDismantleRequest {
+  floorLevel: number;                         // 解体対象の階層番号
+  position: { x: number; y: number };         // 解体対象の地形タイル座標
+  targetTerrainType?: 'floor' | 'wall' | 'door' | 'water' | 'lava' | 'sand'; // 解体対象の地形種別ID (検証用)
+}
+
+interface TerrainDismantleResult {
+  success: boolean;                           // 撤去・解体（標準床への初期化）処理の成否
+  recoveredGold: number;                      // 回収されたゴールド (設置コストの50%、端数切り捨て)
+  recoveredMaterials: { typeId: string; amount: number }[]; // 回収された資材リスト (設置コストの50%、端数切り捨て)
+  message: string;                            // 処理結果メッセージ
+}
+
 interface FacilityDismantleRequest {
   floorLevel: number;                         // 解体対象の階層番号
   facilityId?: string;                        // 解体対象の施設ID (存在する場合)
