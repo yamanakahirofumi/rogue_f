@@ -165,6 +165,9 @@
   - `DELETE /api/admin/dungeon/{dungeonId}/floor/{floorLevel}/trap`: 指定した階層・座標の配置済みトラップを撤去・解体（設置コストの50%の資材・ゴールドを回収）。
     - リクエスト: `TrapDismantleRequest`
     - レスポンス: `TrapDismantleResult`
+  - `DELETE /api/admin/dungeon/{dungeonId}/floor/{floorLevel}/terrain`: 指定した階層・座標の特殊地形を撤去・解体しデフォルトの床へリセット（設置コストの50%の資材・ゴールドを回収）。
+    - リクエスト: `TerrainDismantleRequest`
+    - レスポンス: `TerrainDismantleResult`
   - `DELETE /api/admin/dungeon/{dungeonId}/floor/{floorLevel}/facility/{facilityId}`: 指定した階層・座標の配置済み施設を撤去・解体（設置コストの50%の資材・ゴールドを回収）。
     - リクエスト: `FacilityDismantleRequest`
     - レスポンス: `FacilityDismantleResult`
@@ -1141,6 +1144,18 @@ interface WarehouseExpandResult {
   consumedGold?: number;                       // 消費したゴールド
   consumedMaterials?: { typeId: string; amount: number }[]; // 消費した資材リスト
   message: string;                             // 結果メッセージ
+}
+
+interface TerrainDismantleRequest {
+  floorLevel: number;                         // 解体対象の階層番号
+  position: { x: number; y: number };         // リセット対象の地形座標
+}
+
+interface TerrainDismantleResult {
+  success: boolean;                           // 撤去・解体処理の成否
+  recoveredGold: number;                      // 回収されたゴールド (設置コストの50%、端数切り捨て)
+  recoveredMaterials: { typeId: string; amount: number }[]; // 回収された資材リスト (設置コストの50%、端数切り捨て)
+  message: string;                            // 処理結果メッセージ
 }
 
 interface FacilityDismantleRequest {
