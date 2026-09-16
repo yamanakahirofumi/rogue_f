@@ -149,6 +149,31 @@ interface FacilityDismantleResult {
   message: string;                            // 処理結果メッセージ
 }
 
+interface MonsterRecallRequest {
+  floorLevel: number;                         // 撤去・回収対象の階層番号
+  monsterId: string;                          // 撤去・回収対象のモンスター個体ID
+}
+
+interface MonsterRecallResult {
+  success: boolean;                           // 撤去・回収処理の成否
+  recalledMonsterId: string;                  // 回収されたモンスターの個体ID
+  freedCapacity: number;                      // 解放されたダンジョン配置容量 (標準 5)
+  message: string;                            // 処理結果メッセージ
+}
+
+interface ShopCloseRequest {
+  floorLevel: number;                         // 閉鎖・撤去対象の階層番号
+  shopId: string;                             // 閉鎖・撤去対象のショップID
+}
+
+interface ShopCloseResult {
+  success: boolean;                           // 閉鎖・撤去処理の成否
+  returnedItemsCount: number;                // 倉庫へ返還された未売却商品の総数
+  returnedGold: number;                      // 返還された店舗準備資金 (残額がある場合)
+  freedCapacity: number;                     // 解放されたダンジョン配置容量
+  message: string;                            // 処理結果メッセージ
+}
+
 interface PlacedShop {
   shopId: string;          // ショップID
   position: { x: number, y: number };

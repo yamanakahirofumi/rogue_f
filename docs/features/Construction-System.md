@@ -48,6 +48,10 @@
   - 回収されたゴールドは**管理者の所持金**に、資材は**倉庫（資材ストック）**にそれぞれ即座に追加されます。
 - **容量の解放**: 解体完了後、その施設が消費していた配置容量（Capacity）は即座に解放され、新しい施設やトラップの設置が可能になります。
 
+### 3.4 モンスター回収およびショップ撤去 (Monster Recall & Shop Removal)
+- **配置モンスターの回収**: 配置済みモンスターを指定して回収（`DELETE /api/admin/dungeon/{dungeonId}/floor/{floorLevel}/monster/{monsterId}`）でき、モンスターの status は `'idle'` に戻り、占有していた配置容量（標準 5）が即座に解放されます。詳細は [モンスターシステム](Monster-System.md#411-配置モンスターの撤去回収-monster-recall) を参照してください。
+- **設置ショップの閉鎖**: 設置済みショップを指定して閉鎖・撤去（`DELETE /api/admin/dungeon/{dungeonId}/floor/{floorLevel}/shop/{shopId}`）でき、未売却の陳列商品がアイテム倉庫へ返還され、占有していた配置容量が解放されます。詳細は [ショップシステム](Shop-System.md#34-ショップの閉鎖撤去-shop-closure--removal) を参照してください。
+
 ## 4. 防衛とカスタマイズ
 構築された地形に基づき、侵入者を迎撃するための要素を追加します。
 
