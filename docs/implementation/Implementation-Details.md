@@ -171,6 +171,12 @@
   - `DELETE /api/admin/dungeon/{dungeonId}/floor/{floorLevel}/facility/{facilityId}`: 指定した階層・座標の配置済み施設を撤去・解体（設置コストの50%の資材・ゴールドを回収）。
     - リクエスト: `FacilityDismantleRequest`
     - レスポンス: `FacilityDismantleResult`
+  - `DELETE /api/admin/dungeon/{dungeonId}/floor/{floorLevel}/monster/{monsterId}`: 指定した階層の配置済みモンスターを撤去・回収（倉庫内ステータスを 'placed' から 'idle' へ戻し、配置容量を解放）。
+    - リクエスト: `MonsterRecallRequest`
+    - レスポンス: `MonsterRecallResult`
+  - `DELETE /api/admin/dungeon/{dungeonId}/floor/{floorLevel}/shop/{shopId}`: 指定した階層の設置済みショップを閉鎖・撤去（陳列中の未売却商品を倉庫へ返還し、配置容量を解放）。
+    - リクエスト: `ShopCloseRequest`
+    - レスポンス: `ShopCloseResult`
 - **倉庫・リソース管理**
   - `GET /api/admin/warehouse`: 倉庫の状態（モンスター、アイテム、資材）を取得。
     - レスポンス: `WarehouseState`
@@ -1155,6 +1161,31 @@ interface TerrainDismantleResult {
   success: boolean;                           // 撤去・解体処理の成否
   recoveredGold: number;                      // 回収されたゴールド (設置コストの50%、端数切り捨て)
   recoveredMaterials: { typeId: string; amount: number }[]; // 回収された資材リスト (設置コストの50%、端数切り捨て)
+  message: string;                            // 処理結果メッセージ
+}
+
+interface MonsterRecallRequest {
+  floorLevel: number;                         // 撤去・回収対象の階層番号
+  monsterId: string;                          // 撤去・回収対象のモンスター個体ID
+}
+
+interface MonsterRecallResult {
+  success: boolean;                           // 撤去・回収処理の成否
+  recalledMonsterId: string;                  // 回収されたモンスターの個体ID
+  freedCapacity: number;                      // 解放されたダンジョン配置容量 (標準 5)
+  message: string;                            // 処理結果メッセージ
+}
+
+interface ShopCloseRequest {
+  floorLevel: number;                         // 閉鎖・撤去対象の階層番号
+  shopId: string;                             // 閉鎖・撤去対象のショップID
+}
+
+interface ShopCloseResult {
+  success: boolean;                           // 閉鎖・撤去処理の成否
+  returnedItemsCount: number;                // 倉庫へ返還された未売却商品の総数
+  returnedGold: number;                      // 返還された店舗準備資金 (残額がある場合)
+  freedCapacity: number;                     // 解放されたダンジョン配置容量
   message: string;                            // 処理結果メッセージ
 }
 
