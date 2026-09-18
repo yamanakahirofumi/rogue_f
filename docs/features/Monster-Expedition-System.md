@@ -102,8 +102,16 @@
 
 遠征システムを制御するための主要な API エンドポイントです。詳細は [実装詳細](../implementation/Implementation-Details.md) を参照してください。
 
-### 6.1 `POST /api/admin/expedition/dispatch`
-遠征隊を特定の目的地に派遣します。
+### 6.1 派遣可能な目的地一覧の取得 (`GET /api/admin/expedition/destinations`)
+派遣可能な遠征目的地（Tier、所要時間、コスト、報酬ドロップ設定等）の一覧を取得します。
+- **レスポンス**: `ExpeditionDestination[]`
+
+### 6.2 派遣中遠征隊一覧の取得 (`GET /api/admin/expeditions`)
+現在派遣中の全遠征隊の進行状況（セッションID、目的地、参加モンスター、開始・終了予定時刻、ステータス）を取得します。
+- **レスポンス**: `ExpeditionState[]`
+
+### 6.3 遠征隊の派遣 (`POST /api/admin/expedition/dispatch`)
+倉庫内のモンスターを選択し、指定した目的地へ遠征隊を派遣します。
 - **リクエストボディ**:
   ```json
   {
@@ -111,20 +119,11 @@
     "monsterIds": ["monster-uuid-1", "monster-uuid-2"]
   }
   ```
-- **レスポンス**: 遠征セッション情報、および消費されたゴールド・活力を返却。
+- **レスポンス**: 作成された `ExpeditionState` オブジェクト。
 
-### 6.2 `GET /api/admin/expedition/status`
-現在の遠征隊の進行状況（残り時間、参加モンスター、報酬内容（未確定含む））を取得します。
-
-### 6.3 `POST /api/admin/expedition/claim`
-遠征を完了させ、報酬を受け取ります（倉庫空き容量の検証を通過する必要があります）。
-- **リクエストボディ**:
-  ```json
-  {
-    "expeditionId": "expedition-uuid-1"
-  }
-  ```
-- **レスポンス**: 獲得した正確な報酬データと、更新された倉庫の状態。
+### 6.4 遠征報酬の受取 (`POST /api/admin/expedition/{expeditionId}/claim`)
+完了した遠征セッションの報酬（EXP、ゴールド、資材、アイテム、卵）を受け取り、モンスターを倉庫へ帰還させます。
+- **レスポンス**: `ExpeditionClaimResult`
 
 ## 7. 相互参照
 - [モンスターシステム](Monster-System.md)

@@ -78,19 +78,21 @@
 
 ランキングデータを取得・管理するための REST API エンドポイントを定義します。詳細は [実装詳細](../implementation/Implementation-Details.md) を参照してください。
 
-### 5.1 ランキング一覧の取得
-- **エンドポイント**: `GET /api/ranking/{category}`
+### 5.1 ランキング一覧の取得 (`GET /api/ranking/{category}`)
+指定したカテゴリのランキング一覧データを取得します。
 - **パスパラメータ**:
   - `category`: `explorer_clear` | `explorer_level` | `admin_lethality` | `admin_popularity` | `pker_slain` | `pker_level`
 - **クエリパラメータ**:
   - `limit`: 取得件数 (デフォルト 50、最大 100)
   - `offset`: 開始位置 (デフォルト 0)
-- **レスポンスデータ構造**: 後述する `RankingResponse` 型を返却します。
+- **レスポンス**: `RankingResponse` 型を返却します。
 
-### 5.2 自身の順位の取得
-- **エンドポイント**: `GET /api/ranking/{category}/my-rank`
-- **ヘッダー**: `Authorization: Bearer <token>`
-- **レスポンス**: 自身の現在の順位、スコア、および前後数名のランキングエントリを含む。
+### 5.2 自身および周辺順位の取得 (`GET /api/ranking/{category}/me/{userId}`)
+指定したユーザーの現在順位、スコア、および前後数名（例: 前後3名）のエントリを取得します。
+- **パスパラメータ**:
+  - `category`: ランキングカテゴリ
+  - `userId`: 対象プレイヤーのユーザーID
+- **レスポンス**: `MyRankResponse` 型を返却します。
 
 ## 6. UI・UX 仕様
 
