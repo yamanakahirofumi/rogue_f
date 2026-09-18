@@ -1151,6 +1151,21 @@ interface WarehouseExpandResult {
   consumedMaterials?: { typeId: string; amount: number }[]; // 消費した資材リスト
   message: string;                             // 結果メッセージ
 }
+```
+
+### 3.29 Admin Dismantle & Recall Models
+```typescript
+interface TrapDismantleRequest {
+  floorLevel: number;                         // 解体対象の階層番号
+  position: { x: number; y: number };         // 解体対象のトラップ座標
+}
+
+interface TrapDismantleResult {
+  success: boolean;                           // 撤去・解体処理の成否
+  recoveredGold: number;                      // 回収されたゴールド (設置コストの50%、端数切り捨て)
+  recoveredMaterials: { typeId: string; amount: number }[]; // 回収された資材リスト (設置コストの50%、端数切り捨て)
+  message: string;                            // 処理結果メッセージ
+}
 
 interface TerrainDismantleRequest {
   floorLevel: number;                         // 解体対象の階層番号
@@ -1158,6 +1173,19 @@ interface TerrainDismantleRequest {
 }
 
 interface TerrainDismantleResult {
+  success: boolean;                           // 撤去・解体処理の成否
+  recoveredGold: number;                      // 回収されたゴールド (設置コストの50%、端数切り捨て)
+  recoveredMaterials: { typeId: string; amount: number }[]; // 回収された資材リスト (設置コストの50%、端数切り捨て)
+  message: string;                            // 処理結果メッセージ
+}
+
+interface FacilityDismantleRequest {
+  floorLevel: number;                         // 解体対象の階層番号
+  facilityId?: string;                        // 解体対象の施設ID (存在する場合)
+  position: { x: number; y: number };         // 解体対象の施設座標
+}
+
+interface FacilityDismantleResult {
   success: boolean;                           // 撤去・解体処理の成否
   recoveredGold: number;                      // 回収されたゴールド (設置コストの50%、端数切り捨て)
   recoveredMaterials: { typeId: string; amount: number }[]; // 回収された資材リスト (設置コストの50%、端数切り捨て)
@@ -1188,22 +1216,9 @@ interface ShopCloseResult {
   freedCapacity: number;                     // 解放されたダンジョン配置容量
   message: string;                            // 処理結果メッセージ
 }
-
-interface FacilityDismantleRequest {
-  floorLevel: number;                         // 解体対象の階層番号
-  facilityId?: string;                        // 解体対象の施設ID (存在する場合)
-  position: { x: number; y: number };         // 解体対象の施設座標
-}
-
-interface FacilityDismantleResult {
-  success: boolean;                           // 撤去・解体処理の成否
-  recoveredGold: number;                      // 回収されたゴールド (設置コストの50%、端数切り捨て)
-  recoveredMaterials: { typeId: string; amount: number }[]; // 回収された資材リスト (設置コストの50%、端数切り捨て)
-  message: string;                            // 処理結果メッセージ
-}
 ```
 
-### 3.29 Breeding Models
+### 3.30 Breeding Models
 ```typescript
 interface MonsterBreedRequest {
   parentId1: string;          // 親モンスター1のID
