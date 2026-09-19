@@ -78,6 +78,7 @@
     - [x] プレイヤーのアイテム操作・投擲・装備アクション（`use`, `equip`, `unequip`, `drop`, `throw`）に対するレスポンス型定義（`UseItemResult`, `EquipResult`, `UnequipResult`, `DropItemResult`, `ThrowResult`）の追加補完。
     - [x] 管理者によるトラップ・施設・地形の解体・撤去時の資材・ゴールド回収仕様（設置コストの50%回収）および解体用REST API仕様（`DELETE /api/admin/dungeon/{dungeonId}/floor/{floorLevel}/trap`, `/facility/{facilityId}`, `/terrain`）、TypeScript型定義（`TrapDismantleRequest`, `TrapDismantleResult`, `FacilityDismantleRequest`, `FacilityDismantleResult`, `TerrainDismantleRequest`, `TerrainDismantleResult`）の追加補完。
     - [x] 管理者による配置モンスター撤去・回収および設置ショップ閉鎖・撤去仕様およびREST API仕様（`DELETE /api/admin/dungeon/{dungeonId}/floor/{floorLevel}/monster/{monsterId}`, `/shop/{shopId}`）、TypeScript型定義（`MonsterRecallRequest`, `MonsterRecallResult`, `ShopCloseRequest`, `ShopCloseResult`）の追加補完。
+    - [x] 各機能仕様書（`Chest-Key-System.md`, `Trap-System.md`, `Facility-Master-List.md`, `Construction-System.md`, `Terrain-Master-List.md`, `Monster-System.md`, `Shop-System.md`）への解体・撤去・開錠REST APIエンドポイントおよび型定義（`ChestType`統一、`ChestOpenResult`等）の明示的追記・同期。
 - **解決策**: 各機能仕様書および [実装詳細](implementation/Implementation-Details.md) を更新し、曖昧さを排除済み。
 
 ### [x] セーブ・ロード機能

@@ -33,6 +33,26 @@
 | `altar` | 祭壇 | 魔力結晶 × 7, 石材 × 5 | 2,500 |
 | `fishing_point` | 釣り堀 | 木材 × 7, 石材 × 2 | 600 |
 
+### 3.1 施設解体用 REST API エンドポイント
+- **エンドポイント**: `DELETE /api/admin/dungeon/{dungeonId}/floor/{floorLevel}/facility/{facilityId}`
+  - リクエスト型 (`FacilityDismantleRequest`):
+    ```typescript
+    interface FacilityDismantleRequest {
+      floorLevel: number;
+      facilityId?: string;
+      position: { x: number; y: number };
+    }
+    ```
+  - レスポンス型 (`FacilityDismantleResult`):
+    ```typescript
+    interface FacilityDismantleResult {
+      success: boolean;
+      recoveredGold: number;
+      recoveredMaterials: { typeId: string; amount: number }[];
+      message: string;
+    }
+    ```
+
 ## 4. 相互参照
 - [釣りシステム (Fishing-System.md)](Fishing-System.md)
 - [祭壇システム (Altar-System.md)](Altar-System.md)

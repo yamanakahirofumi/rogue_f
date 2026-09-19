@@ -76,11 +76,30 @@
 
 ---
 
-## 5. データ構造と関連フィールド
+## 5. データ構造と REST API 仕様
 宝箱の動的状態および開錠処理結果は、以下のモデルおよび [Player型定義](../../src/@types/player.d.ts) のインターフェースに基づいてフロントエンド・バックエンド間でやり取りされます。
 
-- **`ChestType`**: `'wood' | 'iron' | 'magic' | 'mimic'`
-- **`ChestOpenResult`**: 開錠試行時のレスポンスモデル（詳細は [Player型定義](../../src/@types/player.d.ts) を参照）。
+### 5.1 データモデル
+- **`ChestType`**: `'wooden' | 'iron' | 'magic' | 'mimic'`
+- **`ChestOpenResult`**:
+  ```typescript
+  interface ChestOpenResult {
+    result: 'success' | 'failed_locked' | 'failed_jammed' | 'trap_triggered' | 'mimic_awakened' | 'broken';
+    loot?: InventoryItem;
+    trapDetails?: string;
+    message: string;
+  }
+  ```
+
+### 5.2 関連 REST API エンドポイント
+- **ピッキング試行**: `PUT /api/player/{userId}/command/chest/unlock-hand`
+  - レスポンス: `ChestOpenResult`
+- **鍵を使用した開錠**: `PUT /api/player/{userId}/command/chest/unlock-key/{itemId}`
+  - レスポンス: `ChestOpenResult`
+- **破壊開錠**: `PUT /api/player/{userId}/command/chest/smash`
+  - レスポンス: `ChestOpenResult`
+- **観察・見破り**: `PUT /api/player/{userId}/command/chest/inspect`
+  - レスポンス: `{ isMimic: boolean; isTrapped: boolean; message: string }`
 
 ---
 

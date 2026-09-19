@@ -30,6 +30,25 @@
 | `lava` | 溶岩 | なし | 0 | 設置コスト: 悪魔の血 (`demon_blood`) × 1 (50%端数切捨てで0) |
 | `sand` | 砂地 | 石材 (`stone`) × 1 | 0 | 設置コスト: 石材 × 2 |
 
+### 3.1 地形解体用 REST API エンドポイント
+- **エンドポイント**: `DELETE /api/admin/dungeon/{dungeonId}/floor/{floorLevel}/terrain`
+  - リクエスト型 (`TerrainDismantleRequest`):
+    ```typescript
+    interface TerrainDismantleRequest {
+      floorLevel: number;
+      position: { x: number; y: number };
+    }
+    ```
+  - レスポンス型 (`TerrainDismantleResult`):
+    ```typescript
+    interface TerrainDismantleResult {
+      success: boolean;
+      recoveredGold: number;
+      recoveredMaterials: { typeId: string; amount: number }[];
+      message: string;
+    }
+    ```
+
 ## 4. 属性・特性・バイオームによる影響の緩和と変化
 
 特定の「属性（Attribute）」、「特性（Traits）」、または滞在する「バイオーム（Biome）」により、地形効果は軽減・無効化・あるいは変化します。

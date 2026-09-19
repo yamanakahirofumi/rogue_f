@@ -78,6 +78,23 @@
 - **侵入者による解除との明確な区別**:
   - **侵入者（プレイヤー等）による「解除」**: トラップは破砕して消滅し、資材やゴールドが回収されることはありません。
   - **管理者による「解体・撤去」**: 計画的な構造変更として扱われ、設置コストの 50% の資材・ゴールドが回収されます。
+- **REST API エンドポイント**: `DELETE /api/admin/dungeon/{dungeonId}/floor/{floorLevel}/trap`
+  - リクエスト型 (`TrapDismantleRequest`):
+    ```typescript
+    interface TrapDismantleRequest {
+      floorLevel: number;
+      position: { x: number; y: number };
+    }
+    ```
+  - レスポンス型 (`TrapDismantleResult`):
+    ```typescript
+    interface TrapDismantleResult {
+      success: boolean;
+      recoveredGold: number;
+      recoveredMaterials: { typeId: string; amount: number }[];
+      message: string;
+    }
+    ```
 
 ## 5. トラップ一覧とコスト
 

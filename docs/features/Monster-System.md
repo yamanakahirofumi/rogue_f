@@ -26,8 +26,22 @@
 #### 4.1.1 配置モンスターの撤去・回収 (Monster Recall)
 - **概要**: 管理者はダンジョン編集画面（`/admin`）から、配置済みのモンスターを指定して撤去・回収することができます。
 - **REST API エンドポイント**: `DELETE /api/admin/dungeon/{dungeonId}/floor/{floorLevel}/monster/{monsterId}`
-  - リクエストデータ構造: `MonsterRecallRequest`
-  - レスポンスデータ構造: `MonsterRecallResult`
+  - リクエストデータ構造 (`MonsterRecallRequest`):
+    ```typescript
+    interface MonsterRecallRequest {
+      floorLevel: number;
+      monsterId: string;
+    }
+    ```
+  - レスポンスデータ構造 (`MonsterRecallResult`):
+    ```typescript
+    interface MonsterRecallResult {
+      success: boolean;
+      recalledMonsterId: string;
+      freedCapacity: number;
+      message: string;
+    }
+    ```
 - **処理ロジックと影響**:
   - 対象モンスターの倉庫内データ（`StoredMonster`）の `status` が `'placed'` から `'idle'` に変更され、拠点倉庫の所持ストック一覧に復帰します。
   - モンスターの現在レベル、累積経験値、上昇した基礎ステータス、継承特性、および残活力（`vigor`）は維持された状態で回収されます。

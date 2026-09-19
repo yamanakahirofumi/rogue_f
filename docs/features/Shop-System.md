@@ -34,8 +34,23 @@
 ### 3.4 ショップの閉鎖・撤去 (Shop Closure & Removal)
 - **概要**: 管理者はダンジョン編集画面（`/admin`）から、設置済みのショップを閉鎖・撤去することができます。
 - **REST API エンドポイント**: `DELETE /api/admin/dungeon/{dungeonId}/floor/{floorLevel}/shop/{shopId}`
-  - リクエストデータ構造: `ShopCloseRequest`
-  - レスポンスデータ構造: `ShopCloseResult`
+  - リクエストデータ構造 (`ShopCloseRequest`):
+    ```typescript
+    interface ShopCloseRequest {
+      floorLevel: number;
+      shopId: string;
+    }
+    ```
+  - レスポンスデータ構造 (`ShopCloseResult`):
+    ```typescript
+    interface ShopCloseResult {
+      success: boolean;
+      returnedItemsCount: number;
+      returnedGold: number;
+      freedCapacity: number;
+      message: string;
+    }
+    ```
 - **処理ロジックと返還ルール**:
   - ショップの各スロット（`ShopSlot[]`）に陳列中で未売却のアイテムは、出品解除（`isStocked: false`）され、すべて管理者の拠点アイテム倉庫（`items`）へ返還されます。
   - 店舗用に準備されていた資金残額がある場合、管理者の所持金へ即座に返還されます。
