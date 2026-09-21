@@ -302,6 +302,24 @@
 - `DELETE /api/player/{userId}/save/suspend`: 再開完了時または死亡時のダンジョン中断セーブ削除。
   - レスポンス: `SaveLoadResult`
 
+### 2.10 共通エラーレスポンスおよびSSEプロトコル仕様
+クライアント・サーバー間通信におけるエラー処理の標準化およびリアルタイムSSE通信の信頼性を確保するための仕様です。
+
+- **統一APIエラーレスポンス**
+  - HTTP ステータスコードが 4xx または 5xx の場合、全ての REST API は統一されたエラーレスポンスオブジェクトを返却します。
+  - レスポンス構造: `ApiErrorResponse`
+- **標準エラーコードマスター (`ApiErrorCode`)**
+  - エラーの識別およびフロントエンドでの多言語表示・通知ロジック用に標準化された文字列コードを使用します。
+  - 主なエラーコード分類:
+    - インベントリ・アイテム関連: `INVENTORY_FULL`, `ITEM_NOT_FOUND`, `ITEM_LOCKED_CURSED`, `ITEM_NOT_IDENTIFIED`
+    - リソース・通貨関連: `INSUFFICIENT_GOLD`, `INSUFFICIENT_STAMINA`, `INSUFFICIENT_SATIETY`, `INSUFFICIENT_MATERIALS`, `INSUFFICIENT_VIGOR`
+    - ダンジョン・マップ関連: `DUNGEON_NOT_FOUND`, `FLOOR_NOT_FOUND`, `CAPACITY_EXCEEDED`, `INVALID_POSITION`, `TILE_IMPASSABLE`
+    - アクション・施設関連: `COOLDOWN_ACTIVE`, `FACILITY_NOT_FOUND`, `NO_BAIT_EQUIPPED`, `ALTAR_DESECRATED`, `REQUIREMENT_NOT_MET`
+    - 倉庫・管理・システム関連: `WAREHOUSE_FULL`, `MONSTER_NOT_FOUND`, `RECIPE_NOT_FOUND`, `EXPIRED_MAIL`, `INTERNAL_SERVER_ERROR`
+- **SSEプロトコル詳細仕様**
+  - **ハートビート (Ping)**: 接続維持のため、サーバーは 15 秒間隔で `: ping` コメントイベントまたは `type: 'ping'` イベントを送信します。クライアントは 30 秒間受信がない場合、切断と判断して再接続を開始します。
+  - **自動再接続 & イベント復元**: 切断時、クライアントは指数バックオフ（1秒, 2秒, 4秒, 最大30秒）で自動再接続を試行します。リクエストヘッダー `Last-Event-ID` を送信することで、切断中の未受信 `DungeonEvent` または `DisplayData` の補填配信を受け取ります。
+
 ## 3. データモデル
 
 ### 3.1 Player
@@ -1265,6 +1283,42 @@ interface BreedingEventDetails {
   consumedGold?: number;      // 消費したゴールド
   consumedMaterials?: { typeId: string; amount: number }[]; // 消費した資材
   isMutationOccurred?: boolean; // 突然変異が発生したか
+}
+
+### 3.31 ApiErrorResponse & ApiErrorCode
+```typescript
+type ApiErrorCode =
+  | 'INVENTORY_FULL'
+  | 'ITEM_NOT_FOUND'
+  | 'ITEM_LOCKED_CURSED'
+  | 'ITEM_NOT_IDENTIFIED'
+  | 'INSUFFICIENT_GOLD'
+  | 'INSUFFICIENT_STAMINA'
+  | 'INSUFFICIENT_SATIETY'
+  | 'INSUFFICIENT_MATERIALS'
+  | 'INSUFFICIENT_VIGOR'
+  | 'DUNGEON_NOT_FOUND'
+  | 'FLOOR_NOT_FOUND'
+  | 'CAPACITY_EXCEEDED'
+  | 'INVALID_POSITION'
+  | 'TILE_IMPASSABLE'
+  | 'COOLDOWN_ACTIVE'
+  | 'FACILITY_NOT_FOUND'
+  | 'NO_BAIT_EQUIPPED'
+  | 'ALTAR_DESECRATED'
+  | 'REQUIREMENT_NOT_MET'
+  | 'WAREHOUSE_FULL'
+  | 'MONSTER_NOT_FOUND'
+  | 'RECIPE_NOT_FOUND'
+  | 'EXPIRED_MAIL'
+  | 'INTERNAL_SERVER_ERROR';
+
+interface ApiErrorResponse {
+  statusCode: number;                 // HTTPステータスコード (例: 400, 403, 404, 409, 422, 500)
+  errorCode: ApiErrorCode | string;  // 標準化エラーコード
+  message: string;                    // ユーザー向けまたはデバッグ用エラーメッセージ
+  timestamp: number;                  // 発生時刻 (UNIX ms)
+  details?: { [key: string]: any };   // パラメータバリデーション等、追加のエラー詳細
 }
 ```
 
