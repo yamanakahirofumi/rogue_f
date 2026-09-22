@@ -445,3 +445,37 @@ interface SaveLoadResult {
   suspendState?: SuspendSaveState;                                     // 復元された中断セーブデータ
   message: string;                                                     // 処理結果メッセージ
 }
+
+type ApiErrorCode =
+  | 'INVENTORY_FULL'
+  | 'ITEM_NOT_FOUND'
+  | 'ITEM_LOCKED_CURSED'
+  | 'ITEM_NOT_IDENTIFIED'
+  | 'INSUFFICIENT_GOLD'
+  | 'INSUFFICIENT_STAMINA'
+  | 'INSUFFICIENT_SATIETY'
+  | 'INSUFFICIENT_MATERIALS'
+  | 'INSUFFICIENT_VIGOR'
+  | 'DUNGEON_NOT_FOUND'
+  | 'FLOOR_NOT_FOUND'
+  | 'CAPACITY_EXCEEDED'
+  | 'INVALID_POSITION'
+  | 'TILE_IMPASSABLE'
+  | 'COOLDOWN_ACTIVE'
+  | 'FACILITY_NOT_FOUND'
+  | 'NO_BAIT_EQUIPPED'
+  | 'ALTAR_DESECRATED'
+  | 'REQUIREMENT_NOT_MET'
+  | 'WAREHOUSE_FULL'
+  | 'MONSTER_NOT_FOUND'
+  | 'RECIPE_NOT_FOUND'
+  | 'EXPIRED_MAIL'
+  | 'INTERNAL_SERVER_ERROR';
+
+interface ApiErrorResponse {
+  statusCode: number;                 // HTTPステータスコード (例: 400, 403, 404, 409, 422, 500)
+  errorCode: ApiErrorCode | string;  // 標準化エラーコード
+  message: string;                    // ユーザー向けまたはデバッグ用エラーメッセージ
+  timestamp: number;                  // 発生時刻 (UNIX ms)
+  details?: { [key: string]: any };   // パラメータバリデーション等、追加のエラー詳細
+}
