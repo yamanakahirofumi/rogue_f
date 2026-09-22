@@ -79,7 +79,7 @@
 ## 5. データ構造と関連フィールド
 宝箱の動的状態および開錠処理結果は、以下のモデルおよび [Player型定義](../../src/@types/player.d.ts) のインターフェースに基づいてフロントエンド・バックエンド間でやり取りされます。
 
-- **`ChestType`**: `'wood' | 'iron' | 'magic' | 'mimic'`
+- **`ChestType`**: `'wooden' | 'iron' | 'magic' | 'mimic'`
 - **`ChestOpenResult`**: 開錠試行時のレスポンスモデル（詳細は [Player型定義](../../src/@types/player.d.ts) を参照）。
 
 ---
