@@ -369,6 +369,32 @@ interface BreedingEventDetails {
   isMutationOccurred?: boolean;                               // 突然変異が発生したか
 }
 
+interface AdminSummonRequest {
+  monsterId: string;                          // 倉庫内モンスター個体ID
+  position: { x: number; y: number };         // 召喚先のマップ座標
+}
+
+interface AdminSummonResult {
+  success: boolean;                           // 召喚処理の成否
+  summonedMonsterId?: string;                 // 召喚されたモンスター個体ID
+  consumedVigor?: number;                     // 消費されたモンスター活力 (標準 50)
+  message: string;                            // 処理結果メッセージ
+}
+
+interface AdminTriggerRequest {
+  position: { x: number; y: number };         // 発動対象の座標
+  effectId?: string;                          // 環境効果ID (例: 'lightning', 'gas_leak', 'rock_fall', 'earthquake')
+}
+
+interface AdminTriggerResult {
+  success: boolean;                           // 発動処理の成否
+  effectId?: string;                          // 発生した効果ID
+  consumedGold?: number;                      // 消費されたゴールド
+  consumedMaterials?: { typeId: string; amount: number }[]; // 消費された資材リスト
+  cooldownSeconds?: number;                   // 適用されたクールタイム (秒)
+  message: string;                            // 処理結果メッセージ
+}
+
 interface AdminLog {
   id: string;              // ログ固有ID
   timestamp: number;       // 操作時刻

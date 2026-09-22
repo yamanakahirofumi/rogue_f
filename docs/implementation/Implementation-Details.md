@@ -251,13 +251,13 @@
 
 - **モンスター召喚**
   - `POST /api/admin/intervention/player/{userId}/summon`: 倉庫内のモンスターを対象のプレイヤーが攻略中のフロアに即座に召喚。
-    - リクエスト: `{ monsterId: string, position: { x: number, y: number } }`
-    - レスポンス: `boolean` (召喚成功の成否)
+    - リクエスト: `AdminSummonRequest`
+    - レスポンス: `AdminSummonResult`
 - **トラップ・効果の発動**
   - `POST /api/admin/intervention/player/{userId}/trigger`: 指定した座標のトラップを強制的に発動、または特殊な環境効果（落雷、落石等）を発生させる。
-    - リクエスト: `{ position: { x: number, y: number }, effectId?: string }`
+    - リクエスト: `AdminTriggerRequest`
     - `effectId` 例: `lightning` (落雷), `gas_leak` (ガス漏れ), `rock_fall` (落石), `earthquake` (地震)
-    - レスポンス: `boolean` (発動成功の成否)
+    - レスポンス: `AdminTriggerResult`
 
 ### 2.7 ランキング API (Ranking API)
 プレイヤーの各種ロールにおける実績やスコア順位を取得するエンドポイントです。詳細は **[ランキングシステム](../features/Ranking-System.md)** を参照してください。
