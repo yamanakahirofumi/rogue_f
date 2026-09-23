@@ -479,3 +479,43 @@ interface ApiErrorResponse {
   timestamp: number;                  // 発生時刻 (UNIX ms)
   details?: { [key: string]: any };   // パラメータバリデーション等、追加のエラー詳細
 }
+
+interface PkInvadeRequest {
+  mode: 'possess' | 'stray';                                           // 乱入形態 ('possess': 憑依, 'stray': 野良モンスター)
+  monsterId?: string;                                                  // 憑依モード時の倉庫内モンスター個体ID
+  targetLevelRange?: { min: number; max: number };                    // 希望するターゲットのレベル範囲 (任意)
+}
+
+interface PkInvadeResult {
+  status: 'matched' | 'queued' | 'failed';                             // マッチング結果ステータス
+  dungeonId?: string;                                                  // 乱入先ダンジョンID (マッチング成功時)
+  floorLevel?: number;                                                 // 乱入先階層番号 (マッチング成功時)
+  targetUserId?: string;                                               // ターゲットプレイヤーのユーザーID
+  assignedMonsterTypeId?: string;                                      // 割り当てられたモンスター種別ID
+  spawnPosition?: { x: number; y: number };                            // 出現初期マップ座標
+  consumedVigor?: number;                                             // 消費されたモンスター活力 ('possess' 時)
+  consumedOrb?: boolean;                                               // 乱入のオーブが消費されたか
+  queueTicketId?: string;                                              // キュー保持時のチケットID ('queued' 時)
+  message: string;                                                     // 処理結果メッセージ
+}
+
+interface PkQueueStatusResponse {
+  inQueue: boolean;                                                    // 待機キュー内に存在するか
+  queueTicketId?: string;                                              // キューチケットID
+  waitDurationSeconds?: number;                                       // 待機経過時間 (秒)
+  estimatedWaitSeconds?: number;                                      // 推定待ち時間 (秒)
+  matchedResult?: PkInvadeResult;                                      // マッチングが完了した場合の結果データ
+}
+
+interface PkReturnResult {
+  success: boolean;                                                    // 帰還・清算処理の成否
+  outcome: 'victory' | 'defeated' | 'surrendered';                     // 乱入攻略結果
+  gainedExp: number;                                                   // 獲得したモンスター経験値
+  gainedGold: number;                                                  // 獲得したゴールド (勝利時)
+  acquiredItems: InventoryItem[];                                      // 獲得し倉庫へ転送された戦利品一覧
+  lostGold?: number;                                                   // 没収されたゴールド (敗北時: 20%)
+  lostMonsterLevel?: number;                                           // 減少したモンスターレベル (敗北時: 1)
+  transferredToWarehouseCount: number;                                 // 倉庫へ転送されたアイテム数
+  cooldownMinutes: number;                                             // 適用された再乱入制限時間 (分)
+  message: string;                                                     // 処理結果メッセージ
+}

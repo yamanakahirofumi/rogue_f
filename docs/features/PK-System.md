@@ -103,7 +103,33 @@ PKer が目的を達成し、無事に拠点へ帰還するためのルールで
     - **建築資材からの合成**: 魔力結晶 (`magic_crystal`) × 5 + 2,000 ゴールド
 - **消費**: 1 回の乱入につき 1 つ消費。
 
-## 7. 相互参照
+## 7. REST API 仕様
+
+PKerの乱入マッチメイキング、待機キュー確認・キャンセル、帰還および清算処理用のエンドポイント群です。
+
+### 7.1 乱入開始 (`POST /api/pker/{userId}/invade`)
+- **概要**: 乱入のオーブを消費し、他プレイヤーの探索セッションへのマッチメイキングを開始、または待機キューへ登録します。
+- **リクエスト**: `PkInvadeRequest`
+- **レスポンス**: `PkInvadeResult`
+  - `status: 'matched'`: 即時マッチング成功。ターゲット情報および初期出現座標を返却。
+  - `status: 'queued'`: マッチング待機状態。`queueTicketId` を返却。
+  - `status: 'failed'`: リソース不足（乱入のオーブ未所持、活力不足等）または保護クールタイム中のため失敗。
+
+### 7.2 待機キュー状況確認 (`GET /api/pker/{userId}/queue`)
+- **概要**: マッチメイキング待機キューの進行状況およびマッチング完了成否を確認します。
+- **レスポンス**: `PkQueueStatusResponse`
+
+### 7.3 待機キューキャンセル (`DELETE /api/pker/{userId}/queue`)
+- **概要**: マッチメイキング待機キューから離脱します（乱入のオーブおよび活力は消費されません）。
+- **レスポンス**: `boolean`
+
+### 7.4 帰還・清算処理 (`POST /api/pker/{userId}/return`)
+- **概要**: 乱入ミッション終了（勝利・撃退・投降）時、戦利品および獲得経験値を清算して拠点へ帰還します。
+- **リクエスト**: `{ reason: 'victory' | 'defeated' | 'surrendered' }`
+- **レスポンス**: `PkReturnResult`
+
+## 8. 相互参照
 - [機能仕様書](Functional-Specification.md)
 - [戦闘システム](Combat-System.md)
 - [活力システム](Vigor-System.md)
+- [実装詳細](../implementation/Implementation-Details.md)
