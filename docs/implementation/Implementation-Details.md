@@ -53,6 +53,8 @@
       - レスポンス: `InventoryItem[]`
   - コミュニケーションコマンド:
     - `PUT /api/player/{userId}/emote/{emoteId}`: エモートまたはスタンプを送信。
+      - リクエスト: `EmoteSendRequest`
+      - レスポンス: `EmoteSendResult`
   - 宝箱インタラクティブコマンド:
     - `PUT /api/player/{userId}/command/chest/unlock-hand`: 手で開ける（ピッキング試行）。
       - レスポンス: `ChestOpenResult`
@@ -83,9 +85,9 @@
     - `GET /api/player/{userId}/titles`: 獲得済み・未解放の称号一覧取得。
       - レスポンス: `TitleEntry[]`
     - `PUT /api/player/{userId}/title/equip/{titleId}`: 称号をアクティブ装備。
-      - レスポンス: `boolean`
+      - レスポンス: `TitleEquipResult`
     - `PUT /api/player/{userId}/title/unequip`: 装備中の称号を外す。
-      - レスポンス: `boolean`
+      - レスポンス: `TitleUnequipResult`
   - モンスター図鑑エンドポイント:
     - `GET /api/player/{userId}/bestiary`: 解析データ一覧の取得。
       - レスポンス: `BestiaryEntry[]`
@@ -184,14 +186,14 @@
     - リクエスト: `WarehouseExpandRequest`
     - レスポンス: `WarehouseExpandResult`
   - `POST /api/admin/warehouse/item/deposit`: プレイヤー所持品または報酬から倉庫へアイテムを保管。
-    - リクエスト: `{ userId: string; itemId: string }`
-    - レスポンス: `boolean`
+    - リクエスト: `WarehouseItemDepositRequest`
+    - レスポンス: `WarehouseItemDepositResult`
   - `POST /api/admin/warehouse/item/withdraw`: 倉庫からプレイヤーインベントリへアイテムを引き出し。
-    - リクエスト: `{ userId: string; itemId: string }`
-    - レスポンス: `InventoryItem`
+    - リクエスト: `WarehouseItemWithdrawRequest`
+    - レスポンス: `WarehouseItemWithdrawResult`
   - `POST /api/admin/warehouse/monster/status`: 保管中モンスターの稼働状態更新。
-    - リクエスト: `{ monsterId: string; status: 'idle' | 'placed' | 'expedition' }`
-    - レスポンス: `boolean`
+    - リクエスト: `WarehouseMonsterStatusRequest`
+    - レスポンス: `WarehouseMonsterStatusResult`
   - `POST /api/admin/warehouse/monster/breed`: モンスターの繁殖を実行。
     - リクエスト: `MonsterBreedRequest`
     - レスポンス: `MonsterBreedResult`
@@ -203,33 +205,40 @@
     - レスポンス: `MonsterAccelerateResult`
 - **設置施設設定管理**
   - `PUT /api/admin/dungeon/{dungeonId}/facility/{facilityId}/statue`: 配置済み彫像の特殊効果変更。
-    - リクエスト: `StatueConfig`
+    - リクエスト: `FacilityConfigUpdateRequest` (config: `StatueConfig`)
+    - レスポンス: `FacilityConfigUpdateResult`
   - `PUT /api/admin/dungeon/{dungeonId}/facility/{facilityId}/altar`: 配置済み祭壇の祀る神・信仰度変更。
-    - リクエスト: `AltarConfig`
+    - リクエスト: `FacilityConfigUpdateRequest` (config: `AltarConfig`)
+    - レスポンス: `FacilityConfigUpdateResult`
   - `PUT /api/admin/dungeon/{dungeonId}/facility/{facilityId}/fishing`: 配置済み釣り堀の構成（利用料等）変更。
-    - リクエスト: `FishingPointConfig`
+    - リクエスト: `FacilityConfigUpdateRequest` (config: `FishingPointConfig`)
+    - レスポンス: `FacilityConfigUpdateResult`
 - **モンスター遠征管理**
   - `GET /api/admin/expedition/destinations`: 派遣可能な遠征目的地一覧の取得。
     - レスポンス: `ExpeditionDestination[]`
   - `GET /api/admin/expeditions`: 現在派遣中の遠征隊一覧の取得。
     - レスポンス: `ExpeditionState[]`
   - `POST /api/admin/expedition/dispatch`: 遠征隊の派遣開始。
-    - リクエスト: `{ destinationId: string; monsterIds: string[] }`
-    - レスポンス: `ExpeditionState`
+    - リクエスト: `ExpeditionDispatchRequest`
+    - レスポンス: `ExpeditionDispatchResult`
   - `POST /api/admin/expedition/{expeditionId}/claim`: 完了した遠征の報酬受取およびモンスターの帰還。
     - レスポンス: `ExpeditionClaimResult`
 - **ショップ管理**
   - `POST /api/admin/shop`: ダンジョン内にショップを新規設置。
-    - リクエスト: `ShopConfig`
+    - リクエスト: `ShopCreateRequest`
+    - レスポンス: `ShopCreateResult`
   - `PUT /api/admin/shop/{shopId}/slots`: ショップの陳列商品と価格を更新。
-    - リクエスト: `ShopSlot[]`
+    - リクエスト: `ShopSlotsUpdateRequest`
+    - レスポンス: `ShopSlotsUpdateResult`
 - **トラストネットワーク (世界間連携)**
   - `GET /api/admin/trust-network`: 信頼関係にあるサーバーの一覧を取得。
     - レスポンス: `TrustedServer[]`
   - `POST /api/admin/trust-network/server`: 新しいサーバーとの信頼関係を構築（申請）。
-    - リクエスト: `{ serverUrl: string, policy: TrustPolicy }`
+    - リクエスト: `TrustServerAddRequest`
+    - レスポンス: `TrustServerAddResult`
   - `PUT /api/admin/trust-network/server/{serverId}`: 信頼ポリシーの更新。
-    - リクエスト: `TrustPolicy`
+    - リクエスト: `TrustPolicyUpdateRequest`
+    - レスポンス: `TrustPolicyUpdateResult`
 - **ゲームバランス管理**
   - `GET /api/admin/balance`: 現在の動的バランス設定の取得。
     - レスポンス: `BalanceConfig`
@@ -277,8 +286,8 @@
   - `GET /api/spectate/dungeon/{dungeonId}` (SSE): 指定ダンジョンのリアルタイム観戦ストリーム。
     - ストリーム要素: `DisplayData` および リアルタイム `DungeonEvent`
   - `PUT /api/spectate/dungeon/{dungeonId}/cheer`: 観戦者用声援・リアクションスタンプの送信。
-    - リクエスト: `{ stampId: string; targetUserId?: string }`
-    - レスポンス: `boolean`
+    - リクエスト: `CheerSendRequest`
+    - レスポンス: `CheerSendResult`
 - **リプレイ管理・再生**
   - `GET /api/replays`: リプレイヘッダー一覧の検索・取得。
     - クエリパラメータ: `userId`, `dungeonId`, `result`, `limit`, `offset`
@@ -286,7 +295,7 @@
   - `GET /api/replays/{replayId}`: 指定リプレイの完全データ取得。
     - レスポンス: `ReplayData`
   - `POST /api/replays/{replayId}/bookmark`: 指定リプレイのお気に入り/ブックマーク登録。
-    - レスポンス: `boolean`
+    - レスポンス: `ReplayBookmarkResult`
 
 ### 2.9 セーブ・ロード API (Save & Load API)
 プレイヤーのゲーム進行状況の保存・復元・中断データの制御を行うエンドポイントです。詳細は **[セーブ・ロードシステム](../features/Save-Load-System.md)** を参照してください。

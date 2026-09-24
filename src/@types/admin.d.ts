@@ -640,3 +640,117 @@ interface BreedingEventDetails {
   consumedMaterials?: { typeId: string; amount: number }[]; // 消費した資材
   isMutationOccurred?: boolean; // 突然変異が発生したか
 }
+
+interface WarehouseItemDepositRequest {
+  userId: string;                                                      // 保管依頼者のユーザーID
+  itemId: string;                                                      // 保管するアイテムの個体ID
+}
+
+interface WarehouseItemDepositResult {
+  success: boolean;                                                    // 保管処理の成否
+  storedItemId?: string;                                               // 倉庫内に登録されたアイテムID
+  message: string;                                                     // 結果メッセージ
+}
+
+interface WarehouseItemWithdrawRequest {
+  userId: string;                                                      // 受取対象のユーザーID
+  itemId: string;                                                      // 引き出すアイテムの個体ID
+}
+
+interface WarehouseItemWithdrawResult {
+  success: boolean;                                                    // 引き出し処理の成否
+  withdrawnItem?: any;                                                 // 引き出されたアイテムオブジェクト
+  message: string;                                                     // 結果メッセージ
+}
+
+interface WarehouseMonsterStatusRequest {
+  monsterId: string;                                                   // 対象モンスターの個体ID
+  status: 'idle' | 'placed' | 'expedition';                           // 新しいステータス
+}
+
+interface WarehouseMonsterStatusResult {
+  success: boolean;                                                    // ステータス更新の成否
+  updatedStatus?: 'idle' | 'placed' | 'expedition';                   // 更新後のステータス
+  message: string;                                                     // 結果メッセージ
+}
+
+interface ExpeditionDispatchRequest {
+  destinationId: string;                                               // 遠征先の固有ID
+  monsterIds: string[];                                                // 派遣する所有モンスター個体IDのリスト
+}
+
+interface ExpeditionDispatchResult {
+  success: boolean;                                                    // 派遣開始の成否
+  expeditionState?: ExpeditionState;                                   // 生成された遠征セッション状態
+  consumedGold: number;                                                // 消費されたゴールド
+  consumedVigorTotal: number;                                         // 総消費活力
+  message: string;                                                     // 結果メッセージ
+}
+
+interface ExpeditionClaimResult {
+  result: boolean;                                                     // 報酬受取成否
+  gainedExp: number;                                                   // 獲得された経験値
+  gainedGold: number;                                                  // 獲得されたゴールド
+  materials: { typeId: string; count: number }[];                     // 獲得された資材一覧
+  items: any[];                                                        // 獲得されたアイテム一覧
+  eggs: StoredMonster[];                                               // 獲得された卵モンスター一覧
+  message: string;                                                     // 結果メッセージ
+}
+
+interface FacilityConfigUpdateRequest {
+  floorLevel: number;                                                  // 設置階層レベル
+  facilityId: string;                                                  // 施設ID
+  config: RecoverySpringConfig | TeleportGateConfig | StatueConfig | AltarConfig | FishingPointConfig; // 更新構成
+}
+
+interface FacilityConfigUpdateResult {
+  success: boolean;                                                    // 設定更新の成否
+  updatedFacility?: PlacedFacility;                                    // 更新後の設置施設データ
+  message: string;                                                     // 結果メッセージ
+}
+
+interface ShopCreateRequest {
+  floorLevel: number;                                                  // 設置する階層番号
+  position: { x: number; y: number };                                  // 設置座標
+  slots: ShopSlot[];                                                   // 初期陳列商品スロット
+}
+
+interface ShopCreateResult {
+  success: boolean;                                                    // 新規設置の成否
+  shopConfig?: ShopConfig;                                             // 生成されたショップ設定データ
+  freedCapacity?: number;                                              // ダンジョン配置容量変動
+  message: string;                                                     // 結果メッセージ
+}
+
+interface ShopSlotsUpdateRequest {
+  shopId: string;                                                      // 対象ショップID
+  slots: ShopSlot[];                                                   // 更新後の陳列商品および設定価格スロット
+}
+
+interface ShopSlotsUpdateResult {
+  success: boolean;                                                    // 更新成否
+  updatedSlots?: ShopSlot[];                                           // 更新後の陳列スロット一覧
+  message: string;                                                     // 結果メッセージ
+}
+
+interface TrustServerAddRequest {
+  serverUrl: string;                                                   // 申請対象のサーバーURL
+  policy: TrustPolicy;                                                 // 適用する信頼ポリシー
+}
+
+interface TrustServerAddResult {
+  success: boolean;                                                    // 申請・登録成否
+  trustedServer?: TrustedServer;                                       // 登録された信頼サーバー情報
+  message: string;                                                     // 結果メッセージ
+}
+
+interface TrustPolicyUpdateRequest {
+  serverId: string;                                                    // 対象サーバーID
+  policy: TrustPolicy;                                                 // 更新する信頼ポリシー
+}
+
+interface TrustPolicyUpdateResult {
+  success: boolean;                                                    // ポリシー更新成否
+  updatedPolicy?: TrustPolicy;                                         // 更新後のポリシーデータ
+  message: string;                                                     // 結果メッセージ
+}

@@ -93,6 +93,10 @@ interface PlayerQuestProgress {
 }
 ```
 
+### 4.3 REST API エンドポイント
+- **一覧取得**: `GET /api/player/{userId}/quests` -> `PlayerQuestProgress[]`
+- **報酬受取**: `POST /api/player/{userId}/quest/{questId}/claim` -> `QuestClaimResult` (`result`, `rewardsClaimed`, `message`)
+
 ---
 
 ## 5. 経済・エコシステムへの影響と報酬設計
