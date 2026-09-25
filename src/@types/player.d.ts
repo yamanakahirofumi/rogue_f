@@ -519,3 +519,51 @@ interface PkReturnResult {
   cooldownMinutes: number;                                             // 適用された再乱入制限時間 (分)
   message: string;                                                     // 処理結果メッセージ
 }
+
+interface EmoteSendRequest {
+  emoteOrStampId: string;                                              // エモートまたはスタンプのID
+}
+
+interface EmoteSendResult {
+  success: boolean;                                                    // 送信処理の成否
+  cooldownRemainingSeconds?: number;                                 // クールダウン残り時間 (秒)
+  message: string;                                                     // 結果メッセージ
+}
+
+interface QuestClaimResult {
+  result: boolean;                                                     // 報酬受取成否
+  rewardsClaimed?: {                                                   // 受取した報酬の詳細
+    gold?: number;
+    exp?: number;
+    materials?: { typeId: string; amount: number }[];
+    items?: InventoryItem[];
+  };
+  message: string;                                                     // 結果メッセージ
+}
+
+interface TitleEquipResult {
+  success: boolean;                                                    // 装着処理の成否
+  activeTitleId?: string;                                             // 装着後のアクティブ称号ID
+  message: string;                                                     // 結果メッセージ
+}
+
+interface TitleUnequipResult {
+  success: boolean;                                                    // 外す処理の成否
+  message: string;                                                     // 結果メッセージ
+}
+
+interface CheerSendRequest {
+  stampId: string;                                                     // 送信する声援スタンプのID
+  targetUserId?: string;                                              // 応援対象のユーザーID (任意)
+}
+
+interface CheerSendResult {
+  success: boolean;                                                    // 送信成否
+  message: string;                                                     // 結果メッセージ
+}
+
+interface ReplayBookmarkResult {
+  success: boolean;                                                    // お気に入り/ブックマーク登録成否
+  isBookmarked: boolean;                                               // 現在のブックマーク状態
+  message: string;                                                     // 結果メッセージ
+}

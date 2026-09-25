@@ -141,8 +141,8 @@ interface SpectatorSession {
   - `GET /api/spectate/dungeon/{dungeonId}` (SSE): 指定ダンジョンのリアルタイム観戦ストリーム。
     - ストリーム要素: `DisplayData` および リアルタイム `DungeonEvent`
   - `PUT /api/spectate/dungeon/{dungeonId}/cheer`: 観戦声援・リアクションスタンプの送信。
-    - リクエスト: `{ stampId: string; targetUserId?: string }`
-    - レスポンス: `boolean`
+    - リクエスト: `CheerSendRequest`
+    - レスポンス: `CheerSendResult` (`success`, `message`)
 
 - **リプレイ管理・再生**
   - `GET /api/replays`: リプレイ一覧の検索・取得（クエリ: `userId`, `dungeonId`, `result`, `limit`, `offset`）。
@@ -150,7 +150,7 @@ interface SpectatorSession {
   - `GET /api/replays/{replayId}`: 指定リプレイの完全データ取得。
     - レスポンス: `ReplayData`
   - `POST /api/replays/{replayId}/bookmark`: ブックマーク/お気に入り登録。
-    - レスポンス: `boolean`
+    - レスポンス: `ReplayBookmarkResult` (`success`, `isBookmarked`, `message`)
 
 ---
 

@@ -127,6 +127,11 @@ interface TitleEntry {
 }
 ```
 
+### 6.3 REST API エンドポイント
+- **一覧取得**: `GET /api/player/{userId}/titles` -> `TitleEntry[]`
+- **称号装備**: `PUT /api/player/{userId}/title/equip/{titleId}` -> `TitleEquipResult` (`success`, `activeTitleId`, `message`)
+- **称号解除**: `PUT /api/player/{userId}/title/unequip` -> `TitleUnequipResult` (`success`, `message`)
+
 ---
 
 ## 7. 称号マスターリスト (Title Master List)

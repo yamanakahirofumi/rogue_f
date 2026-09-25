@@ -104,27 +104,16 @@
 
 ### 6.1 `POST /api/admin/expedition/dispatch`
 遠征隊を特定の目的地に派遣します。
-- **リクエストボディ**:
-  ```json
-  {
-    "destinationId": "forest_tier2",
-    "monsterIds": ["monster-uuid-1", "monster-uuid-2"]
-  }
-  ```
-- **レスポンス**: 遠征セッション情報、および消費されたゴールド・活力を返却。
+- **リクエスト**: `ExpeditionDispatchRequest` (`destinationId`, `monsterIds`)
+- **レスポンス**: `ExpeditionDispatchResult` (`success`, `expeditionState`, `consumedGold`, `consumedVigorTotal`, `message`)
 
-### 6.2 `GET /api/admin/expedition/status`
-現在の遠征隊の進行状況（残り時間、参加モンスター、報酬内容（未確定含む））を取得します。
+### 6.2 `GET /api/admin/expeditions`
+現在派遣中の遠征隊一覧の進行状況を取得します。
+- **レスポンス**: `ExpeditionState[]`
 
-### 6.3 `POST /api/admin/expedition/claim`
+### 6.3 `POST /api/admin/expedition/{expeditionId}/claim`
 遠征を完了させ、報酬を受け取ります（倉庫空き容量の検証を通過する必要があります）。
-- **リクエストボディ**:
-  ```json
-  {
-    "expeditionId": "expedition-uuid-1"
-  }
-  ```
-- **レスポンス**: 獲得した正確な報酬データと、更新された倉庫の状態。
+- **レスポンス**: `ExpeditionClaimResult` (`result`, `gainedExp`, `gainedGold`, `materials`, `items`, `eggs`, `message`)
 
 ## 7. 相互参照
 - [モンスターシステム](Monster-System.md)

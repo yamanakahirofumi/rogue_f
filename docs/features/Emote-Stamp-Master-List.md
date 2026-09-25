@@ -18,6 +18,8 @@
 
 ### 2.3 API エンドポイント
 - **送信**: `PUT /api/player/{userId}/emote/{emoteId}`
+- **リクエスト**: `EmoteSendRequest` (必要に応じて任意パラメータ)
+- **レスポンス**: `EmoteSendResult` (`success`, `cooldownRemainingSeconds`, `message`)
 - この API を通じて、サーバーへエモートまたはスタンプの実行を通知します。
 
 ## 3. エモートリスト (Emotes)
