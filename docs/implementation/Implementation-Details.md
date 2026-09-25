@@ -91,6 +91,8 @@
   - モンスター図鑑エンドポイント:
     - `GET /api/player/{userId}/bestiary`: 解析データ一覧の取得。
       - レスポンス: `BestiaryEntry[]`
+    - `GET /api/player/{userId}/bestiary/{monsterTypeId}`: 指定モンスターの研究レベル別詳細解析データの取得。
+      - レスポンス: `BestiaryMonsterDetail`
   - メール管理エンドポイント:
     - `GET /api/player/{userId}/mail`: 受信箱のメール一覧取得。
       - レスポンス: `MailMessage[]`
@@ -900,7 +902,7 @@ interface TitleEntry {
 }
 ```
 
-### 3.17 BestiaryEntry Model
+### 3.17 Bestiary Models
 ```typescript
 interface BestiaryEntry {
   monsterTypeId: string;      // モンスター種別ID
@@ -910,6 +912,58 @@ interface BestiaryEntry {
   captureCount: number;       // 捕獲回数
   breedCount: number;         // 孵化（繁殖）回数
   unlockedAt?: Date;          // 最初に Level 1 に到達した日時
+}
+
+interface BestiaryMonsterDetail {
+  monsterTypeId: string;      // モンスター種別ID
+  name: string;               // モンスター名 (Level 0 は '???')
+  researchLevel: 0 | 1 | 2 | 3; // 現在の研究レベル
+  attribute?: string;         // 属性 (Level 1 以上で公開)
+  encounterCount: number;     // 遭遇回数
+  defeatCount: number;        // 撃破回数
+  captureCount: number;       // 捕獲回数
+  breedCount: number;         // 孵化数
+  stats?: {                   // 完全ステータス (Level 2 以上で公開)
+    hp: number;
+    stamina?: number;
+    attack: number;
+    defense: number;
+    agility: number;
+    dexterity: number;
+    speed: number;
+    luck: number;
+  };
+  skills?: {                  // 所持スキルリスト (Level 2 以上で公開)
+    id: string;
+    name: string;
+    description: string;
+  }[];
+  possibleDrops?: {           // ドロップ可能アイテム一覧 (Level 3 で公開)
+    itemTypeId: string;
+    itemName: string;
+    dropRatePercent: number;  // ドロップ率 (%)
+  }[];
+  possibleTraits?: string[];  // 所持可能特性IDリスト (Level 3 で公開)
+  aiPatternDescription?: string; // AIパターンの詳細解説 (Level 3 で公開)
+  bonuses: {                  // 現在適用されている研究ボーナス
+    damageMultiplier: number;  // 与ダメージ倍率 (1.00〜1.05)
+    captureRateBonus: number;  // 捕獲率加算補正 (+0%〜+5%)
+    hatchTimeReductionRatio: number; // 孵化時間短縮比率 (0.00 または 0.10)
+  };
+}
+
+interface BestiaryProgressResult {
+  monsterTypeId: string;      // モンスター種別ID
+  updatedEntry: BestiaryEntry; // 更新後の図鑑エントリー
+  oldResearchLevel: 0 | 1 | 2 | 3; // 変更前の研究レベル
+  newResearchLevel: 0 | 1 | 2 | 3; // 変更後の研究レベル
+  isLevelUp: boolean;          // 研究レベルが昇格したか
+  newlyUnlockedBonuses?: {     // 新たに解放されたボーナス
+    damageMultiplier?: number;
+    captureRateBonus?: number;
+    hatchTimeReductionRatio?: number;
+  };
+  message: string;             // 処理結果メッセージ
 }
 ```
 

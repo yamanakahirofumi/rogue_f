@@ -58,9 +58,25 @@
 
 ---
 
-## 5. 技術データ構造 (Technical Data Structures)
+## 5. REST API エンドポイント仕様 (REST API Specifications)
 
-### 5.1 Player データモデルの拡張
+モンスター図鑑情報の参照、詳細解析データの確認、および戦闘・捕獲・繁殖時の研究度進捗処理を行うための API エンドポイントです。詳細は **[実装詳細](../implementation/Implementation-Details.md)** を参照してください。
+
+### 5.1 全図鑑概要一覧の取得
+- **エンドポイント**: `GET /api/player/{userId}/bestiary`
+- **説明**: プレイヤーが遭遇・解析した全モンスター種別の研究進捗概要リストを取得します。
+- **レスポンス**: `BestiaryEntry[]`
+
+### 5.2 特定モンスターの詳細解析データ取得
+- **エンドポイント**: `GET /api/player/{userId}/bestiary/{monsterTypeId}`
+- **説明**: 指定したモンスター種別の研究レベルに応じた詳細解析データ（ステータス、スキル、ドロップアイテム、特性、AIパターン）を取得します。
+- **レスポンス**: `BestiaryMonsterDetail`
+
+---
+
+## 6. 技術データ構造 (Technical Data Structures)
+
+### 6.1 Player データモデルの拡張
 プレイヤーの図鑑保持状態および研究進捗を管理するため、**[Playerデータモデル](../../src/@types/player.d.ts)** 内にプロパティを追加します。
 
 ```typescript
@@ -68,7 +84,7 @@
 bestiary?: BestiaryEntry[]; // モンスター図鑑のエントリーリスト
 ```
 
-### 5.2 BestiaryEntry インターフェース
+### 6.2 BestiaryEntry インターフェース
 各モンスター種別の研究進捗および統計データを保持するデータ構造です。
 
 ```typescript
@@ -83,9 +99,71 @@ interface BestiaryEntry {
 }
 ```
 
+### 6.3 BestiaryMonsterDetail インターフェース
+研究レベルに応じて開示されるモンスターの完全解析データ構造です。
+
+```typescript
+interface BestiaryMonsterDetail {
+  monsterTypeId: string;      // モンスター種別ID
+  name: string;               // モンスター名 (Level 0 は '???')
+  researchLevel: 0 | 1 | 2 | 3; // 現在の研究レベル
+  attribute?: string;         // 属性 (Level 1 以上で公開)
+  encounterCount: number;     // 遭遇回数
+  defeatCount: number;        // 撃破回数
+  captureCount: number;       // 捕獲回数
+  breedCount: number;         // 孵化数
+  stats?: {                   // 完全ステータス (Level 2 以上で公開)
+    hp: number;
+    stamina?: number;
+    attack: number;
+    defense: number;
+    agility: number;
+    dexterity: number;
+    speed: number;
+    luck: number;
+  };
+  skills?: {                  // 所持スキルリスト (Level 2 以上で公開)
+    id: string;
+    name: string;
+    description: string;
+  }[];
+  possibleDrops?: {           // ドロップ可能アイテム一覧 (Level 3 で公開)
+    itemTypeId: string;
+    itemName: string;
+    dropRatePercent: number;  // ドロップ率 (%)
+  }[];
+  possibleTraits?: string[];  // 所持可能特性IDリスト (Level 3 で公開)
+  aiPatternDescription?: string; // AIパターンの詳細解説 (Level 3 で公開)
+  bonuses: {                  // 現在適用されている研究ボーナス
+    damageMultiplier: number;  // 与ダメージ倍率 (1.00〜1.05)
+    captureRateBonus: number;  // 捕獲率加算補正 (+0%〜+5%)
+    hatchTimeReductionRatio: number; // 孵化時間短縮比率 (0.00 または 0.10)
+  };
+}
+```
+
+### 6.4 BestiaryProgressResult インターフェース
+撃破・捕獲・繁殖等のアクション実行時に研究進捗が加算され、研究レベルがランクアップした際に返却される処理結果構造です。
+
+```typescript
+interface BestiaryProgressResult {
+  monsterTypeId: string;      // モンスター種別ID
+  updatedEntry: BestiaryEntry; // 更新後の図鑑エントリー
+  oldResearchLevel: 0 | 1 | 2 | 3; // 変更前の研究レベル
+  newResearchLevel: 0 | 1 | 2 | 3; // 変更後の研究レベル
+  isLevelUp: boolean;          // 研究レベルが昇格したか
+  newlyUnlockedBonuses?: {     // 新たに解放されたボーナス
+    damageMultiplier?: number;
+    captureRateBonus?: number;
+    hatchTimeReductionRatio?: number;
+  };
+  message: string;             // 処理結果メッセージ
+}
+```
+
 ---
 
-## 6. 他システムとの動的連携
+## 7. 他システムとの動的連携
 
 - **[戦闘システム](Combat-System.md)**: プレイヤーがモンスターに攻撃を行う際、攻撃対象の `typeId` に対応する図鑑の研究レベルを参照し、与ダメージ（+1% 〜 +5%）を自動計算します。
 - **[モンスターシステム](Monster-System.md)**: モンスター撃破時やキャプチャーボール成功時に、`defeatCount` や `captureCount` をインクリメントし、条件を満たした場合に `researchLevel` を即座に昇格させます。
@@ -94,7 +172,7 @@ interface BestiaryEntry {
 
 ---
 
-## 7. 相互参照
+## 8. 相互参照
 - [モンスターシステム](Monster-System.md)
 - [モンスターマスターリスト](Monster-Master-List.md)
 - [モンスター繁殖システム](Monster-Breeding-System.md)
