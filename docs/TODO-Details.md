@@ -80,6 +80,7 @@
     - [x] 管理者による配置モンスター撤去・回収および設置ショップ閉鎖・撤去仕様およびREST API仕様（`DELETE /api/admin/dungeon/{dungeonId}/floor/{floorLevel}/monster/{monsterId}`, `/shop/{shopId}`）、TypeScript型定義（`MonsterRecallRequest`, `MonsterRecallResult`, `ShopCloseRequest`, `ShopCloseResult`）の追加補完。
     - [x] 統一APIエラーレスポンス構造（`ApiErrorResponse`）、標準エラーコードマスター（`ApiErrorCode`）、およびSSEハートビート・自動再接続詳細仕様の追加補完。
     - [x] PKシステムの乱入マッチメイキング、キュー制御および清算用REST API仕様（`/api/pker/{userId}/invade`, `/queue`, `/return`）とTypeScript型定義（`PkInvadeRequest`, `PkInvadeResult`, `PkQueueStatusResponse`, `PkReturnResult`）の追加補完。
+    - [x] モンスター図鑑詳細解析REST API仕様（`GET /api/player/{userId}/bestiary/{monsterTypeId}`）、研究進捗・レベルアップ通知モデル、およびTypeScript型定義（`BestiaryMonsterDetail`, `BestiaryProgressResult`）の追加補完。
 - **解決策**: 各機能仕様書および [実装詳細](implementation/Implementation-Details.md) を更新し、曖昧さを排除済み。
 
 ### [x] セーブ・ロード機能
