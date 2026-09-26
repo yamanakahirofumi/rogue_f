@@ -66,6 +66,15 @@ interface TrapEntry {
   effectDescription: string;
 }
 
+interface MonsterTraitEntry {
+  id: string;                                                          // 特性ID (例: 'hard_skin', 'dragon_scale')
+  name: string;                                                        // 特性表示名 (例: '硬い皮膚', 'ドラゴンスケイル')
+  description: string;                                                 // 特性の効果詳細説明
+  rarity: 'common' | 'rare' | 'epic';                                  // レアリティ (Common, Rare, Epic)
+  isUnique?: boolean;                                                  // 固有特性フラグ (特定親の組み合わせでのみ発現)
+  combinationParents?: string[];                                       // 固有特性の発現親種別組合せ例 (例: ['dragon', 'golem'])
+}
+
 interface PlacedFacility {
   typeId: 'recovery_spring' | 'teleport_gate' | 'shop_counter' | 'synthesis_workshop' | 'torch' | 'statue' | 'altar' | 'fishing_point';
   position: { x: number, y: number };

@@ -93,6 +93,9 @@
       - レスポンス: `BestiaryEntry[]`
     - `GET /api/player/{userId}/bestiary/{monsterTypeId}`: 指定モンスターの研究レベル別詳細解析データの取得。
       - レスポンス: `BestiaryMonsterDetail`
+  - モンスター特性マスターエンドポイント:
+    - `GET /api/monster/traits`: 全モンスター特性マスター（ステータス補正、戦闘・特殊効果、固有特性）一覧の取得。
+      - レスポンス: `MonsterTraitEntry[]`
   - メール管理エンドポイント:
     - `GET /api/player/{userId}/mail`: 受信箱のメール一覧取得。
       - レスポンス: `MailMessage[]`
@@ -1443,6 +1446,18 @@ interface PkReturnResult {
   transferredToWarehouseCount: number;                                 // 倉庫へ転送されたアイテム数
   cooldownMinutes: number;                                             // 適用された再乱入制限時間 (分)
   message: string;                                                     // 処理結果メッセージ
+}
+```
+
+### 3.33 MonsterTraitEntry Model
+```typescript
+interface MonsterTraitEntry {
+  id: string;                                                          // 特性ID (例: 'hard_skin', 'dragon_scale')
+  name: string;                                                        // 特性表示名 (例: '硬い皮膚', 'ドラゴンスケイル')
+  description: string;                                                 // 特性の効果詳細説明
+  rarity: 'common' | 'rare' | 'epic';                                  // レアリティ (Common, Rare, Epic)
+  isUnique?: boolean;                                                  // 固有特性フラグ (特定親の組み合わせでのみ発現)
+  combinationParents?: string[];                                       // 固有特性の発現親種別組合せ例 (例: ['dragon', 'golem'])
 }
 ```
 

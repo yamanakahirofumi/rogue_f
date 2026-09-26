@@ -72,3 +72,23 @@
 - [モンスター繁殖システム](Monster-Breeding-System.md)
 - [モンスターマスターリスト](Monster-Master-List.md)
 - [状態異常システム](Status-Effect-System.md)
+
+## 7. データモデルと REST API 仕様
+
+### 7.1 特性マスター取得 REST API
+全モンスター特性の定義データ（ステータス補正、戦闘・特殊効果、固有特性）を取得するための共通エンドポイントです。
+
+- **エンドポイント**: `GET /api/monster/traits`
+- **レスポンス**: `MonsterTraitEntry[]`
+
+### 7.2 データ構造 (`MonsterTraitEntry`)
+```typescript
+interface MonsterTraitEntry {
+  id: string;                                                          // 特性ID (例: 'hard_skin', 'dragon_scale')
+  name: string;                                                        // 特性表示名 (例: '硬い皮膚', 'ドラゴンスケイル')
+  description: string;                                                 // 特性の効果詳細説明
+  rarity: 'common' | 'rare' | 'epic';                                  // レアリティ (Common, Rare, Epic)
+  isUnique?: boolean;                                                  // 固有特性フラグ (特定親の組み合わせでのみ発現)
+  combinationParents?: string[];                                       // 固有特性の発現親種別組合せ例 (例: ['dragon', 'golem'])
+}
+```
