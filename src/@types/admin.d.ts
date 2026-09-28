@@ -754,3 +754,22 @@ interface TrustPolicyUpdateResult {
   updatedPolicy?: TrustPolicy;                                         // 更新後のポリシーデータ
   message: string;                                                     // 結果メッセージ
 }
+
+interface MonsterTraitEntry {
+  id: string;                                          // 特性ID (例: 'hard_skin', 'poison_touch', 'dragon_scale')
+  name: string;                                        // 特性名 (例: '硬い皮膚', '毒の体', 'ドラゴンスケイル')
+  description: string;                                 // 特性の効果説明
+  rarity: 'common' | 'rare' | 'epic';                  // レアリティ
+  category: 'stat' | 'combat_special' | 'unique';      // カテゴリ分類
+  statModifiers?: {                                    // ステータス補正倍率/加算値 (任意)
+    hpMultiplier?: number;
+    attackMultiplier?: number;
+    defenseMultiplier?: number;
+    agilityMultiplier?: number;
+    dexterityMultiplier?: number;
+    speedMultiplier?: number;
+    luckBonus?: number;
+    criticalRateBonus?: number;
+    evasionRateBonus?: number;
+  };
+}

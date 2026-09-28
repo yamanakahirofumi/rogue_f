@@ -67,8 +67,16 @@
 - 特性は繁殖時に親から子へ継承される可能性があります。詳細は [モンスター繁殖システム](Monster-Breeding-System.md) を参照してください。
 - 突然変異により、両親が持っていない特性が発現することもあります。
 
-## 6. 相互参照
+## 6. REST API 仕様
+全モンスター特性マスターの一覧を取得する REST API エンドポイントです。
+
+- `GET /api/monster/traits`: システム内に定義された全ての特性マスターエントリー（ID、名称、効果記述、レアリティ、カテゴリ、ステータス補正値等）を取得します。
+  - レスポンス: `MonsterTraitEntry[]`
+  - 詳細な TypeScript データモデルは [実装詳細](../implementation/Implementation-Details.md#333-monstertraitentry-model) を参照してください。
+
+## 7. 相互参照
 - [モンスターシステム](Monster-System.md)
 - [モンスター繁殖システム](Monster-Breeding-System.md)
 - [モンスターマスターリスト](Monster-Master-List.md)
 - [状態異常システム](Status-Effect-System.md)
+- [実装詳細](../implementation/Implementation-Details.md)

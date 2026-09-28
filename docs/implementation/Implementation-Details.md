@@ -349,6 +349,12 @@
     - リクエスト: `{ reason: 'victory' | 'defeated' | 'surrendered' }`
     - レスポンス: `PkReturnResult`
 
+### 2.12 モンスター特性マスター API (Monster Traits API)
+全モンスター特性（ステータス補正系・戦闘特殊系・固有特性）のマスター定義一覧を取得するエンドポイントです。詳細は **[モンスター特性マスターリスト](../features/Monster-Trait-List.md)** を参照してください。
+
+- `GET /api/monster/traits`: システム内に定義された全ての特性マスターエントリー（ID、名称、効果記述、レアリティ、カテゴリ、ステータス補正値等）を取得します。
+  - レスポンス: `MonsterTraitEntry[]`
+
 ## 3. データモデル
 
 ### 3.1 Player
@@ -1443,6 +1449,28 @@ interface PkReturnResult {
   transferredToWarehouseCount: number;                                 // 倉庫へ転送されたアイテム数
   cooldownMinutes: number;                                             // 適用された再乱入制限時間 (分)
   message: string;                                                     // 処理結果メッセージ
+}
+```
+
+### 3.33 MonsterTraitEntry Model
+```typescript
+interface MonsterTraitEntry {
+  id: string;                                          // 特性ID (例: 'hard_skin', 'poison_touch', 'dragon_scale')
+  name: string;                                        // 特性名 (例: '硬い皮膚', '毒の体', 'ドラゴンスケイル')
+  description: string;                                 // 特性の効果説明
+  rarity: 'common' | 'rare' | 'epic';                  // レアリティ
+  category: 'stat' | 'combat_special' | 'unique';      // カテゴリ分類
+  statModifiers?: {                                    // ステータス補正倍率/加算値 (任意)
+    hpMultiplier?: number;
+    attackMultiplier?: number;
+    defenseMultiplier?: number;
+    agilityMultiplier?: number;
+    dexterityMultiplier?: number;
+    speedMultiplier?: number;
+    luckBonus?: number;
+    criticalRateBonus?: number;
+    evasionRateBonus?: number;
+  };
 }
 ```
 
