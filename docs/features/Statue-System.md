@@ -61,7 +61,69 @@ interface StatueConfig {
 }
 ```
 
-## 5. 相互参照
+## 5. REST API 及びデータモデル仕様
+
+彫像の設置・設定変更・撤去・解体は以下の REST API エンドポイントを介して実行されます。
+
+### 5.1 彫像効果設定・変更 API
+配置済みの彫像に対し、付与する特殊効果を設定または更新します。
+
+- **エンドポイント**: `PUT /api/admin/dungeon/{dungeonId}/facility/{facilityId}/statue`
+- **リクエスト構造**:
+```typescript
+interface FacilityConfigUpdateRequest {
+  floorLevel: number; // 設置階層レベル
+  facilityId: string; // 施設ID
+  config: StatueConfig; // 更新する彫像構成
+}
+
+interface StatueConfig {
+  effectType: 'dread' | 'guardian' | 'healing' | 'greed' | 'glow'; // 彫像の特殊効果
+}
+```
+- **レスポンス構造**:
+```typescript
+interface FacilityConfigUpdateResult {
+  success: boolean;                   // 設定更新の成否
+  updatedFacility?: PlacedFacility;   // 更新後の設置施設データ
+  message: string;                    // 処理結果メッセージ
+}
+```
+
+### 5.2 彫像撤去・解体 API
+配置済みの彫像をダンジョンから撤去・解体し、設置コストの 50%（端数切り捨て）にあたる資材・ゴールドを管理者のストックに回収します。
+
+- **エンドポイント**: `DELETE /api/admin/dungeon/{dungeonId}/floor/{floorLevel}/facility/{facilityId}`
+- **リクエスト構造**:
+```typescript
+interface FacilityDismantleRequest {
+  floorLevel: number;                 // 解体対象の階層番号
+  facilityId?: string;                // 解体対象の施設ID
+  position: { x: number; y: number }; // 解体対象の施設座標
+}
+```
+- **レスポンス構造**:
+```typescript
+interface FacilityDismantleResult {
+  success: boolean;                   // 撤去・解体処理の成否
+  recoveredGold: number;              // 回収されたゴールド (石材×10, 800ゴールドの50% = 400ゴールド)
+  recoveredMaterials: { typeId: string; amount: number }[]; // 回収された資材 (石材×5)
+  message: string;                    // 処理結果メッセージ
+}
+```
+
+### 5.3 イベントログ仕様 (`statue_placed`)
+彫像の設置、効果変更、および撤去時に発行される `DungeonEvent` の詳細構造です。
+
+```typescript
+interface StatuePlacedDetails {
+  action: 'place' | 'remove';                                 // 設置または撤去
+  effectType: 'dread' | 'guardian' | 'healing' | 'greed' | 'glow'; // 彫像の効果種類
+  position: { x: number; y: number };                         // 設置・撤去座標
+}
+```
+
+## 6. 相互参照
 - [建築システム](Construction-System.md)
 - [施設マスターリスト](Facility-Master-List.md)
 - [アイテムマスターリスト](Item-Master-List.md)

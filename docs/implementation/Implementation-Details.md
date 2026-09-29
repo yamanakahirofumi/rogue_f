@@ -206,7 +206,7 @@
     - リクエスト: `MonsterAccelerateRequest`
     - レスポンス: `MonsterAccelerateResult`
 - **設置施設設定管理**
-  - `PUT /api/admin/dungeon/{dungeonId}/facility/{facilityId}/statue`: 配置済み彫像の特殊効果変更。
+  - `PUT /api/admin/dungeon/{dungeonId}/facility/{facilityId}/statue`: 配置済み彫像の特殊効果（畏怖/守護/癒やし/強欲/輝き）変更。詳細は **[彫像システム](../features/Statue-System.md)** を参照。
     - リクエスト: `FacilityConfigUpdateRequest` (config: `StatueConfig`)
     - レスポンス: `FacilityConfigUpdateResult`
   - `PUT /api/admin/dungeon/{dungeonId}/facility/{facilityId}/altar`: 配置済み祭壇の祀る神・信仰度変更。
