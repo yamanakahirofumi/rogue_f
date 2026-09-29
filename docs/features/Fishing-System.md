@@ -105,7 +105,115 @@ interface FishingPointConfig {
 - `fishingLevel?: number;` : 釣りスキルレベル（ヒット時間の短縮、タイミング緩和に影響）
 - `fishingExp?: number;` : 釣りに成功した際に獲得する熟練経験値
 
-## 7. 相互参照
+## 7. REST API 及びデータモデル仕様
+
+釣りのキャスト・フッキング操作、釣り堀構成の設定変更、解体・撤去、およびイベントログ記録は以下の REST API エンドポイントを介して実行されます。
+
+### 7.1 キャスト・フッキング API
+プレイヤーが釣り竿とエサを用いてキャスト（投入）およびフッキング（引き上げ）を行います。
+
+- **キャスト・エンドポイント**: `PUT /api/player/{userId}/command/fish/cast`
+  - **リクエスト構造**:
+```typescript
+interface FishCastRequest {
+  rodItemId: string;   // 使用する釣り竿アイテムID
+  baitItemId?: string; // 使用するエサアイテムID
+}
+```
+  - **レスポンス構造**:
+```typescript
+interface FishCastResult {
+  success: boolean;       // キャスト成功フラグ
+  waitTicks: number;      // ヒットまでの待機時間 (ティック数)
+  consumedBaitId?: string; // 消費されたエサアイテムID
+  message: string;        // 処理結果メッセージ
+}
+```
+
+- **フッキング・エンドポイント**: `PUT /api/player/{userId}/command/fish/hook`
+  - **リクエスト構造**:
+```typescript
+interface FishingHookRequest {
+  timingAccuracy: 'perfect' | 'success' | 'failed'; // タイミング判定結果
+}
+```
+  - **レスポンス構造**:
+```typescript
+interface FishingHookResult {
+  success: boolean;           // 釣り上げ成否
+  caughtItem?: InventoryItem; // 獲得したアイテム (魚、宝箱、装備等)
+  ambushedMonsterId?: string; // 襲撃発生時のモンスターID
+  fishingExpGained: number;   // 獲得した釣り熟練経験値
+  message: string;            // 処理結果メッセージ
+}
+```
+
+### 7.2 釣り堀構成設定 API
+管理者が配置済みの釣り堀（`fishing_point`）に対し、利用料や残り魚影数、エサ制限等を設定・更新します。
+
+- **エンドポイント**: `PUT /api/admin/dungeon/{dungeonId}/facility/{facilityId}/fishing`
+- **リクエスト構造**:
+```typescript
+interface FacilityConfigUpdateRequest {
+  floorLevel: number;        // 設置階層レベル
+  facilityId: string;        // 施設ID
+  config: FishingPointConfig; // 更新する釣り堀構成
+}
+
+interface FishingPointConfig {
+  fishPoolSize: number;       // 現在の残り魚影数 (上限 10)
+  allowedBaitTier: number;    // 使用可能なエサの最低/最高 Tier 制限
+  usageFee: number;           // 1キャストあたりの利用料 (ゴールド)
+  bonusMultiplier: number;    // レア出現率補正 (標準: 1.0, 最大: 1.5)
+}
+```
+- **レスポンス構造**:
+```typescript
+interface FacilityConfigUpdateResult {
+  success: boolean;                 // 設定更新の成否
+  updatedFacility?: PlacedFacility; // 更新後の設置施設データ
+  message: string;                  // 処理結果メッセージ
+}
+```
+
+### 7.3 釣り堀撤去・解体 API
+配置済みの釣り堀をダンジョンから撤去・解体し、設置コストの 50%（端数切り捨て）にあたる資材・ゴールドを管理者のストックに回収します。
+
+- **エンドポイント**: `DELETE /api/admin/dungeon/{dungeonId}/floor/{floorLevel}/facility/{facilityId}`
+- **リクエスト構造**:
+```typescript
+interface FacilityDismantleRequest {
+  floorLevel: number;                 // 解体対象の階層番号
+  facilityId?: string;                // 解体対象の施設ID
+  position: { x: number; y: number }; // 解体対象の施設座標
+}
+```
+- **レスポンス構造**:
+```typescript
+interface FacilityDismantleResult {
+  success: boolean;                   // 撤去・解体処理の成否
+  recoveredGold: number;              // 回収されたゴールド (1,200ゴールドの50% = 600ゴールド)
+  recoveredMaterials: { typeId: string; amount: number }[]; // 回収された資材 (木材×7, 石材×2)
+  message: string;                    // 処理結果メッセージ
+}
+```
+
+### 7.4 イベントログ仕様 (`fishing_attempt`)
+釣り操作（キャスト、フッキング、成果・モンスター襲撃発生）時に発行される `DungeonEvent` の詳細構造です。
+
+```typescript
+interface FishingAttemptDetails {
+  rodItemId: string;          // 使用した釣り竿ID
+  baitItemId?: string;        // 使用したエサID
+  result: 'success' | 'failed' | 'ambushed'; // 結果種別
+  caughtItemId?: string;      // 釣獲アイテムID
+  ambushedMonsterType?: string; // 発生したモンスター種別
+}
+```
+
+---
+
+## 8. 相互参照
 - [アイテムマスターリスト](Item-Master-List.md)
 - [合成システム](Synthesis-System.md)
 - [アクションシステム](Action-System.md)
