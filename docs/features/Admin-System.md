@@ -66,7 +66,190 @@
 ## 7. 管理者 UI (Admin UI)
 管理画面（`/admin`）の具体的な画面構成、操作方法、およびデザイン方針については、**[UI・UX設計](UI-UX-Design.md#4-管理者用-ui-admin-ui)** を参照してください。
 
-## 8. 相互参照
+## 8. 管理者 REST API 仕様およびデータモデル (Admin REST API & Data Models)
+
+管理者が世界を構築・運営するための全エンドポイント、型定義、およびデータモデルリファレンスです。
+
+### 8.1 REST API エンドポイント一覧
+
+#### ダンジョン・階層管理 API
+- `POST /api/admin/dungeon`: 新規ダンジョンの作成。
+  - リクエスト: `DungeonConfig` (idはサーバー自動生成)
+  - レスポンス: `DungeonConfig`
+- `GET /api/admin/dungeons`: 管理者が所有する全ダンジョン設定一覧の取得。
+  - レスポンス: `DungeonConfig[]`
+- `PUT /api/admin/dungeon/{dungeonId}/floor/{floorLevel}`: 特定階層の構成（地形、モンスター・トラップ・施設・ショップ配置）の更新。
+  - リクエスト: `FloorConfig`
+  - レスポンス: `FloorConfig`
+- `DELETE /api/admin/dungeon/{dungeonId}/floor/{floorLevel}/trap`: 配置済みトラップの撤去・解体（設置コストの 50% 資材・ゴールドを回収）。
+  - リクエスト: `TrapDismantleRequest`
+  - レスポンス: `TrapDismantleResult`
+- `DELETE /api/admin/dungeon/{dungeonId}/floor/{floorLevel}/terrain`: 特殊地形の撤去・解体と標準床へのリセット（設置コストの 50% 資材・ゴールドを回収）。
+  - リクエスト: `TerrainDismantleRequest`
+  - レスポンス: `TerrainDismantleResult`
+- `DELETE /api/admin/dungeon/{dungeonId}/floor/{floorLevel}/facility/{facilityId}`: 配置済み施設の撤去・解体（設置コストの 50% 資材・ゴールドを回収）。
+  - リクエスト: `FacilityDismantleRequest`
+  - レスポンス: `FacilityDismantleResult`
+- `DELETE /api/admin/dungeon/{dungeonId}/floor/{floorLevel}/monster/{monsterId}`: 配置済みモンスターの撤去・回収（倉庫ステータスを 'placed' から 'idle' へ更新・配置容量解放）。
+  - リクエスト: `MonsterRecallRequest`
+  - レスポンス: `MonsterRecallResult`
+- `DELETE /api/admin/dungeon/{dungeonId}/floor/{floorLevel}/shop/{shopId}`: 設置済みショップの閉鎖・撤去（陳列中の未売却商品を倉庫へ返還・配置容量解放）。
+  - リクエスト: `ShopCloseRequest`
+  - レスポンス: `ShopCloseResult`
+
+#### 倉庫・リソース管理 API
+- `GET /api/admin/warehouse`: 倉庫の状態（モンスター、アイテム、資材、容量）の取得。
+  - レスポンス: `WarehouseState`
+- `POST /api/admin/warehouse/expand`: 倉庫の保管枠（モンスター/アイテム/資材）の拡張。
+  - リクエスト: `WarehouseExpandRequest`
+  - レスポンス: `WarehouseExpandResult`
+- `POST /api/admin/warehouse/item/deposit`: プレイヤー所持品または報酬からの倉庫へのアイテム預入。
+  - リクエスト: `WarehouseItemDepositRequest`
+  - レスポンス: `WarehouseItemDepositResult`
+- `POST /api/admin/warehouse/item/withdraw`: 倉庫からプレイヤーインベントリへのアイテム引出。
+  - リクエスト: `WarehouseItemWithdrawRequest`
+  - レスポンス: `WarehouseItemWithdrawResult`
+- `POST /api/admin/warehouse/monster/status`: 保管中モンスターの稼働状態（`idle`, `placed`, `expedition`）の更新。
+  - リクエスト: `WarehouseMonsterStatusRequest`
+  - レスポンス: `WarehouseMonsterStatusResult`
+- `POST /api/admin/warehouse/monster/breed`: モンスター同士の繁殖試行。
+  - リクエスト: `MonsterBreedRequest`
+  - レスポンス: `MonsterBreedResult`
+- `POST /api/admin/warehouse/monster/{eggId}/hatch`: 孵化準備完了卵の即時孵化実行。
+  - リクエスト: `MonsterHatchRequest`
+  - レスポンス: `MonsterHatchResult`
+- `POST /api/admin/warehouse/monster/{eggId}/accelerate`: 孵化促進剤の使用による孵化時間短縮・即時完了。
+  - リクエスト: `MonsterAccelerateRequest`
+  - レスポンス: `MonsterAccelerateResult`
+
+#### 施設設定管理 API
+- `PUT /api/admin/dungeon/{dungeonId}/facility/{facilityId}/statue`: 配置済み彫像の特殊効果（畏怖/守護/癒やし/強欲/輝き）変更。
+  - リクエスト: `FacilityConfigUpdateRequest` (config: `StatueConfig`)
+  - レスポンス: `FacilityConfigUpdateResult`
+- `PUT /api/admin/dungeon/{dungeonId}/facility/{facilityId}/altar`: 配置済み祭壇の祀る神・初期信仰度変更。
+  - リクエスト: `FacilityConfigUpdateRequest` (config: `AltarConfig`)
+  - レスポンス: `FacilityConfigUpdateResult`
+- `PUT /api/admin/dungeon/{dungeonId}/facility/{facilityId}/fishing`: 配置済み釣り堀の構成（利用料・エサ制限）変更。
+  - リクエスト: `FacilityConfigUpdateRequest` (config: `FishingPointConfig`)
+  - レスポンス: `FacilityConfigUpdateResult`
+
+#### モンスター遠征 API
+- `GET /api/admin/expedition/destinations`: 派遣可能な遠征目的地一覧の取得。
+  - レスポンス: `ExpeditionDestination[]`
+- `GET /api/admin/expeditions`: 現在派遣中の遠征隊一覧の取得。
+  - レスポンス: `ExpeditionState[]`
+- `POST /api/admin/expedition/dispatch`: 遠征隊の派遣開始。
+  - リクエスト: `ExpeditionDispatchRequest`
+  - レスポンス: `ExpeditionDispatchResult`
+- `POST /api/admin/expedition/{expeditionId}/claim`: 完了した遠征の報酬受取およびモンスターの帰還。
+  - レスポンス: `ExpeditionClaimResult`
+
+#### ショップ管理 API
+- `POST /api/admin/shop`: ダンジョン内にショップを新規設置。
+  - リクエスト: `ShopCreateRequest`
+  - レスポンス: `ShopCreateResult`
+- `PUT /api/admin/shop/{shopId}/slots`: ショップの陳列商品と価格スロットを更新。
+  - リクエスト: `ShopSlotsUpdateRequest`
+  - レスポンス: `ShopSlotsUpdateResult`
+
+#### トラストネットワーク (世界間連携) API
+- `GET /api/admin/trust-network`: 信頼関係にあるサーバー一覧の取得。
+  - レスポンス: `TrustedServer[]`
+- `POST /api/admin/trust-network/server`: 新しいサーバーとの信頼関係構築申請。
+  - リクエスト: `TrustServerAddRequest`
+  - レスポンス: `TrustServerAddResult`
+- `PUT /api/admin/trust-network/server/{serverId}`: 信頼ポリシー（アイテム移動・レベル同期）の更新。
+  - リクエスト: `TrustPolicyUpdateRequest`
+  - レスポンス: `TrustPolicyUpdateResult`
+
+#### ゲームバランス管理 API
+- `GET /api/admin/balance`: 動的ゲームバランスパラメーターの取得。
+  - レスポンス: `BalanceConfig`
+- `PUT /api/admin/balance`: 動的ゲームバランスパラメーターのリアルタイム更新。
+  - リクエスト: `Partial<BalanceConfig>`
+  - レスポンス: `BalanceConfig`
+- `GET /api/admin/balance/telemetry`: 収集されたバランステレメトリデータの取得。
+  - レスポンス: `BalanceTelemetry`
+
+#### リアルタイム介入 API
+- `POST /api/admin/intervention/player/{userId}/summon`: 攻略中のプレイヤーと同じマップ座標へ手持ちモンスターを即座に召喚。
+  - リクエスト: `AdminSummonRequest`
+  - レスポンス: `AdminSummonResult`
+- `POST /api/admin/intervention/player/{userId}/trigger`: 指定座標のトラップ強制作動または環境効果（落雷・落石・ガス漏れ・地震）を発生。
+  - リクエスト: `AdminTriggerRequest`
+  - レスポンス: `AdminTriggerResult`
+
+#### モニタリング & ログ API
+- `GET /api/admin/logs/dungeon/{dungeonId}`: 指定ダンジョンのイベントログを取得。
+  - クエリパラメータ: `limit`, `offset`, `type`
+  - レスポンス: `DungeonEvent[]`
+- `GET /api/admin/logs/actions`: 管理者の操作アクションログを取得。
+  - クエリパラメータ: `limit`, `offset`, `action`
+  - レスポンス: `AdminLog[]`
+
+### 8.2 主要データモデルリファレンス
+
+TypeScript 型定義 (`src/@types/admin.d.ts` で定義):
+
+```typescript
+interface DungeonConfig {
+  id: string;              // ダンジョンID
+  name: string;            // ダンジョン名
+  ownerId: string;         // 管理者のユーザーID
+  description: string;     // ダンジョンの説明文
+  isPublic: boolean;       // 公開フラグ
+  entryFee: number;        // 入場料 (ゴールド)
+  totalFloors: number;     // 総階層数
+  deathPenalty: DeathPenaltyConfig; // デスペナルティ設定
+  rewards: ClearRewardConfig;       // クリア報酬設定
+  rewardPool: ClearRewardPool;      // 現在の報酬プール残高
+}
+
+interface FloorConfig {
+  floorLevel: number;      // 階層番号
+  width: number;           // マップ幅
+  height: number;          // マップ高さ
+  biomeId: 'cave' | 'forest' | 'ice' | 'lava'; // 現在の階層のバイオームID
+  tiles: string[][];       // 地形データ (2次元配列)
+  monsters: PlacedMonster[]; // 配置済みモンスター
+  traps: PlacedTrap[];       // 配置済みトラップ
+  shops: PlacedShop[];       // 設置済みショップ
+  facilities: PlacedFacility[]; // 設置済み施設
+}
+
+interface WarehouseState {
+  monsters: StoredMonster[]; // 保管中のモンスター
+  items: StoredItem[];       // 保管中のアイテム
+  materials: StoredMaterial[]; // 保管中の建築資材
+  trustNetwork: TrustedServer[]; // 信頼しているサーバー
+  capacity: {
+    monsterMax: number;
+    itemMax: number;
+    materialMax: number;
+  };
+}
+
+interface AdminLog {
+  id: string;              // ログ固有ID
+  timestamp: number;       // 操作時刻
+  adminId: string;         // 管理者のユーザーID
+  action: AdminActionType; // 操作種別
+  targetId?: string;       // 対象のID (dungeonId, shopId等)
+  changes: {
+    before: any;           // 変更前
+    after: any;            // 変更後
+  };
+}
+
+type AdminActionType =
+  | 'create_dungeon'       // ダンジョン作成
+  | 'update_floor'         // 階層更新
+  | 'update_shop_price'    // ショップ価格更新
+  | 'update_trust_policy'  // 信頼ポリシー更新
+  | 'intervene_player';    // プレイヤーへの介入
+```
+
+## 9. 相互参照
 - [機能仕様書](Functional-Specification.md)
 - [管理者介入システム](Admin-Intervention-System.md)
 - [ショップシステム](Shop-System.md)
@@ -74,3 +257,5 @@
 - [トラップシステム](Trap-System.md)
 - [モンスターシステム](Monster-System.md)
 - [UI・UX設計](UI-UX-Design.md)
+- [実装詳細](../implementation/Implementation-Details.md)
+- [管理者データモデル](../implementation/Admin-Data-Models.md)
