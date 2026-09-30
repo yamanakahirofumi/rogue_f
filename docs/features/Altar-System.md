@@ -117,7 +117,99 @@ interface AltarConfig {
 
 ---
 
-## 6. 相互参照
+## 6. REST API 及びデータモデル仕様
+
+祭壇のインタラクティブ操作、設置神の設定変更、解体・撤去、およびイベントログ記録は以下の REST API エンドポイントを介して実行されます。
+
+### 6.1 祭壇インタラクティブ操作 API
+探索者または PKer が祭壇に対して各種アクション（祈る、供物を捧げる、冒涜する、略奪する）を実行します。
+
+- **エンドポイント**: `PUT /api/player/{userId}/command/altar/{action}`
+- **パスパラメータ**:
+  - `action`: `'pray' | 'offer-gold' | 'offer-item' | 'desecrate' | 'loot'`
+- **リクエスト構造** (供物奉納時):
+```typescript
+interface AltarActionRequest {
+  itemId?: string;     // 捧げるアイテムID (offer-item時)
+  goldAmount?: number; // 捧げるゴールド額 (offer-gold時)
+}
+```
+- **レスポンス構造**:
+```typescript
+interface AltarActionResult {
+  result: 'divine_blessing' | 'divine_punishment' | 'favor_increased' | 'favor_decreased' | 'loot_success' | 'loot_failed_punished';
+  grantedEffect?: string;        // 付与されたバフ/デバフ名 (DIVINE_BLESSING, DIVINE_PUNISHMENT 等)
+  lootedItems?: InventoryItem[]; // 略奪成功時の獲得アイテム
+  lootedGold?: number;          // 略奪成功時の獲得ゴールド
+  favorLevel: number;           // 更新後の信仰度レベル (0〜5)
+  message: string;              // 処理結果メッセージ
+}
+```
+
+### 6.2 祭壇設定変更 API
+管理者が配置済みの祭壇に対し、祀る神や信仰度パラメータを設定・変更します。
+
+- **エンドポイント**: `PUT /api/admin/dungeon/{dungeonId}/facility/{facilityId}/altar`
+- **リクエスト構造**:
+```typescript
+interface FacilityConfigUpdateRequest {
+  floorLevel: number; // 設置階層レベル
+  facilityId: string; // 施設ID
+  config: AltarConfig; // 更新する祭壇構成
+}
+
+interface AltarConfig {
+  deityId: 'ares' | 'athena' | 'demeter' | 'fortuna'; // 祀る神のID
+  favorLevel: number;                                // 信仰度レベル (0〜5)
+  isDesecrated: boolean;                             // 冒涜されているかフラグ
+}
+```
+- **レスポンス構造**:
+```typescript
+interface FacilityConfigUpdateResult {
+  success: boolean;                 // 設定更新の成否
+  updatedFacility?: PlacedFacility; // 更新後の設置施設データ
+  message: string;                  // 処理結果メッセージ
+}
+```
+
+### 6.3 祭壇撤去・解体 API
+配置済みの祭壇をダンジョンから撤去・解体し、設置コストの 50%（端数切り捨て）にあたる資材・ゴールドを管理者のストックに回収します。
+
+- **エンドポイント**: `DELETE /api/admin/dungeon/{dungeonId}/floor/{floorLevel}/facility/{facilityId}`
+- **リクエスト構造**:
+```typescript
+interface FacilityDismantleRequest {
+  floorLevel: number;                 // 解体対象の階層番号
+  facilityId?: string;                // 解体対象の施設ID
+  position: { x: number; y: number }; // 解体対象の施設座標
+}
+```
+- **レスポンス構造**:
+```typescript
+interface FacilityDismantleResult {
+  success: boolean;                   // 撤去・解体処理の成否
+  recoveredGold: number;              // 回収されたゴールド (5,000ゴールドの50% = 2,500ゴールド)
+  recoveredMaterials: { typeId: string; amount: number }[]; // 回収された資材 (魔力結晶×7, 石材×5)
+  message: string;                    // 処理結果メッセージ
+}
+```
+
+### 6.4 イベントログ仕様 (`altar_interaction`)
+祭壇に対する各種操作（祈り、供物、冒涜、略奪、神罰発動）時に発行される `DungeonEvent` の詳細構造です。
+
+```typescript
+interface AltarInteractionDetails {
+  action: 'pray' | 'offer' | 'desecrate' | 'loot' | 'divine_punishment'; // アクション種別
+  deityId: 'ares' | 'athena' | 'demeter' | 'fortuna';                     // 対象の神ID
+  favorLevel: number;                                                   // アクション後の信仰度
+  resultEffect?: string;                                                // 付与・発動された効果名
+}
+```
+
+---
+
+## 7. 相互参照
 - [機能仕様書](Functional-Specification.md)
 - [建築システム](Construction-System.md)
 - [彫像システム (Statue-System.md)](Statue-System.md)

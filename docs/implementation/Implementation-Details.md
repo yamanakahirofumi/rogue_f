@@ -827,17 +827,18 @@ interface DungeonExitResult {
 ### 3.13 Fishing Results
 ```typescript
 interface FishCastResult {
-  result: 'waiting' | 'failed_no_bait' | 'failed_invalid_tile';
-  waitTicks?: number;   // ヒット発生までの待機時間（ティック）
-  message: string;
+  success: boolean;       // キャスト成功フラグ
+  waitTicks: number;      // ヒットまでの待機時間 (ティック数)
+  consumedBaitId?: string; // 消費されたエサアイテムID
+  message: string;        // 処理結果メッセージ
 }
 
 interface FishingHookResult {
-  result: 'success' | 'missed' | 'monster_ambush';
-  loot?: InventoryItem; // 釣り上げた魚・資材・宝箱
-  ambushMonsterId?: string; // モンスター襲撃時の個体/種別ID
-  gainedExp?: number;   // 獲得した釣り熟練経験値
-  message: string;
+  success: boolean;           // 釣り上げ成否
+  caughtItem?: InventoryItem; // 獲得したアイテム (魚、宝箱、装備等)
+  ambushedMonsterId?: string; // 襲撃発生時のモンスターID
+  fishingExpGained: number;   // 獲得した釣り熟練経験値
+  message: string;            // 処理結果メッセージ
 }
 ```
 

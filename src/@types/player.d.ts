@@ -341,6 +341,30 @@ interface ChestOpenResult {
   message: string;
 }
 
+interface FishCastResult {
+  success: boolean;       // キャスト成功フラグ
+  waitTicks: number;      // ヒットまでの待機時間 (ティック数)
+  consumedBaitId?: string; // 消費されたエサアイテムID
+  message: string;        // 処理結果メッセージ
+}
+
+interface FishingHookResult {
+  success: boolean;           // 釣り上げ成否
+  caughtItem?: InventoryItem; // 獲得したアイテム (魚、宝箱、装備等)
+  ambushedMonsterId?: string; // 襲撃発生時のモンスターID
+  fishingExpGained: number;   // 獲得した釣り熟練経験値
+  message: string;            // 処理結果メッセージ
+}
+
+interface AltarActionResult {
+  result: 'divine_blessing' | 'divine_punishment' | 'favor_increased' | 'favor_decreased' | 'loot_success' | 'loot_failed_punished';
+  grantedEffect?: string;        // 付与されたバフ/デバフ名 (DIVINE_BLESSING, DIVINE_PUNISHMENT 等)
+  lootedItems?: InventoryItem[]; // 略奪成功時の獲得アイテム
+  lootedGold?: number;          // 略奪成功時の獲得ゴールド
+  favorLevel: number;           // 更新後の信仰度レベル (0〜5)
+  message: string;              // 処理結果メッセージ
+}
+
 interface ShopItemListing {
   id: string;             // スロットID
   itemId: string;         // アイテム個体ID
