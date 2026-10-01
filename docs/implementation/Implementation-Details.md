@@ -108,16 +108,16 @@
     - `PUT /api/player/{userId}/audio-settings`: 音量設定（マスター・BGM・SE）の更新。
       - リクエスト: `AudioSettings`
       - レスポンス: `boolean`
-  - ロア・世界観情報エンドポイント:
-    - `GET /api/player/{userId}/lore`: 解放状況を含む全ロアエントリー一覧の取得。
+  - ロア・世界観情報エンドポイント (Story and Lore Endpoints):
+    - `GET /api/player/{userId}/lore`: 解放状況（`unlockedAt`）および未解放ヒントを含む全ロアエントリー一覧の取得。
       - レスポンス: `LoreEntry[]`
     - `GET /api/player/{userId}/lore/{loreId}`: 指定したロアの詳細本文の取得。
       - レスポンス: `LoreEntry`
-    - `POST /api/player/{userId}/lore/unlock`: （特定イベント達成時等の）ロア解禁リクエスト。
+    - `POST /api/player/{userId}/lore/unlock`: ダンジョン探索やイベント達成時における特定のロア解禁リクエスト。
       - リクエスト: `LoreUnlockRequest`
       - レスポンス: `LoreUnlockResult`
-  - NPC会話制御エンドポイント:
-    - `GET /api/player/{userId}/npc/{npcId}/dialogue`: プレイヤーの現在状況（レベル、到達階層、解禁済みLore、装備称号）に応じた動的セリフの取得。
+  - NPC会話制御エンドポイント (NPC Dynamic Dialogue Endpoints):
+    - `GET /api/player/{userId}/npc/{npcId}/dialogue`: プレイヤーの現在状況（レベル、到達階層、解禁済みLore、装備称号等）に対応する最新動的ダイアログの取得。
       - レスポンス: `NpcDialogue`
   - アイテム合成・解体エンドポイント:
     - `GET /api/synthesis/recipes`: 全合成レシピ一覧および基本成功率の取得。
