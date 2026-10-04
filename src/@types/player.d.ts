@@ -643,3 +643,26 @@ interface ReplayBookmarkResult {
   isBookmarked: boolean;                                               // 現在のブックマーク状態
   message: string;                                                     // 結果メッセージ
 }
+
+interface BaseFacilityInfo {
+  facilityId: string;                                                  // 施設ID (例: 'breeding', 'synthesis', 'warehouse', 'gate', 'mailbox', 'shop', 'quest_board', 'ranking_board', 'shrine')
+  name: string;                                                        // 施設名
+  isAvailable: boolean;                                                // 利用可能フラグ
+  unhandledCount?: number;                                            // 未処理件数 (例: 未読メール件数、達成済みクエスト数)
+}
+
+interface BaseStatusResponse {
+  userId: string;                                                      // ユーザーID
+  isInBase: boolean;                                                   // 拠点滞在中フラグ
+  facilities: BaseFacilityInfo[];                                      // 利用可能施設情報一覧
+  unreadMailCount: number;                                             // 未読/未受取メール件数
+  completedQuestCount: number;                                         // 報酬受取可能クエスト数
+}
+
+interface BaseRestResult {
+  success: boolean;                                                    // 全回復処理の成否
+  healedHp: number;                                                    // 回復したHP量
+  healedStamina: number;                                               // 回復したスタミナ量
+  curedStatusEffects: string[];                                        // 解除された状態異常のIDリスト
+  message: string;                                                     // 処理結果メッセージ
+}

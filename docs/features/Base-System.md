@@ -44,6 +44,26 @@
 - 添付アイテムの受領時、インベントリが満床の場合は自動的に倉庫へ転送されます。
 - 詳細は **[メール・プレゼントシステム](Mail-System.md)** を参照してください。
 
+### 3.6 拠点ショップ・鑑定所 (Base Shop & Appraisal Office)
+- 探索者が収集した戦利品や不要アイテムの売却、未識別アイテムの有料鑑定、ならびに基本消費アイテム（回復薬、食料、松明等）の購入を行うシステムショップおよび鑑定施設です。
+- 詳細は **[ショップシステム](Shop-System.md)** を参照してください。
+
+### 3.7 クエスト掲示板・ギルド (Quest Board & Guild)
+- 探索者（Explorer）、管理者（Admin）、PKerそれぞれに向けた日課・週課・単発クエストの受諾、達成状況の確認、およびクリア報酬（ゴールド、経験値、資材、限定スタンプ等）を受領するための施設です。
+- 詳細は **[クエストシステム](Quest-System.md)** を参照してください。
+
+### 3.8 ランキング掲示板 (Ranking Board)
+- 各役割における最新ランキング（ダンジョン攻略階層、討伐数、管理者殺傷率、人気度、PK勝利数等）や自身の順位、およびシーズン残り時間を閲覧する掲示板オブジェクトです。
+- 詳細は **[ランキングシステム](Ranking-System.md)** を参照してください。
+
+### 3.9 拠点神殿・彫像展示場 (Base Shrine & Statue Display Area)
+- 四大神への祈願や奉納、ならびに所有する彫像の配置・展示を行い、拠点滞在時や再出発時のプレイヤーに特定の恩恵（祈願バフや加護）を付与する祈りのエリアです。
+- 詳細は **[祭壇システム](Altar-System.md)** および **[彫像システム](Statue-System.md)** を参照してください。
+
+### 3.10 宿屋・休憩所 (Inn / Rest Area)
+- 長旅の疲労を癒やし、プレイヤーの HP・スタミナを完全回復すると同時に、一時的な状態異常（毒、麻痺、鈍足等）を完全に消去するリフレッシュ施設です。
+- 拠点到達時の自動回復に加え、手動で即時休息を実行することも可能です。
+
 ## 4. 移動と遷移 (Transition)
 
 ### 4.1 拠点からダンジョンへ
@@ -57,6 +77,29 @@
 - **クリア (Clear)**: 最終階層にある「下り階段」を使用する。
 - **ゲームオーバー (Death)**: HP が 0 になり、死亡する（ペナルティが発生します）。
 
+### 4.3 拠点インタラクションと REST API 仕様
+拠点滞在中のステータス確認および手動全回復処理のための REST API 仕様です。
+
+#### 1) 拠点ステータス・施設状況取得
+- **エンドポイント**: `GET /api/player/{userId}/base/status`
+- **概要**: プレイヤーの拠点滞在フラグ、各主要施設の利用可能状態、ならびに未読メールや達成済みクエストの通知件数を取得します。
+- **レスポンスモデル**: `BaseStatusResponse`
+  - `userId`: ユーザーID (`string`)
+  - `isInBase`: 拠点滞在中フラグ (`boolean`)
+  - `facilities`: 利用可能施設情報一覧 (`BaseFacilityInfo[]`)
+  - `unreadMailCount`: 未読/未受取メール件数 (`number`)
+  - `completedQuestCount`: 報酬受取可能クエスト数 (`number`)
+
+#### 2) 拠点での手動休息・全回復処理
+- **エンドポイント**: `POST /api/player/{userId}/base/rest`
+- **概要**: 宿屋・休憩所を利用してプレイヤーの HP・スタミナを即座に最大値まで回復し、一時的な状態異常を解毒・消去します。
+- **レスポンスモデル**: `BaseRestResult`
+  - `success`: 処理の成否 (`boolean`)
+  - `healedHp`: 回復したHP量 (`number`)
+  - `healedStamina`: 回復したスタミナ量 (`number`)
+  - `curedStatusEffects`: 解除された状態異常のIDリスト (`string[]`)
+  - `message`: 処理結果メッセージ (`string`)
+
 ## 5. 相互参照
 - [機能仕様書](Functional-Specification.md)
 - [管理者システム](Admin-System.md)
@@ -64,4 +107,10 @@
 - [合成システム](Synthesis-System.md)
 - [倉庫システム](Warehouse-System.md)
 - [メール・プレゼントシステム](Mail-System.md)
+- [ショップシステム](Shop-System.md)
+- [クエストシステム](Quest-System.md)
+- [ランキングシステム](Ranking-System.md)
+- [祭壇システム](Altar-System.md)
+- [彫像システム](Statue-System.md)
 - [インベントリシステム](Inventory-System.md)
+- [実装詳細](../implementation/Implementation-Details.md)
