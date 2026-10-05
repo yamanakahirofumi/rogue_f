@@ -74,3 +74,4 @@
 ### 2026年10月
 - **サウンドエフェクトマスターリスト (SE Master List) の追加・補完**: ゲーム内で再生される全効果音（アクション・探索系、ギミック・施設系、UI・システム系）の SE ID、発生トリガー・条件、距離に応じた空間減衰適用の有無、および最大同時再生上限（1〜3音）を規定したマスターリスト仕様を `Audio-System.md` に追加。
 - **拠点システム施設定義および REST API 仕様・データモデルの追完**: 拠点内の主要施設（ショップ・鑑定所、クエスト掲示板、ランキング掲示板、拠点神殿、宿屋・休憩所）の機能定義、拠点ステータス取得および手動全回復用 REST API エンドポイント (`GET /api/player/{userId}/base/status`, `POST /api/player/{userId}/base/rest`)、データモデル (`BaseFacilityInfo`, `BaseStatusResponse`, `BaseRestResult`)、ならびに関連仕様書 (`Base-System.md`, `Implementation-Details.md`, `player.d.ts`) への追記・完全同期。
+- **エモート・スタンプシステムの報酬スタンプマスター定義・SSE配信仕様およびプレイヤーモデル拡張の補完**: クエスト・実績・ランキング報酬となる特殊スタンプマスター定義 (`stamp_crown`, `stamp_trophy`, `stamp_fire` 等)、リアルタイム配信イベントデータ構造 (`EmoteStampBroadcastEvent`)、Fog of War 視界表示ルール、およびアンロック済み特殊スタンプ保持用プロパティ (`Player.unlockedStampIds`) の各仕様書 (`Emote-Stamp-Master-List.md`, `Implementation-Details.md`, `player.d.ts`) への追記・完全同期。
