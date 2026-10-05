@@ -47,6 +47,7 @@ declare class Player {
   unlockedLoreIds?: string[];    // 解放されたLoreのIDリスト
   unlockedTitleIds?: string[];   // アンロックされた称号のIDリスト
   activeTitleId?: string;        // 現在装備中の称号のID (未装備時は undefined または空文字)
+  unlockedStampIds?: string[];   // アンロックされた特殊スタンプのIDリスト
   quests?: PlayerQuestProgress[]; // 進行中のクエストリスト
   fishingLevel?: number;         // 釣りスキルレベル (任意、初期値 1)
   fishingExp?: number;           // 釣り熟練度累積経験値 (任意)
@@ -604,6 +605,17 @@ interface EmoteSendResult {
   success: boolean;                                                    // 送信処理の成否
   cooldownRemainingSeconds?: number;                                 // クールダウン残り時間 (秒)
   message: string;                                                     // 結果メッセージ
+}
+
+interface EmoteStampBroadcastEvent {
+  speakerUserId: string;                                               // 発言者のユーザーID
+  speakerName: string;                                                 // 表示名 (プレイヤー名またはモンスター種別名)
+  speakerRole: 'explorer' | 'admin' | 'pker';                          // 発言者の役割
+  targetType: 'emote' | 'stamp';                                       // 種別
+  emoteOrStampId: string;                                              // 対象のエモートIDまたはスタンプID
+  textOrSymbol: string;                                                // 描画テキストまたは表示用シンボルマーク
+  position: { x: number; y: number };                                  // 実行時のマップ座標
+  timestamp: number;                                                   // 発生時刻 (UNIX ms)
 }
 
 interface QuestClaimResult {

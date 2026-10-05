@@ -399,6 +399,7 @@
   unlockedLoreIds?: string[];    // 解放済みLoreのIDリスト
   unlockedTitleIds?: string[];   // アンロック済み称号のIDリスト
   activeTitleId?: string;        // 装備中の称号ID
+  unlockedStampIds?: string[];   // アンロック済み特殊スタンプのIDリスト
   quests?: PlayerQuestProgress[]; // 進行中・完了クエストリスト
   fishingLevel?: number;         // 釣りスキルレベル
   fishingExp?: number;           // 釣り熟練経験値
@@ -1503,6 +1504,20 @@ interface BaseRestResult {
   healedStamina: number;                                               // 回復したスタミナ量
   curedStatusEffects: string[];                                        // 解除された状態異常のIDリスト
   message: string;                                                     // 処理結果メッセージ
+}
+```
+
+### 3.35 EmoteStampBroadcastEvent
+```typescript
+interface EmoteStampBroadcastEvent {
+  speakerUserId: string;                                               // 発言者のユーザーID
+  speakerName: string;                                                 // 表示名 (プレイヤー名またはモンスター種別名)
+  speakerRole: 'explorer' | 'admin' | 'pker';                          // 発言者の役割
+  targetType: 'emote' | 'stamp';                                       // 種別
+  emoteOrStampId: string;                                              // 対象のエモートIDまたはスタンプID
+  textOrSymbol: string;                                                // 描画テキストまたは表示用シンボルマーク
+  position: { x: number; y: number };                                  // 実行時のマップ座標
+  timestamp: number;                                                   // 発生時刻 (UNIX ms)
 }
 ```
 
