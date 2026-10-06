@@ -83,6 +83,7 @@
     - [x] モンスター図鑑詳細解析REST API仕様（`GET /api/player/{userId}/bestiary/{monsterTypeId}`）、研究進捗・レベルアップ通知モデル、およびTypeScript型定義（`BestiaryMonsterDetail`, `BestiaryProgressResult`）の追加補完。
     - [x] モンスター特性マスター取得REST API仕様（`GET /api/monster/traits`）およびTypeScript型定義（`MonsterTraitEntry`）の追加補完。
     - [x] 彫像システム設定変更および解体REST API仕様（`PUT /api/admin/dungeon/{dungeonId}/facility/{facilityId}/statue`, `DELETE /api/admin/dungeon/{dungeonId}/floor/{floorLevel}/facility/{facilityId}`）、TypeScript型定義（`FacilityConfigUpdateRequest`, `FacilityConfigUpdateResult`, `StatueConfig`, `StatuePlacedDetails`）の追加補完。
+    - [x] モンスター特殊行動（スキル）の再使用クールダウン、効果範囲 (AoE)、状態異常持続時間、効果音 (SE ID) 紐付け、ならびに実行モデル（`MonsterSkillExecution`）の追加補完。
 - **解決策**: 各機能仕様書および [実装詳細](implementation/Implementation-Details.md) を更新し、曖昧さを排除済み。
 
 ### [x] セーブ・ロード機能
