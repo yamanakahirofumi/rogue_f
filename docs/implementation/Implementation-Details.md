@@ -1506,6 +1506,34 @@ interface BaseRestResult {
 }
 ```
 
+### 3.35 Monster Skill Execution Model
+```typescript
+interface MonsterSkillExecution {
+  skillId: string;                     // スキルID ('snipe', 'fire_breath', 'life_drain', 'earthquake', 'summon_slimes', 'holy_light', 'shadow_strike', 'ground_slam' 等)
+  skillName: string;                   // スキル名称
+  casterId: string;                    // 発動者のエンティティID
+  casterTypeId: string;                // 発動者のモンスター種別ID
+  staminaCost: number;                 // 消費スタミナ
+  cooldownTicks: number;               // 適用された再使用クールダウン (ティック数)
+  aoeType: 'single_target' | 'line' | 'square_area' | 'adjacent_all' | 'self'; // 影響範囲種別
+  aoeRadius?: number;                  // 影響半径 (マス)
+  appliedStatusEffect?: {              // 付与された状態異常 (任意)
+    effectId: string;                  // 状態異常ID (例: 'STUN')
+    durationSeconds: number;           // 持続時間 (秒)
+  };
+  targetsHit: {                        // 被弾対象と個別の結果
+    targetId: string;
+    damageDealt: number;
+    isHit: boolean;
+    isCritical: boolean;
+    remainingHp: number;
+    isDead: boolean;
+  }[];
+  seId: string;                        // 再生される効果音ID (例: 'se_skill_fire_breath')
+  message: string;                     // 結果メッセージ
+}
+```
+
 詳細は **[イベントログ詳細仕様](Event-Log-Schemas.md)** を参照してください。
 
 ## 4. フィールドマップ記号 (Field Map Symbols)

@@ -74,3 +74,4 @@
 ### 2026年10月
 - **サウンドエフェクトマスターリスト (SE Master List) の追加・補完**: ゲーム内で再生される全効果音（アクション・探索系、ギミック・施設系、UI・システム系）の SE ID、発生トリガー・条件、距離に応じた空間減衰適用の有無、および最大同時再生上限（1〜3音）を規定したマスターリスト仕様を `Audio-System.md` に追加。
 - **拠点システム施設定義および REST API 仕様・データモデルの追完**: 拠点内の主要施設（ショップ・鑑定所、クエスト掲示板、ランキング掲示板、拠点神殿、宿屋・休憩所）の機能定義、拠点ステータス取得および手動全回復用 REST API エンドポイント (`GET /api/player/{userId}/base/status`, `POST /api/player/{userId}/base/rest`)、データモデル (`BaseFacilityInfo`, `BaseStatusResponse`, `BaseRestResult`)、ならびに関連仕様書 (`Base-System.md`, `Implementation-Details.md`, `player.d.ts`) への追記・完全同期。
+- **モンスター特殊行動（スキル）の再使用クールダウン、効果範囲 (AoE) および演出紐付け仕様の追加**: モンスターの特殊行動（`snipe`, `fire_breath`, `life_drain`, `earthquake`, `summon_slimes`, `holy_light`, `shadow_strike`, `ground_slam` 等）に関する再使用クールダウン (`cooldownTicks`)、影響範囲 (AoE)、状態異常持続時間、効果音 ID (SE ID) 紐付け、ならびに実行データモデル (`MonsterSkillExecution`) の策定・追記・完全同期。
