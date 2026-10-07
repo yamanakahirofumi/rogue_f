@@ -74,3 +74,4 @@
 ### 2026年10月
 - **サウンドエフェクトマスターリスト (SE Master List) の追加・補完**: ゲーム内で再生される全効果音（アクション・探索系、ギミック・施設系、UI・システム系）の SE ID、発生トリガー・条件、距離に応じた空間減衰適用の有無、および最大同時再生上限（1〜3音）を規定したマスターリスト仕様を `Audio-System.md` に追加。
 - **拠点システム施設定義および REST API 仕様・データモデルの追完**: 拠点内の主要施設（ショップ・鑑定所、クエスト掲示板、ランキング掲示板、拠点神殿、宿屋・休憩所）の機能定義、拠点ステータス取得および手動全回復用 REST API エンドポイント (`GET /api/player/{userId}/base/status`, `POST /api/player/{userId}/base/rest`)、データモデル (`BaseFacilityInfo`, `BaseStatusResponse`, `BaseRestResult`)、ならびに関連仕様書 (`Base-System.md`, `Implementation-Details.md`, `player.d.ts`) への追記・完全同期。
+- **ランキング API エンドポイント表記同期およびドキュメント不整合の整理**: `Ranking-System.md` における自身の順位取得エンドポイント定義を `GET /api/ranking/{category}/me/{userId}` に統一し、`Implementation-Details.md` および `ranking.d.ts` と同期。併せて `TODO-Rule.md` 内の相対リンク参照不整合の整理・修正を完了。
