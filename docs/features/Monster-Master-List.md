@@ -77,6 +77,24 @@
 
 ※本リストに記載のないモンスターは、通常攻撃（隣接 1 マス、消費 2 ST）のみを行います。
 
+#### 6.1.1 モンスター特殊行動（スキル）実行パラメーターマスター
+各特殊スキルのシステム処理・データモデル（`MonsterSkillExecution`）におけるパラメーター一覧です。
+
+| skillId | スキル名称 | 所有種別 | ターゲット種別 | クールタイム (CT) | 消費ST | 倍率 | 射程 | 範囲(aoeRadius) | 付与状態異常 | 異常持続 | 再生SE ID |
+| :--- | :--- | :--- | :--- | :---: | :---: | :---: | :---: | :---: | :--- | :---: | :--- |
+| `snipe` | 狙い撃ち | `archer` | `line_of_sight` | 3 ティック | 5 | 1.2x | 5 | 0 (単体) | なし | - | `se_skill_snipe` |
+| `fire_breath` | 火炎放射 | `dragon` | `line_of_sight` | 4 ティック | 10 | 1.0x | 3 | 1 (周囲1マス/3x3) | `BURN` | 3 ティック | `se_skill_fire_breath` |
+| `life_drain` | 吸血 | `vampire` | `single_target` | 2 ティック | 8 | 0.8x | 1 | 0 (単体) | なし (回復50%) | - | `se_skill_life_drain` |
+| `earthquake` | 大震動 | `golem` | `self_aoe` | 5 ティック | 15 | 1.5x | 2 | 2 (周囲2マス/5x5) | `STUN` | 2 ティック | `se_skill_earthquake` |
+| `rage` | 激昂 | `orc` | `self_buff` | パッシブ | 0 | 1.0x | 0 | 0 | パッシブ強化 | - | `se_skill_rage` |
+| `phase_through` | 壁抜け | `ghost` | `passive` | パッシブ | 2 | 1.0x | 0 | 0 | なし | - | `se_skill_phase_through` |
+| `summon_slimes` | 仲間呼び | `king_slime` | `summon` | 6 ティック | 20 | 0.0x | 1 | 1 (周囲1マス) | 召喚: スライム | - | `se_skill_summon_slimes` |
+| `preemptive_strike` | 先制擬態攻撃 | `mimic` | `single_target` | 1 回のみ | 0 | 1.0x | 1 | 0 (単体) | なし | - | `se_attack_hit` |
+| `flee` | 逃走 | `metal_slime` | `passive` | 0 ティック | 1 | 0.0x | 0 | 0 | なし | - | `se_footstep` |
+| `holy_light` | 聖なる光 | `angel` | `line_of_sight` | 3 ティック | 12 | 1.1x | 3 | 0 (単体) | なし | - | `se_skill_holy_light` |
+| `shadow_strike` | 影撃 | `shadow` | `single_target` | 2 ティック | 8 | 1.3x | 1 | 0 (単体) | `BLINDNESS` | 3 ティック | `se_skill_shadow_strike` |
+| `ground_slam` | 大地の怒り | `floor_boss` | `self_aoe` | 4 ティック | 40 | 2.0x | 1 | 1 (周囲1マス/3x3) | `STUN` | 3 ティック | `se_skill_ground_slam` |
+
 - **召喚個体の派閥**: 「仲間呼び」等の特殊行動によって新しく召喚されたエンティティは、**召喚者の現在の派閥（Faction）をそのまま継承**します。例えば、PKer によって召喚されたスライムは「PKer」派閥として扱われます。詳細は [派閥システム](Faction-System.md) を参照してください。
 
 #### モンスターのスタミナ自然回復
