@@ -66,6 +66,11 @@
 - **概要**: プレイヤーおよび管理者の活動拠点ハブにおける主要施設（ショップ・鑑定所、クエスト掲示板、ランキング掲示板、拠点神殿、宿屋・休憩所）の機能定義、全回復ルール、および拠点用 REST API 仕様の策定。
 - **解決策**: [拠点システム](features/Base-System.md) にて施設定義、全回復ルール、REST API (`GET /api/player/{userId}/base/status`, `POST /api/player/{userId}/base/rest`)、および TypeScript 型定義 (`BaseStatusResponse`, `BaseRestResult`) の補完を完了。
 
+### [x] ダンジョンミューテーター（階層変異）システムの設計提案
+- **完了日**: 2026-10-10
+- **概要**: 各階層に発生する 8 種類の特殊環境・変異効果（狂暴化、濃霧・密輸宝箱、魔力奔流、ブラッドムーン、重力異常、聖域化、豊かな脈動、呪いの蔓延）の導入、10%〜20%の自然発生率、管理者手動起動（500 Gold + 魔晶石 ×2）、REST API 仕様、およびデータモデル策定。
+- **解決策**: [ダンジョンミューテーターシステム](features/Dungeon-Mutator-System.md) にて変異マスターリスト、発生ルール、管理者起動コスト、相乗効果、REST API 仕様 (`/api/admin/dungeon/{dungeonId}/floor/{floorLevel}/mutator` エンドポイント群)、および TypeScript 型定義 (`DungeonMutatorEntry`, `ActiveFloorMutator`, `MutatorTriggerRequest`, `MutatorTriggerResult`, `MutatorEventDetails`) の策定を完了。
+
 ## 2. 技術面
 
 ### [x] 欠落仕様の補完

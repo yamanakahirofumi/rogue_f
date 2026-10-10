@@ -38,6 +38,7 @@ interface FloorConfig {
   traps: PlacedTrap[];       // 配置済みトラップ
   shops: PlacedShop[];       // 設置済みショップ
   facilities: PlacedFacility[]; // 設置済み施設
+  activeMutators?: ActiveFloorMutator[]; // 適用中のフロア変異（ミューテーター）一覧
 }
 
 interface TerrainEntry {
@@ -352,7 +353,9 @@ type DungeonEventType =
   | 'balance_telemetry'    // ゲームバランス調整用テレメトリ記録
   | 'synthesis_event'      // アイテム合成・解体イベント
   | 'shop_transaction'     // ショップ取引（購入・売却・鑑定）
-  | 'breeding_event';      // モンスター繁殖・孵化・促進
+  | 'breeding_event'       // モンスター繁殖・孵化・促進
+  | 'mutator_activated'    // ミューテーター発動
+  | 'mutator_expired';     // ミューテーター解除・期限切れ
 
 interface PlayerEntryDetails {
   entranceId: string;
@@ -787,4 +790,43 @@ interface MonsterSkillExecution {
   statusEffectDurationTicks?: number;                  // 付与する状態異常の持続時間 (ティック数)
   soundEffectId: string;                               // 再生される効果音ID (例: 'se_skill_fire_breath')
   targetType: 'single_target' | 'line_of_sight' | 'self_aoe' | 'self_buff' | 'summon' | 'passive'; // ターゲット種別
+}
+
+interface DungeonMutatorEntry {
+  mutatorId: string;           // ミューテーター固有ID (例: 'monster_frenzy')
+  name: string;                // 表示名 (例: 'モンスター狂暴化')
+  description: string;         // 効果の説明文
+  type: 'buff' | 'debuff' | 'hazard' | 'special'; // 種別分類
+  durationTicks: number;       // 持続時間（ティック数）
+  activationCost: {
+    gold: number;
+    materials: { typeId: string; amount: number }[];
+  };
+}
+
+interface ActiveFloorMutator {
+  mutatorId: string;           // 発動中のミューテーターID
+  activatedBy: 'system' | 'admin'; // 発動主体
+  activatedAt: number;         // 発動タイムスタンプ (UNIX ms)
+  remainingTicks: number;      // 残り継続ティック数
+}
+
+interface MutatorTriggerRequest {
+  mutatorId: string;           // 起動するミューテーターID
+}
+
+interface MutatorTriggerResult {
+  success: boolean;            // 処理成否
+  activeMutator?: ActiveFloorMutator; // 発動した変異データ
+  consumedGold: number;        // 消費ゴールド
+  consumedMaterials: { typeId: string; amount: number }[]; // 消費資材
+  message: string;             // 結果メッセージ
+}
+
+interface MutatorEventDetails {
+  action: 'activated' | 'expired'; // アクション種別
+  mutatorId: string;               // 対象ミューテーターID
+  activatedBy?: 'system' | 'admin'; // 発動主体
+  consumedGold?: number;           // 消費ゴールド (手動起動時)
+  consumedMaterials?: { typeId: string; amount: number }[]; // 消費資材 (手動起動時)
 }
