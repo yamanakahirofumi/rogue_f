@@ -53,6 +53,7 @@ interface FloorConfig {
   traps: PlacedTrap[];       // 配置済みトラップ
   shops: PlacedShop[];       // 設置済みショップ
   facilities: PlacedFacility[]; // 設置済み施設
+  activeMutators?: ActiveFloorMutator[]; // 適用中のフロア変異（ミューテーター）一覧
 }
 
 interface PlacedFacility {
@@ -313,7 +314,8 @@ interface DungeonEvent {
     | BalanceTelemetryDetails
     | SynthesisEventDetails
     | ShopTransactionDetails
-    | BreedingEventDetails;
+    | BreedingEventDetails
+    | MutatorEventDetails;
 }
 
 type DungeonEventType =
@@ -335,7 +337,17 @@ type DungeonEventType =
   | 'balance_telemetry'    // ゲームバランス調整用テレメトリ記録
   | 'synthesis_event'      // アイテム合成・解体イベント
   | 'shop_transaction'     // ショップ取引（購入・売却・鑑定）
-  | 'breeding_event';      // モンスター繁殖・孵化・促進
+  | 'breeding_event'       // モンスター繁殖・孵化・促進
+  | 'mutator_activated'    // ミューテーター発動
+  | 'mutator_expired';     // ミューテーター解除・期限切れ
+
+interface MutatorEventDetails {
+  action: 'activated' | 'expired';                            // アクション種別
+  mutatorId: string;                                          // 対象ミューテーターID
+  activatedBy?: 'system' | 'admin';                           // 発動主体
+  consumedGold?: number;                                      // 消費ゴールド (手動起動時)
+  consumedMaterials?: { typeId: string; amount: number }[];   // 消費資材 (手動起動時)
+}
 
 interface SynthesisEventDetails {
   action: 'craft' | 'dismantle';                              // 合成または解体

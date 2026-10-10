@@ -210,6 +210,14 @@
   - `POST /api/admin/warehouse/monster/{eggId}/accelerate`: 孵化促進剤を使用して卵の孵化時間を即時完了/短縮。
     - リクエスト: `MonsterAccelerateRequest`
     - レスポンス: `MonsterAccelerateResult`
+- **ダンジョンミューテーター（階層変異）管理**
+  - `POST /api/admin/dungeon/{dungeonId}/floor/{floorLevel}/mutator`: 指定階層へのミューテーター（階層変異）手動起動。詳細は **[ダンジョンミューテーターシステム](../features/Dungeon-Mutator-System.md)** を参照。
+    - リクエスト: `MutatorTriggerRequest`
+    - レスポンス: `MutatorTriggerResult`
+  - `GET /api/dungeon/{dungeonId}/floor/{floorLevel}/mutators`: 指定階層のアクティブミューテーター一覧取得。
+    - レスポンス: `ActiveFloorMutator[]`
+  - `DELETE /api/admin/dungeon/{dungeonId}/floor/{floorLevel}/mutator`: 指定階層のミューテーター強制消去・初期状態リセット。
+    - レスポンス: `{ success: boolean; message: string; }`
 - **設置施設設定管理**
   - `PUT /api/admin/dungeon/{dungeonId}/facility/{facilityId}/statue`: 配置済み彫像の特殊効果（畏怖/守護/癒やし/強欲/輝き）変更。詳細は **[彫像システム](../features/Statue-System.md)** を参照。
     - リクエスト: `FacilityConfigUpdateRequest` (config: `StatueConfig`)
@@ -625,7 +633,9 @@ type DungeonEventType =
   | 'balance_telemetry'    // ゲームバランス調整用テレメトリ記録
   | 'synthesis_event'      // アイテム合成・解体イベント
   | 'shop_transaction'     // ショップ取引（購入・売却・鑑定）
-  | 'breeding_event';      // モンスター繁殖・孵化・促進
+  | 'breeding_event'       // モンスター繁殖・孵化・促進
+  | 'mutator_activated'    // ミューテーター発動
+  | 'mutator_expired';     // ミューテーター解除・期限切れ
 
 interface PlayerEntryDetails {
   entranceId: string;      // 入口のID
