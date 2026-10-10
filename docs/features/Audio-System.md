@@ -126,6 +126,21 @@ $$\text{空間減衰率} = \max\left(0, 1 - \frac{d}{R}\right)$$
 | `se_dungeon_clear` | ダンジョンクリア | ダンジョンの最終階層を攻略達成したとき | なし | 1 |
 | `se_button_click` | ボタンクリック | UIメニューの操作や決定を行ったとき | なし | 3 |
 
+### 6.4 モンスター特殊行動（スキル） SE
+
+| SE ID | 名称 / 概要 | 発生トリガー・条件 | 空間減衰 | 同時再生上限 |
+| :--- | :--- | :--- | :---: | :---: |
+| `se_skill_snipe` | 狙い撃ち SE | スケルトンアーチャーがスキル `snipe` を発動したとき | あり | 2 |
+| `se_skill_fire_breath` | 火炎放射 SE | ドラゴンがスキル `fire_breath` を発動したとき | あり | 2 |
+| `se_skill_life_drain` | 吸血 SE | ヴァンパイアがスキル `life_drain` を発動したとき | あり | 2 |
+| `se_skill_earthquake` | 大震動 SE | ゴーレムがスキル `earthquake` を発動したとき | あり | 2 |
+| `se_skill_rage` | 激昂 SE | オークのスキル `rage`（パッシブ強化）が発動したとき | あり | 2 |
+| `se_skill_phase_through` | 壁抜け SE | ゴーストがスキル `phase_through` で壁内を移動したとき | あり | 2 |
+| `se_skill_summon_slimes` | 仲間呼び SE | キングスライムがスキル `summon_slimes` を発動したとき | あり | 2 |
+| `se_skill_holy_light` | 聖なる光 SE | エンジェルがスキル `holy_light` を発動したとき | あり | 2 |
+| `se_skill_shadow_strike` | 影撃 SE | シャドウがスキル `shadow_strike` を発動したとき | あり | 2 |
+| `se_skill_ground_slam` | 大地の怒り SE | フロアボスがスキル `ground_slam` を発動したとき | あり | 2 |
+
 ## 7. データモデルの拡張
 音量設定情報は、プレイヤーのセーブデータや状態管理の一部として組み込まれます。
 詳細な定義は、**[セーブ・ロードシステム](Save-Load-System.md)** および **[インベントリシステム](Inventory-System.md)** とも密接に関連します。
