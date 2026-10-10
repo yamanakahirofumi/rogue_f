@@ -61,6 +61,11 @@
 - **概要**: 拠点の郵便受けを通じて運営通知、ランキングシーズン報酬、ダンジョンオーバーフロー戦利品、ギフトメッセージを受信・受領するシステム。
 - **解決策**: [メール・プレゼントシステム](features/Mail-System.md) にて、50通の容量制限、30日間の有効期限、インベントリ超過時の倉庫自動転送ロジック、データ構造（`MailMessage`, `MailAttachment`, `MailClaimResult`）、およびREST APIエンドポイント群の策定を完了。
 
+### [x] 拠点システム・主要施設定義の補完
+- **完了日**: 2026-10-05
+- **概要**: プレイヤーおよび管理者の活動拠点ハブにおける主要施設（ショップ・鑑定所、クエスト掲示板、ランキング掲示板、拠点神殿、宿屋・休憩所）の機能定義、全回復ルール、および拠点用 REST API 仕様の策定。
+- **解決策**: [拠点システム](features/Base-System.md) にて施設定義、全回復ルール、REST API (`GET /api/player/{userId}/base/status`, `POST /api/player/{userId}/base/rest`)、および TypeScript 型定義 (`BaseStatusResponse`, `BaseRestResult`) の補完を完了。
+
 ## 2. 技術面
 
 ### [x] 欠落仕様の補完
@@ -83,6 +88,8 @@
     - [x] モンスター図鑑詳細解析REST API仕様（`GET /api/player/{userId}/bestiary/{monsterTypeId}`）、研究進捗・レベルアップ通知モデル、およびTypeScript型定義（`BestiaryMonsterDetail`, `BestiaryProgressResult`）の追加補完。
     - [x] モンスター特性マスター取得REST API仕様（`GET /api/monster/traits`）およびTypeScript型定義（`MonsterTraitEntry`）の追加補完。
     - [x] 彫像システム設定変更および解体REST API仕様（`PUT /api/admin/dungeon/{dungeonId}/facility/{facilityId}/statue`, `DELETE /api/admin/dungeon/{dungeonId}/floor/{floorLevel}/facility/{facilityId}`）、TypeScript型定義（`FacilityConfigUpdateRequest`, `FacilityConfigUpdateResult`, `StatueConfig`, `StatuePlacedDetails`）の追加補完。
+    - [x] サウンドエフェクトマスターリスト（SE Master List）の策定・追加定義。
+    - [x] 拠点ステータス・手動全回復 REST API 仕様（`GET/POST /api/player/{userId}/base/*`）および TypeScript 型定義（`BaseFacilityInfo`, `BaseStatusResponse`, `BaseRestResult`）の追加補完。
 - **解決策**: 各機能仕様書および [実装詳細](implementation/Implementation-Details.md) を更新し、曖昧さを排除済み。
 
 ### [x] セーブ・ロード機能
@@ -105,9 +112,9 @@
     - モンスターやアイテムの個別のスプライト。
 
 ### [x] サウンドエフェクト (SE) と BGM
-- **完了日**: 2026-07-21
+- **完了日**: 2026-07-21 (2026-10-02 SEマスターリスト補完完了)
 - **概要**: 没入感の向上。
-- **解決策**: [オーディオ・BGMシステム](features/Audio-System.md) にて、音量設定、動的なBGM切り替え、効果音の空間減衰、および同時再生制限の詳細を策定済み。
+- **解決策**: [オーディオ・BGMシステム](features/Audio-System.md) にて、音量設定、動的なBGM切り替え、効果音の空間減衰、同時再生制限、およびSEマスターリスト（アクション・探索系、ギミック・施設系、UI・システム系）の詳細を策定済み。
 - **検討内容**:
     - 移動音、攻撃音、アイテム取得音、レベルアップ音。
     - 階層や状況に応じたBGMの切り替え。
