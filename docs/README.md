@@ -5,63 +5,77 @@
 ## 1. ドキュメント構成
 
 ### 1.1 機能・仕様 ([features/](features/))
-ゲームの機能や仕様に関する核となる情報を記述しています。
+ゲームの機能や仕様に関する核となる情報を記述しています。機能ドメインごとに分類されています。
+
+#### ① 核となるコンセプト・全般 (Core & System Overview)
 - **[ゲーム機能概要](features/Game-Features.md)**: プロジェクト概要、基本操作、ゲームサイクル。
-- **[アクションシステム](features/Action-System.md)**: 移動、攻撃、アイテム使用などの行動コストとスタミナ・満腹度消費。
-- **[属性システム](features/Attribute-System.md)**: 属性の相性、ダメージ倍率、および環境効果への耐性。
-- **[バイオーム・環境システム](features/Biome-System.md)**: 各バイオーム特有の地形生成率、出現モンスターやドロップ率、ステータス等に対する環境補正。
-- **[拠点システム](features/Base-System.md)**: プレイヤーと管理者の活動のハブとなる安全地帯の役割と施設。
 - **[機能仕様書](features/Functional-Specification.md)**: システム構成、二つのダンジョン形式、管理者メリット、世界間連携。
-- **[ダンジョン生成システム](features/Dungeon-Generation-System.md)**: ランダムダンジョンの生成ロジック、部屋・通路の配置ルール。
-- **[戦闘システム](features/Combat-System.md)**: リアルタイム制バトル、ダメージ計算、モンスターAI。
-- **[モンスターシステム](features/Monster-System.md)**: モンスターの獲得、繁殖、運用。
-- **[モンスター図鑑システム](features/Monster-Bestiary-System.md)**: モンスターの遭遇・討伐・捕獲・繁殖データの記録・研究、段階的情報開示および各種ボーナス。
-- **[モンスター遠征システム](features/Monster-Expedition-System.md)**: モンスターを遠征に派遣し、経験値やゴールド、建築資材、アイテムを獲得。
-- **[モンスター繁殖システム](features/Monster-Breeding-System.md)**: 卵の生成、遺伝、孵化。
-- **[モンスター特性リスト](features/Monster-Trait-List.md)**: 特性の種類、効果、レアリティ。
-- **[活力システム](features/Vigor-System.md)**: モンスターの活動リソース（活力）の消費と回復。
-- **[モンスターマスターリスト](features/Monster-Master-List.md)**: 全モンスターの詳細仕様、ステータス、AIパターン。
-- **[トラップマスターリスト](features/Trap-Master-List.md)**: 全トラップのコスト、容量、難易度。
-- **[施設マスターリスト](features/Facility-Master-List.md)**: 全施設のコスト、容量、効果。
-- **[地形マスターリスト](features/Terrain-Master-List.md)**: 各地形の環境効果、属性耐性の影響。
-- **[セーブ・ロードシステム](features/Save-Load-System.md)**: プレイ状況の保存、中断・再開、および永続化。
-- **[PKシステム](features/PK-System.md)**: プレイヤーキル、モンスターとしての参戦。
+- **[システム要件](features/System-Requirements.md)**: 動作環境、技術構成、制約事項。
+- **[拠点システム](features/Base-System.md)**: プレイヤーと管理者の活動のハブとなる安全地帯の役割と主要施設。
+- **[UI・UX設計](features/UI-UX-Design.md)**: 画面遷移、コンポーネント階層、デザイン方針、および各種拡張機能のUI詳細。
+- **[開発ロードマップ](features/Development-Roadmap.md)**: 開発状況、既知のバグ、実装優先順位、完了履歴。
+- **[TODOリスト](TODO-Details.md)**: 面白さを向上させるための機能アイデアと技術的課題。
+
+#### ② プレイヤー行動・ステータス・進行システム (Player & Progression)
+- **[アクションシステム](features/Action-System.md)**: 移動、攻撃、アイテム使用などの行動コストとスタミナ・満腹度消費。
 - **[経験値・レベルアップシステム](features/Leveling-System.md)**: プレイヤーの成長要素、経験値計算式、ステータス成長。
-- **[ランキングシステム](features/Ranking-System.md)**: 各役割における実績の競い合い、シーズン制と報酬、および通知。
-- **[エモート・スタンプマスターリスト](features/Emote-Stamp-Master-List.md)**: プレイヤー間の簡易意思疎通ツールの仕様と一覧。
-- **[ドロップ品・出現システム](features/Loot-and-Spawn-System.md)**: アイテムやゴールドの出現、モンスターのドロップロジック、サーキュレーション制限の適用。
 - **[自然回復システム](features/Natural-Recovery-System.md)**: HP、スタミナの自然回復、状態による回復量補正。
 - **[満腹度システム](features/Hunger-System.md)**: 満腹度の減少、飢餓による影響、食料アイテム。
-- **[インベントリシステム](features/Inventory-System.md)**: アイテムの所持、使用、識別、およびリソース管理。
-- **[宝箱・鍵システム](features/Chest-Key-System.md)**: ダンジョン内に配置される宝箱の種類、各種鍵、開錠、物理的な破壊およびミミックへの対処メカニズム。
-- **[ショップシステム](features/Shop-System.md)**: 管理者によるショップ運営、動的な価格決定、アイテムの売買。
-- **[ゲームバランス調整システム](features/Game-Balance-System.md)**: パワーバランスを保つためのライブチューニングパラメータ、テレメトリ収集、および手触り調整基準。
-- **[合成システム](features/Synthesis-System.md)**: 資材の組み合わせによるアイテム生成、レシピ管理。
-- **[祭壇システム](features/Altar-System.md)**: 四大神を祀る祭壇（altar）を巡る、探索・防衛バフ、冒涜と強力な神罰の戦略的相互作用。
-- **[彫像システム](features/Statue-System.md)**: 配置した彫像への特殊効果の設定、範囲内エンティティへのバフ・デバフ付与。
-- **[釣りシステム](features/Fishing-System.md)**: ダンジョン内の水辺や溶岩、専用施設での釣りメカニズム、エサやバイオームに応じた釣獲物、管理者による釣り堀の設置。
-- **[派閥システム](features/Faction-System.md)**: エンティティ間の敵対・友好関係、ターゲット優先度。
-- **[視界システム](features/Visibility-System.md)**: プレイヤーの視界半径、視線遮蔽、および照明効果。
-- **[オーディオ・BGMシステム](features/Audio-System.md)**: 音量設定、状況に応じた動的なBGM切り替え、効果音の空間減衰。
-- **[ストーリー・世界観システム](features/Story-Lore-System.md)**: 背景設定、NPCとの動的な会話、ジャーナル画面の仕様、および解放条件。
-- **[称号・実績システム](features/Title-System.md)**: 称号および実績の解除条件、装備（アクティブ）時のバフ効果、マルチプレイヤーでの表示とNPC会話への影響。
-- **[クエストシステム](features/Quest-System.md)**: 探索者、ダンジョン管理者、およびPKerそれぞれに向けた目標、進行状況管理、および報酬定義。
-- **[昼夜・天候システム](features/Time-Weather-System.md)**: ゲーム内の時間帯（昼夜）や天候の変化、および各種環境効果、釣りや戦闘への動的影響。
-- **[リプレイ・観戦システム](features/Replay-Spectator-System.md)**: リアルタイム観戦（SSE配信・声援送受信）、ティック単位の差分ログ記録によるリプレイ再生、および殿堂入り・サーバー間共有。
-- **[メール・プレゼントシステム](features/Mail-System.md)**: 拠点の郵便受けにおける各種お知らせ・シーズン報酬・溢れ戦利品の受信、30日間の有効期限、インベントリ超過時の倉庫自動転送機能。
-- **[管理者介入システム](features/Admin-Intervention-System.md)**: 管理者によるリアルタイム介入（召喚、特殊効果）の詳細。
-- **[アイテムマスターリスト](features/Item-Master-List.md)**: 全アイテムの詳細仕様、効果、価格、流通上限。
-- **[建築システム](features/Construction-System.md)**: 管理者によるダンジョン地形の構築、施設の設置、および資材管理。
+- **[インベントリシステム](features/Inventory-System.md)**: アイテムの所持、使用、整理・スタック統合、識別およびリソース管理。
 - **[装備システム](features/Equipment-System.md)**: 装備の装着、ステータス補正、および呪いによる固定。
 - **[アイテム識別システム](features/Item-Identification-System.md)**: アイテムの鑑定、呪い・祝福の状態管理。
-- **[状態異常システム](features/Status-Effect-System.md)**: バフ・デバフの種類、効果、および管理方法。
-- **[トラップシステム](features/Trap-System.md)**: トラップの種類、ダメージ計算、発見・解除メカニズム、および管理者による配置。
-- **[倉庫システム](features/Warehouse-System.md)**: モンスター、アイテム、および資材の保管と管理。
-- **[管理者システム](features/Admin-System.md)**: ダンジョン構築、モンスター・トラップ配置、ショップ経営、世界設定の管理。
-- **[システム要件](features/System-Requirements.md)**: 動作環境、技術構成、制約事項。
-- **[UI・UX設計](features/UI-UX-Design.md)**: 画面遷移、コンポーネント階層、デザイン方針、および各種拡張機能（宝箱・釣り・祭壇/彫像・クエスト・図鑑・観戦/リプレイ・オーディオ・ゲームバランス・倉庫拡張）のUI詳細。
-- **[開発ロードマップ](features/Development-Roadmap.md)**: 開発状況、既知のバグ、今後の課題。
-- **[TODOリスト](TODO-Details.md)**: 面白さを向上させるための機能アイデアと技術的課題。
+- **[クエストシステム](features/Quest-System.md)**: 探索者、ダンジョン管理者、PKerそれぞれの目標、進行状況管理および報酬マスターリスト。
+- **[称号・実績システム](features/Title-System.md)**: 称号および実績の解除条件、装備時バフ効果、表示とNPC会話への影響。
+- **[セーブ・ロードシステム](features/Save-Load-System.md)**: プレイ状況の保存、中断・再開、および永続化データ構造。
+
+#### ③ ダンジョン生成・環境・ギミック (Dungeon & Environment)
+- **[ダンジョン生成システム](features/Dungeon-Generation-System.md)**: ランダムダンジョンの生成ロジック、部屋・通路・特殊エリアの配置ルール。
+- **[バイオーム・環境システム](features/Biome-System.md)**: 各バイオーム特有の地形生成率、出現モンスターやドロップ率、ステータス補正。
+- **[昼夜・天候システム](features/Time-Weather-System.md)**: ゲーム内の時間帯（昼夜）や天候の変化、および各種環境効果、釣りや戦闘への動的影響。
+- **[視界システム](features/Visibility-System.md)**: プレイヤーの視界半径、視線遮蔽、および照明効果。
+- **[宝箱・鍵システム](features/Chest-Key-System.md)**: 宝箱の種類、各種鍵、開錠・破壊リスクおよびミミックへの対処メカニズム。
+- **[トラップシステム](features/Trap-System.md)**: トラップの種類、ダメージ計算、発見・解除・解体メカニズム。
+- **[トラップマスターリスト](features/Trap-Master-List.md)**: 全トラップのコスト、容量、難易度、属性。
+- **[地形マスターリスト](features/Terrain-Master-List.md)**: 各地形の環境効果、属性耐性の影響、建設・解体コスト。
+
+#### ④ 戦闘・属性・状態異常・派閥 (Combat & Status)
+- **[戦闘システム](features/Combat-System.md)**: リアルタイム制バトル、ダメージ計算式、命中・回避・クリティカル判定、投擲、モンスターAI。
+- **[属性システム](features/Attribute-System.md)**: 属性の相性、ダメージ倍率、および環境効果への耐性。
+- **[状態異常システム](features/Status-Effect-System.md)**: バフ・デバフの種類（`CHILLED`, `OVERHEATED` 等）、効果、および管理方法。
+- **[派閥システム](features/Faction-System.md)**: エンティティ間の敵対・友好関係、ターゲット優先度。
+- **[PKシステム](features/PK-System.md)**: プレイヤーキル、憑依/野良モンスターとしての参戦、マッチメイキング、清算処理。
+
+#### ⑤ モンスター・育成・図鑑・遠征 (Monster & Companion)
+- **[モンスターシステム](features/Monster-System.md)**: モンスターの獲得、捕獲、配置、撤去回収。
+- **[モンスターマスターリスト](features/Monster-Master-List.md)**: 全モンスターの詳細仕様、ステータス、AIパターン、特殊行動。
+- **[モンスター特性リスト](features/Monster-Trait-List.md)**: 特性の種類、効果、カテゴリ、レアリティ。
+- **[モンスター繁殖システム](features/Monster-Breeding-System.md)**: 卵の生成、遺伝、孵化計算式、即時孵化促進。
+- **[モンスター遠征システム](features/Monster-Expedition-System.md)**: モンスターを遠征に派遣し、経験値やゴールド、建築資材、アイテムを獲得。
+- **[モンスター図鑑システム](features/Monster-Bestiary-System.md)**: 遭遇・討伐・捕獲・繁殖データの記録・研究、段階的情報開示および各種ボーナス。
+- **[活力システム](features/Vigor-System.md)**: モンスターの活動リソース（活力）の消費と回復。
+
+#### ⑥ 建築・施設・経済・アイテム・アクティビティ (Economy, Facilities & Activities)
+- **[建築システム](features/Construction-System.md)**: 管理者によるダンジョン地形の構築、施設の設置・解体、および資材管理。
+- **[施設マスターリスト](features/Facility-Master-List.md)**: 全8種施設のコスト、容量、効果。
+- **[倉庫システム](features/Warehouse-System.md)**: モンスター、アイテム、資材の保管、預入・引出、容量拡張。
+- **[ショップシステム](features/Shop-System.md)**: 管理者およびシステムショップ運営、動的価格決定、陳列・鑑定・閉鎖。
+- **[合成システム](features/Synthesis-System.md)**: 資材の組み合わせによるアイテム生成、レシピ管理、解体処理。
+- **[アイテムマスターリスト](features/Item-Master-List.md)**: 全アイテムの詳細仕様、効果、価格、流通上限。
+- **[ドロップ品・出現システム](features/Loot-and-Spawn-System.md)**: アイテムやゴールドの出現、モンスターのドロップロジック、サーキュレーション制限の適用。
+- **[祭壇システム](features/Altar-System.md)**: 四大神を祀る祭壇（altar）を巡る、探索・防衛バフ、奉納、冒涜と神罰。
+- **[彫像システム](features/Statue-System.md)**: 配置した彫像への特殊効果設定、範囲内エンティティへのバフ・デバフ付与。
+- **[釣りシステム](features/Fishing-System.md)**: 釣竿・エサを用いた釣りメカニズム、バイオーム別釣獲物、管理者設置釣り堀。
+- **[メール・プレゼントシステム](features/Mail-System.md)**: お知らせ・シーズン報酬・溢れ戦利品の受信、有効期限、倉庫自動転送。
+
+#### ⑦ マルチプレイ・通信・運営・システム統合 (Multiplayer, Admin & Media)
+- **[管理者システム](features/Admin-System.md)**: ダンジョン構築、モンスター・トラップ配置、ショップ経営、信頼ネットワーク管理。
+- **[管理者介入システム](features/Admin-Intervention-System.md)**: 管理者によるリアルタイム介入（召喚、環境効果発生）の詳細。
+- **[ランキングシステム](features/Ranking-System.md)**: 各役割における実績の競い合い、シーズン制と報酬、および通知。
+- **[リプレイ・観戦システム](features/Replay-Spectator-System.md)**: リアルタイム観戦（SSE配信・声援送受信）、ティック単位差分ログリプレイ、共有機能。
+- **[エモート・スタンプマスターリスト](features/Emote-Stamp-Master-List.md)**: 簡易意思疎通ツールの仕様と一覧。
+- **[ゲームバランス調整システム](features/Game-Balance-System.md)**: ライブチューニングパラメータ、テレメトリ自動収集、手触り調整基準。
+- **[オーディオ・BGMシステム](features/Audio-System.md)**: 音量設定、状況に応じた動的BGM切り替え、SEマスターリスト、空間減衰。
+- **[ストーリー・世界観システム](features/Story-Lore-System.md)**: 背景設定、NPCとの動的会話、ジャーナル画面、世界観記録・NPC会話マスター。
 
 ### 1.2 実装詳細 ([implementation/](implementation/))
 特定の機能を実現するための詳細なデータ構造やアルゴリズムを記述しています。

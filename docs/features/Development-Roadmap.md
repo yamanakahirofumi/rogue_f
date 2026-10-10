@@ -74,5 +74,6 @@
 ### 2026年10月
 - **サウンドエフェクトマスターリスト (SE Master List) の追加・補完**: ゲーム内で再生される全効果音（アクション・探索系、ギミック・施設系、UI・システム系）の SE ID、発生トリガー・条件、距離に応じた空間減衰適用の有無、および最大同時再生上限（1〜3音）を規定したマスターリスト仕様を `Audio-System.md` に追加。
 - **拠点システム施設定義および REST API 仕様・データモデルの追完**: 拠点内の主要施設（ショップ・鑑定所、クエスト掲示板、ランキング掲示板、拠点神殿、宿屋・休憩所）の機能定義、拠点ステータス取得および手動全回復用 REST API エンドポイント (`GET /api/player/{userId}/base/status`, `POST /api/player/{userId}/base/rest`)、データモデル (`BaseFacilityInfo`, `BaseStatusResponse`, `BaseRestResult`)、ならびに関連仕様書 (`Base-System.md`, `Implementation-Details.md`, `player.d.ts`) への追記・完全同期。
+- **ドキュメント一覧の構造化カテゴリ整理とナビゲーションの最適化**: `docs/README.md` における 50 件以上の全仕様書リンクを機能ドメイン（①全般、②プレイヤー・進行、③ダンジョン・環境、④戦闘・属性、⑤モンスター・育成、⑥建築・施設・経済、⑦マルチプレイ・通信・運営）ごとの構造化カテゴリとして整理・再編し、可読性とアクセス性を向上。
 - **ランキング API エンドポイント表記同期およびドキュメント不整合の整理**: `Ranking-System.md` における自身の順位取得エンドポイント定義を `GET /api/ranking/{category}/me/{userId}` に統一し、`Implementation-Details.md` および `ranking.d.ts` と同期。併せて `TODO-Rule.md` 内の相対リンク参照不整合の整理・修正を完了。
 - **モンスター特殊行動（スキル）実行パラメーターおよびデータモデルの補完**: 全 12 種のモンスター特殊スキルのクールタイム (`cooldownTicks`)、消費スタミナ、射程、効果範囲 (`aoeRadius`)、状態異常付与 (`statusEffectApplied`)、再生効果音 ID (`soundEffectId`) および TypeScript 型定義 (`MonsterSkillExecution`) を策定・各仕様書へ完全同期。
