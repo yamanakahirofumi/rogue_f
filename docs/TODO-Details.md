@@ -88,6 +88,7 @@
     - [x] モンスター図鑑詳細解析REST API仕様（`GET /api/player/{userId}/bestiary/{monsterTypeId}`）、研究進捗・レベルアップ通知モデル、およびTypeScript型定義（`BestiaryMonsterDetail`, `BestiaryProgressResult`）の追加補完。
     - [x] モンスター特性マスター取得REST API仕様（`GET /api/monster/traits`）およびTypeScript型定義（`MonsterTraitEntry`）の追加補完。
     - [x] 彫像システム設定変更および解体REST API仕様（`PUT /api/admin/dungeon/{dungeonId}/facility/{facilityId}/statue`, `DELETE /api/admin/dungeon/{dungeonId}/floor/{floorLevel}/facility/{facilityId}`）、TypeScript型定義（`FacilityConfigUpdateRequest`, `FacilityConfigUpdateResult`, `StatueConfig`, `StatuePlacedDetails`）の追加補完。
+    - [x] モンスター特殊行動（スキル）実行パラメーターマスター仕様、効果音ID定義およびTypeScript型定義（`MonsterSkillExecution`）の追加補完。
     - [x] サウンドエフェクトマスターリスト（SE Master List）の策定・追加定義。
     - [x] 拠点ステータス・手動全回復 REST API 仕様（`GET/POST /api/player/{userId}/base/*`）および TypeScript 型定義（`BaseFacilityInfo`, `BaseStatusResponse`, `BaseRestResult`）の追加補完。
 - **解決策**: 各機能仕様書および [実装詳細](implementation/Implementation-Details.md) を更新し、曖昧さを排除済み。
