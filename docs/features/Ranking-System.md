@@ -88,9 +88,11 @@
 - **レスポンスデータ構造**: 後述する `RankingResponse` 型を返却します。
 
 ### 5.2 自身の順位の取得
-- **エンドポイント**: `GET /api/ranking/{category}/my-rank`
-- **ヘッダー**: `Authorization: Bearer <token>`
-- **レスポンス**: 自身の現在の順位、スコア、および前後数名のランキングエントリを含む。
+- **エンドポイント**: `GET /api/ranking/{category}/me/{userId}`
+- **パスパラメータ**:
+  - `category`: `explorer_clear` | `explorer_level` | `admin_lethality` | `admin_popularity` | `pker_slain` | `pker_level`
+  - `userId`: プレイヤーID
+- **レスポンスデータ構造**: `MyRankResponse` 型（自身の現在の順位、スコア、および前後数名のランキングエントリ含む）を返却します。
 
 ## 6. UI・UX 仕様
 
