@@ -773,3 +773,18 @@ interface MonsterTraitEntry {
     evasionRateBonus?: number;
   };
 }
+
+interface MonsterSkillExecution {
+  skillId: string;                                     // スキル固有ID (例: 'fire_breath', 'snipe', 'earthquake')
+  skillName: string;                                   // スキル表示名 (例: '火炎放射', '狙い撃ち', '大震動')
+  monsterTypeId: string;                               // 所有モンスター種別ID (例: 'dragon', 'archer', 'golem')
+  cooldownTicks: number;                               // 発動後の再使用クールタイム (ティック数)
+  staminaCost: number;                                 // 発動時の消費スタミナ量
+  skillMultiplier: number;                             // スキルダメージ倍率 (標準 1.0)
+  range: number;                                       // 射程距離 (マス数)
+  aoeRadius: number;                                   // 範囲攻撃の半径 (0: 単体, 1: 周囲1マス/3x3, 2: 周囲2マス/5x5)
+  statusEffectApplied?: string;                        // 付与する状態異常ID (例: 'STUN', 'BURN', 'POISON')
+  statusEffectDurationTicks?: number;                  // 付与する状態異常の持続時間 (ティック数)
+  soundEffectId: string;                               // 再生される効果音ID (例: 'se_skill_fire_breath')
+  targetType: 'single_target' | 'line_of_sight' | 'self_aoe' | 'self_buff' | 'summon' | 'passive'; // ターゲット種別
+}
