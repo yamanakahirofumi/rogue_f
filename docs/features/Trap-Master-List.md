@@ -45,6 +45,7 @@ export interface TrapEntry {
 
 ## 5. 相互参照
 - [トラップシステム](Trap-System.md)
+- [ダンジョン生成システム](Dungeon-Generation-System.md)
 - [管理者データモデル](../implementation/Admin-Data-Models.md)
 - [実装詳細](../implementation/Implementation-Details.md)
 - [アイテムマスターリスト](Item-Master-List.md)
