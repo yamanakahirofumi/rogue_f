@@ -25,7 +25,13 @@
 管理者がマイ・ダンジョンに配置したトラップを編集画面から撤去（解体）する場合、設置時に消費した各資材およびゴールドの **50%**（端数切り捨て）が返還されます。
 詳細は [建築システム](Construction-System.md#22-入手方法) および [トラップシステム](Trap-System.md#43-トラップの撤去・解体-dismantling) を参照してください。
 
-## 4. データ構造とデータモデル
+## 4. ランダムダンジョン生成時の野良トラップ出現と難易度スケーリング
+
+ランダムダンジョン（フロンティア）生成時、階層 Tier（1〜3）に応じたトラップ出現確率テーブルに基づき各部屋に野良トラップが初期配置されます。
+また、野良トラップの実効発見・解除難易度は `難易度 + floorLevel * 2` として階層レベルに応じて動的に上昇補正されます。
+詳細は **[ダンジョン生成システム](Dungeon-Generation-System.md#49-野良トラップの生成配置ルール-wild-trap-generation-rules)** を参照してください。
+
+## 5. データ構造とデータモデル
 
 ゲームシステムおよび API 等で使用されるトラップマスタ情報の基本データ構造（`TrapEntry`）の定義です。
 TypeScript の型定義は `src/@types/admin.d.ts` に配置されます。
@@ -43,8 +49,9 @@ export interface TrapEntry {
 }
 ```
 
-## 5. 相互参照
+## 6. 相互参照
 - [トラップシステム](Trap-System.md)
+- [ダンジョン生成システム](Dungeon-Generation-System.md)
 - [管理者データモデル](../implementation/Admin-Data-Models.md)
 - [実装詳細](../implementation/Implementation-Details.md)
 - [アイテムマスターリスト](Item-Master-List.md)
