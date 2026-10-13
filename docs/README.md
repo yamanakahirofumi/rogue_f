@@ -13,6 +13,7 @@
 - **[拠点システム](features/Base-System.md)**: プレイヤーと管理者の活動のハブとなる安全地帯の役割と施設。
 - **[機能仕様書](features/Functional-Specification.md)**: システム構成、二つのダンジョン形式、管理者メリット、世界間連携。
 - **[ダンジョン生成システム](features/Dungeon-Generation-System.md)**: ランダムダンジョンの生成ロジック、部屋・通路の配置ルール。
+- **[ダンジョン変異システム](features/Dungeon-Mutator-System.md)**: 階層ごとに発生する動的な環境変異（モンスター狂乱、濃霧と秘宝、ブラッドムーン等）、発生・消滅条件、管理者発動メカニズム。
 - **[戦闘システム](features/Combat-System.md)**: リアルタイム制バトル、ダメージ計算、モンスターAI。
 - **[モンスターシステム](features/Monster-System.md)**: モンスターの獲得、繁殖、運用。
 - **[モンスター図鑑システム](features/Monster-Bestiary-System.md)**: モンスターの遭遇・討伐・捕獲・繁殖データの記録・研究、段階的情報開示および各種ボーナス。

@@ -66,6 +66,11 @@
 - **概要**: プレイヤーおよび管理者の活動拠点ハブにおける主要施設（ショップ・鑑定所、クエスト掲示板、ランキング掲示板、拠点神殿、宿屋・休憩所）の機能定義、全回復ルール、および拠点用 REST API 仕様の策定。
 - **解決策**: [拠点システム](features/Base-System.md) にて施設定義、全回復ルール、REST API (`GET /api/player/{userId}/base/status`, `POST /api/player/{userId}/base/rest`)、および TypeScript 型定義 (`BaseStatusResponse`, `BaseRestResult`) の補完を完了。
 
+### [x] ダンジョン変異（Dungeon Mutator）システムの設計
+- **完了日**: 2026-10-13 (提案・仕様策定完了)
+- **概要**: ダンジョン階層ごとに動的・一時的な環境特性（モンスター狂乱、濃霧と秘宝、ブラッドムーン、聖なる祝福等）を付与し、リスクとリターンの変動、ならびに管理者の手動発動介入を組み込む。
+- **解決策**: [ダンジョン変異システム](features/Dungeon-Mutator-System.md) にて、全 8 種類の変異効果、自然発生ロジック（5%〜15%）、発動コスト・クールタイム、REST API (`POST /api/admin/dungeon/{dungeonId}/floor/{floorLevel}/mutator`, `GET /api/dungeon/{dungeonId}/floor/{floorLevel}/mutators`)、および TypeScript 型定義 (`DungeonMutatorEntry`, `ActiveFloorMutator`, `MutatorTriggerRequest`, `MutatorTriggerResult`, `MutatorEventDetails`) の策定を完了。
+
 ## 2. 技術面
 
 ### [x] 欠落仕様の補完

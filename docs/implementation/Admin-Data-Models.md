@@ -53,6 +53,7 @@ interface FloorConfig {
   traps: PlacedTrap[];       // 配置済みトラップ
   shops: PlacedShop[];       // 設置済みショップ
   facilities: PlacedFacility[]; // 設置済み施設
+  mutators?: ActiveFloorMutator[]; // フロア変異状態リスト
 }
 
 interface PlacedFacility {
@@ -313,7 +314,8 @@ interface DungeonEvent {
     | BalanceTelemetryDetails
     | SynthesisEventDetails
     | ShopTransactionDetails
-    | BreedingEventDetails;
+    | BreedingEventDetails
+    | MutatorEventDetails;
 }
 
 type DungeonEventType =
@@ -335,7 +337,8 @@ type DungeonEventType =
   | 'balance_telemetry'    // ゲームバランス調整用テレメトリ記録
   | 'synthesis_event'      // アイテム合成・解体イベント
   | 'shop_transaction'     // ショップ取引（購入・売却・鑑定）
-  | 'breeding_event';      // モンスター繁殖・孵化・促進
+  | 'breeding_event'       // モンスター繁殖・孵化・促進
+  | 'mutator_event';       // ダンジョンフロア変異イベント
 
 interface SynthesisEventDetails {
   action: 'craft' | 'dismantle';                              // 合成または解体
@@ -393,6 +396,32 @@ interface AdminTriggerResult {
   consumedMaterials?: { typeId: string; amount: number }[]; // 消費された資材リスト
   cooldownSeconds?: number;                   // 適用されたクールタイム (秒)
   message: string;                            // 処理結果メッセージ
+}
+
+interface ActiveFloorMutator {
+  mutatorId: string;         // 適用中の変異ID
+  appliedAtTick: number;     // 適用時のゲーム累積ティック
+  remainingTicks: number;    // 残り持続ティック数
+  isNaturallyGenerated: boolean; // 自然発生フラグ
+}
+
+interface MutatorTriggerRequest {
+  mutatorId: string;         // 発動する変異のID
+}
+
+interface MutatorTriggerResult {
+  success: boolean;               // 発動処理の成否
+  activeMutator?: ActiveFloorMutator; // 生成された変異状態
+  consumedGold?: number;          // 消費ゴールド
+  consumedMaterials?: { typeId: string; amount: number }[]; // 消費資材
+  message: string;                // 結果メッセージ
+}
+
+interface MutatorEventDetails {
+  action: 'applied' | 'expired' | 'cleared'; // 変異アクション
+  mutatorId: string;              // 変異ID
+  isNaturallyGenerated: boolean;  // 自然発生か
+  position?: { x: number; y: number };
 }
 
 interface AdminLog {
