@@ -38,6 +38,7 @@ interface FloorConfig {
   traps: PlacedTrap[];       // 配置済みトラップ
   shops: PlacedShop[];       // 設置済みショップ
   facilities: PlacedFacility[]; // 設置済み施設
+  mutators?: ActiveFloorMutator[]; // フロア変異状態リスト
 }
 
 interface TerrainEntry {
@@ -352,7 +353,8 @@ type DungeonEventType =
   | 'balance_telemetry'    // ゲームバランス調整用テレメトリ記録
   | 'synthesis_event'      // アイテム合成・解体イベント
   | 'shop_transaction'     // ショップ取引（購入・売却・鑑定）
-  | 'breeding_event';      // モンスター繁殖・孵化・促進
+  | 'breeding_event'       // モンスター繁殖・孵化・促進
+  | 'mutator_event';       // ダンジョンフロア変異イベント
 
 interface PlayerEntryDetails {
   entranceId: string;
@@ -787,4 +789,38 @@ interface MonsterSkillExecution {
   statusEffectDurationTicks?: number;                  // 付与する状態異常の持続時間 (ティック数)
   soundEffectId: string;                               // 再生される効果音ID (例: 'se_skill_fire_breath')
   targetType: 'single_target' | 'line_of_sight' | 'self_aoe' | 'self_buff' | 'summon' | 'passive'; // ターゲット種別
+}
+
+interface DungeonMutatorEntry {
+  id: string;                                                         // 変異ID (例: 'monster_frenzy')
+  name: string;                                                       // 変異表示名
+  category: 'threat' | 'treasure' | 'magic' | 'support' | 'resource'; // 変異カテゴリ
+  description: string;                                                // 効果説明
+  durationTicks: number;                                             // 基本持続ティック数 (標準 600)
+}
+
+interface ActiveFloorMutator {
+  mutatorId: string;         // 適用中の変異ID
+  appliedAtTick: number;     // 適用時のゲーム累積ティック
+  remainingTicks: number;    // 残り持続ティック数
+  isNaturallyGenerated: boolean; // 自然発生フラグ
+}
+
+interface MutatorTriggerRequest {
+  mutatorId: string;         // 発動する変異のID
+}
+
+interface MutatorTriggerResult {
+  success: boolean;               // 発動処理の成否
+  activeMutator?: ActiveFloorMutator; // 生成された変異状態
+  consumedGold?: number;          // 消費ゴールド
+  consumedMaterials?: { typeId: string; amount: number }[]; // 消費資材
+  message: string;                // 結果メッセージ
+}
+
+interface MutatorEventDetails {
+  action: 'applied' | 'expired' | 'cleared'; // 変異アクション
+  mutatorId: string;              // 変異ID
+  isNaturallyGenerated: boolean;  // 自然発生か
+  position?: { x: number; y: number };
 }

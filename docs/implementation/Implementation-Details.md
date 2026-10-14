@@ -171,6 +171,11 @@
     - レスポンス: `DungeonConfig[]`
   - `PUT /api/admin/dungeon/{dungeonId}/floor/{floorLevel}`: 特定階層の構成（マップ、配置物）の更新。
     - リクエスト: `FloorConfig`
+  - `POST /api/admin/dungeon/{dungeonId}/floor/{floorLevel}/mutator`: 指定階層にフロア変異を意図的に付与。
+    - リクエスト: `MutatorTriggerRequest`
+    - レスポンス: `MutatorTriggerResult`
+  - `GET /api/dungeon/{dungeonId}/floor/{floorLevel}/mutators`: 指定階層で現在アクティブなフロア変異一覧および残り時間の取得。
+    - レスポンス: `ActiveFloorMutator[]`
   - `DELETE /api/admin/dungeon/{dungeonId}/floor/{floorLevel}/trap`: 指定した階層・座標の配置済みトラップを撤去・解体（設置コストの50%の資材・ゴールドを回収）。
     - リクエスト: `TrapDismantleRequest`
     - レスポンス: `TrapDismantleResult`
@@ -603,7 +608,8 @@ interface ThrowResult {
     | BalanceTelemetryDetails
     | SynthesisEventDetails
     | ShopTransactionDetails
-    | BreedingEventDetails;
+    | BreedingEventDetails
+    | MutatorEventDetails;
 }
 
 type DungeonEventType =
@@ -625,7 +631,8 @@ type DungeonEventType =
   | 'balance_telemetry'    // ゲームバランス調整用テレメトリ記録
   | 'synthesis_event'      // アイテム合成・解体イベント
   | 'shop_transaction'     // ショップ取引（購入・売却・鑑定）
-  | 'breeding_event';      // モンスター繁殖・孵化・促進
+  | 'breeding_event'       // モンスター繁殖・孵化・促進
+  | 'mutator_event';       // ダンジョンフロア変異イベント
 
 interface PlayerEntryDetails {
   entranceId: string;      // 入口のID
