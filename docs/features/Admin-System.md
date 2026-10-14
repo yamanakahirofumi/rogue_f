@@ -96,6 +96,11 @@
 - `DELETE /api/admin/dungeon/{dungeonId}/floor/{floorLevel}/shop/{shopId}`: 設置済みショップの閉鎖・撤去（陳列中の未売却商品を倉庫へ返還・配置容量解放）。
   - リクエスト: `ShopCloseRequest`
   - レスポンス: `ShopCloseResult`
+- `POST /api/admin/dungeon/{dungeonId}/floor/{floorLevel}/mutator`: 指定階層にフロア変異を意図的に発動・付与。
+  - リクエスト: `MutatorTriggerRequest`
+  - レスポンス: `MutatorTriggerResult`
+- `GET /api/dungeon/{dungeonId}/floor/{floorLevel}/mutators`: 指定階層で現在アクティブなフロア変異一覧および残り時間の取得。
+  - レスポンス: `ActiveFloorMutator[]`
 
 #### 倉庫・リソース管理 API
 - `GET /api/admin/warehouse`: 倉庫の状態（モンスター、アイテム、資材、容量）の取得。
@@ -215,6 +220,26 @@ interface FloorConfig {
   traps: PlacedTrap[];       // 配置済みトラップ
   shops: PlacedShop[];       // 設置済みショップ
   facilities: PlacedFacility[]; // 設置済み施設
+  mutators?: ActiveFloorMutator[]; // フロア変異状態リスト
+}
+
+interface ActiveFloorMutator {
+  mutatorId: string;         // 適用中の変異ID
+  appliedAtTick: number;     // 適用時のゲーム累積ティック
+  remainingTicks: number;    // 残り持続ティック数
+  isNaturallyGenerated: boolean; // 自然発生フラグ
+}
+
+interface MutatorTriggerRequest {
+  mutatorId: string;         // 発動する変異のID
+}
+
+interface MutatorTriggerResult {
+  success: boolean;               // 発動処理の成否
+  activeMutator?: ActiveFloorMutator; // 生成された変異状態
+  consumedGold?: number;          // 消費ゴールド
+  consumedMaterials?: { typeId: string; amount: number }[]; // 消費資材
+  message: string;                // 結果メッセージ
 }
 
 interface WarehouseState {
@@ -252,6 +277,7 @@ type AdminActionType =
 ## 9. 相互参照
 - [機能仕様書](Functional-Specification.md)
 - [管理者介入システム](Admin-Intervention-System.md)
+- [ダンジョン変異システム](Dungeon-Mutator-System.md)
 - [ショップシステム](Shop-System.md)
 - [倉庫システム](Warehouse-System.md)
 - [トラップシステム](Trap-System.md)
