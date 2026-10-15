@@ -527,6 +527,9 @@ interface UseItemResult {
   appliedStatusEffects?: string[];                             // 付与された状態異常/バフのIDリスト
   removedStatusEffects?: string[];                             // 解除された状態異常/デバフのIDリスト
   identifiedItemIds?: string[];                                // 鑑定されたアイテムのIDリスト (鑑定の巻物等)
+  uncursedItemIds?: string[];                                  // 解呪されたアイテムのIDリスト (解呪の巻物等)
+  blessedItemIds?: string[];                                   // 祝福されたアイテムのIDリスト (祝福の巻物等)
+  enhancedStatBonus?: { itemId: string; bonusType: 'attack' | 'defense'; amount: number }; // 強化された装備補正情報 (強化の巻物等)
   teleportedPosition?: { x: number; y: number };               // テレポート先座標 (高飛びの巻物等)
   message: string;                                             // 処理結果メッセージ
 }
