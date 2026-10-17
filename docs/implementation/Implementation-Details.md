@@ -1531,6 +1531,78 @@ interface MonsterSkillExecution {
 }
 ```
 
+### 3.36 Companion Management Endpoints & Data Models
+
+#### Endpoints
+- `POST /api/player/{userId}/companion/deploy`
+- `DELETE /api/player/{userId}/companion/dismiss`
+- `PUT /api/player/{userId}/companion/tactic`
+- `POST /api/player/{userId}/companion/feed`
+
+#### Data Models
+```typescript
+type CompanionTactic = 'aggressive' | 'defensive' | 'support' | 'follow';
+type CompanionStatus = 'active' | 'exhausted' | 'downed' | 'dismissed';
+
+interface CompanionState {
+  instanceId: string;                                  // モンスター個体固有ID
+  monsterTypeId: string;                               // モンスター種別ID
+  name: string;                                        // モンスター名・愛称
+  level: number;                                       // 現在のレベル
+  exp: number;                                         // 累積経験値
+  nextExp: number;                                     // 次レベルまでの必要経験値
+  hp: number;                                          // 現在のHP
+  maxHp: number;                                       // 最大HP
+  vigor: number;                                       // 現在の活力 (0〜100)
+  maxVigor: number;                                    // 最大活力 (100)
+  attribute: string;                                   // 属性
+  tactic: CompanionTactic;                             // AI戦術
+  status: CompanionStatus;                             // 状態
+  position?: { x: number; y: number };                // 現在座標
+  downedTicksRemaining?: number;                        // ダウン時蘇生猶予ティック数
+}
+
+interface CompanionDeployRequest {
+  monsterInstanceId: string;                           // 出撃させるモンスター個体ID
+  initialTactic?: CompanionTactic;                      // 初期AI戦術
+}
+
+interface CompanionDeployResult {
+  success: boolean;
+  companion?: CompanionState;
+  message: string;
+}
+
+interface CompanionDismissResult {
+  success: boolean;
+  returnedToWarehouse: boolean;
+  message: string;
+}
+
+interface CompanionTacticUpdateRequest {
+  tactic: CompanionTactic;
+}
+
+interface CompanionTacticUpdateResult {
+  success: boolean;
+  updatedTactic: CompanionTactic;
+  message: string;
+}
+
+interface CompanionFeedRequest {
+  itemId: string;                                      // 投与する食料アイテム個体ID
+}
+
+interface CompanionFeedResult {
+  success: boolean;
+  recoveredVigor: number;
+  recoveredHp: number;
+  consumedItemId: string;
+  isFavoriteFoodBonus: boolean;                        // 好物ボーナス適用フラグ
+  message: string;
+}
+```
+
 詳細は **[イベントログ詳細仕様](Event-Log-Schemas.md)** を参照してください。
 
 ## 4. フィールドマップ記号 (Field Map Symbols)

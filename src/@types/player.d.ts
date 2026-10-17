@@ -53,6 +53,7 @@ declare class Player {
   worldTimeState?: WorldTimeState;                             // 現在の階層/ワールドの昼夜・天候状態
   bestiary?: BestiaryEntry[];                                  // モンスター図鑑のエントリーリスト
   unreadMailCount?: number;                                    // 未読/未受取メールの件数 (拠点UI表示用)
+  activeCompanion?: CompanionState;                            // 現在ダンジョン探索に帯同中のモンスター情報
 }
 
 interface MailAttachment {
@@ -665,4 +666,65 @@ interface BaseRestResult {
   healedStamina: number;                                               // 回復したスタミナ量
   curedStatusEffects: string[];                                        // 解除された状態異常のIDリスト
   message: string;                                                     // 処理結果メッセージ
+}
+
+type CompanionTactic = 'aggressive' | 'defensive' | 'support' | 'follow';
+type CompanionStatus = 'active' | 'exhausted' | 'downed' | 'dismissed';
+
+interface CompanionState {
+  instanceId: string;           // モンスター個体固有ID
+  monsterTypeId: string;        // モンスター種別ID (例: 'slime', 'goblin_warrior')
+  name: string;                 // モンスター名・愛称
+  level: number;                // 現在のレベル
+  exp: number;                  // 累積経験値
+  nextExp: number;              // 次のレベルまでの必要経験値
+  hp: number;                   // 現在のHP
+  maxHp: number;                // 最大HP
+  vigor: number;                // 現在の活力 (0〜100)
+  maxVigor: number;             // 最大活力 (100)
+  attribute: string;            // 属性
+  tactic: CompanionTactic;      // 現在設定されているAI戦術
+  status: CompanionStatus;      // 現在の状態
+  position?: { x: number; y: number }; // マップ上の現在座標
+  downedTicksRemaining?: number; // ダウン時の残り蘇生猶予ティック
+}
+
+interface CompanionDeployRequest {
+  monsterInstanceId: string;    // 帯同させる倉庫内モンスターの個体ID
+  initialTactic?: CompanionTactic; // 初期AI戦術 (デフォルト: 'aggressive')
+}
+
+interface CompanionDeployResult {
+  success: boolean;
+  companion?: CompanionState;
+  message: string;
+}
+
+interface CompanionDismissResult {
+  success: boolean;
+  returnedToWarehouse: boolean;
+  message: string;
+}
+
+interface CompanionTacticUpdateRequest {
+  tactic: CompanionTactic;
+}
+
+interface CompanionTacticUpdateResult {
+  success: boolean;
+  updatedTactic: CompanionTactic;
+  message: string;
+}
+
+interface CompanionFeedRequest {
+  itemId: string;               // 投与するインベントリ内食料アイテムの個体ID
+}
+
+interface CompanionFeedResult {
+  success: boolean;
+  recoveredVigor: number;
+  recoveredHp: number;
+  consumedItemId: string;
+  isFavoriteFoodBonus: boolean; // 好物ボーナスが適用されたか
+  message: string;
 }
