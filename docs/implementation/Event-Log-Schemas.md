@@ -256,6 +256,22 @@
 }
 ```
 
+### 2.20 companion_event (仲間モンスター帯同アクション)
+ダンジョン内で探索者が帯同モンスターの出撃、戦術変更、エサ投与、スキル発動指示を行った際、または帯同モンスターがダウン・復帰・撤退した際に記録されます。
+
+```typescript
+{
+  action: 'deploy' | 'tactic_change' | 'feed' | 'skill_use' | 'downed' | 'revived' | 'dismissed';
+  companionInstanceId: string;                                // 帯同モンスター個体ID
+  monsterTypeId: string;                                       // モンスター種別ID
+  currentHp: number;                                           // 現在のHP
+  currentVigor: number;                                        // 現在の活力
+  tactic?: 'aggressive' | 'defensive' | 'support' | 'follow';  // 現在設定中のAI戦術
+  usedItemId?: string;                                         // 使用・投与されたアイテムID
+  message: string;                                             // ログメッセージ
+}
+```
+
 ## 3. 相互参照
 - [管理者データモデル](Admin-Data-Models.md)
 - [管理者システム](../features/Admin-System.md)
@@ -271,3 +287,4 @@
 - [エモート・スタンプマスターリスト](../features/Emote-Stamp-Master-List.md)
 - [ショップシステム](../features/Shop-System.md)
 - [ゲームバランス調整システム](../features/Game-Balance-System.md)
+- [仲間モンスター帯同システム](../features/Monster-Companion-System.md)

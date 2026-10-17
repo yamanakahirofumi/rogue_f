@@ -71,6 +71,11 @@
 - **概要**: ダンジョン階層ごとに動的・一時的な環境特性（モンスター狂乱、濃霧と秘宝、ブラッドムーン、聖なる祝福等）を付与し、リスクとリターンの変動、ならびに管理者の手動発動介入を組み込む。
 - **解決策**: [ダンジョン変異システム](features/Dungeon-Mutator-System.md) にて、全 8 種類の変異効果、自然発生ロジック（5%〜15%）、発動コスト・クールタイム、REST API (`POST /api/admin/dungeon/{dungeonId}/floor/{floorLevel}/mutator`, `GET /api/dungeon/{dungeonId}/floor/{floorLevel}/mutators`)、および TypeScript 型定義 (`DungeonMutatorEntry`, `ActiveFloorMutator`, `MutatorTriggerRequest`, `MutatorTriggerResult`, `MutatorEventDetails`) の策定を完了。
 
+### [x] 仲間モンスター帯同システムの設計
+- **完了日**: 2026-10-18 (提案・仕様策定完了)
+- **概要**: 探索者が拠点倉庫で飼育・所有しているモンスターを 1 体選び、「仲間（Companion）」としてダンジョン探索に連れて行き、戦術指示（攻撃/防衛/サポート/追従）やエサ投与を行いながら共に攻略する仕組み。
+- **解決策**: [仲間モンスター帯同システム](features/Monster-Companion-System.md) にて、出撃・解除ルール、AI戦術パターン、活力・満腹度消費、ダウン・蘇生メカニズム、REST API エンドポイント (`/api/player/{userId}/companion/*`)、TypeScript 型定義 (`CompanionState` 等)、UI/UX 設計要件、およびイベントログ構造 (`companion_event`) の策定を完了。
+
 ## 2. 技術面
 
 ### [x] 欠落仕様の補完
