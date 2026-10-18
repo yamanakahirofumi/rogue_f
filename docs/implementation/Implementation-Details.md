@@ -467,6 +467,7 @@
   luckBonus?: number;  // 運補正値
   range?: number;      // 武器の射程
   throwAttack?: number; // 投擲威力
+  enhancementLevel?: number; // 強化値 (+0 〜 +10)
   attribute?: string;  // 属性 (武器・防具用)
   capacityUsage?: number; // ダンジョン配置時に消費する容量
   amount?: number;     // 所持数（スタック可能なアイテム用）
@@ -528,6 +529,11 @@ interface UseItemResult {
   removedStatusEffects?: string[];                             // 解除された状態異常/デバフのIDリスト
   identifiedItemIds?: string[];                                // 鑑定されたアイテムのIDリスト (鑑定の巻物等)
   teleportedPosition?: { x: number; y: number };               // テレポート先座標 (高飛びの巻物等)
+  enhancedItemId?: string;                                     // 強化対象アイテムの個体ID (武器/防具強化の巻物等)
+  enhancementLevel?: number;                                   // 強化後の強化値 (+0〜+10)
+  enhancedStatBonus?: number;                                  // 強化によるステータス上昇量 (+1)
+  uncursedItemIds?: string[];                                  // 呪いが解呪されたアイテムID一覧 (解呪の巻物等)
+  blessedItemIds?: string[];                                   // 祝福状態が付与されたアイテムID一覧 (祝福の巻物等)
   message: string;                                             // 処理結果メッセージ
 }
 ```
