@@ -53,6 +53,61 @@ declare class Player {
   worldTimeState?: WorldTimeState;                             // 現在の階層/ワールドの昼夜・天候状態
   bestiary?: BestiaryEntry[];                                  // モンスター図鑑のエントリーリスト
   unreadMailCount?: number;                                    // 未読/未受取メールの件数 (拠点UI表示用)
+  companionState?: CompanionState;                             // 現在同行中のモンスターの状態 (任意)
+}
+
+interface CompanionState {
+  monsterId: string;                                                   // 同行中のモンスター個体ID
+  typeId: string;                                                      // モンスター種別ID
+  name: string;                                                        // モンスター表示名
+  level: number;                                                       // モンスターレベル
+  hp: number;                                                          // 現在HP
+  maxHp: number;                                                       // 最大HP
+  satiety: number;                                                     // 現在満腹度 (0〜100)
+  maxSatiety: number;                                                  // 最大満腹度 (標準 100)
+  tactic: 'aggressive' | 'defensive' | 'support' | 'follow';          // 現在の作戦
+  isDowned: boolean;                                                   // ダウン状態か
+  downedTicksRemaining?: number;                                      // ダウンの残りティック数
+  position: { x: number; y: number };                                  // 現在マップ位置
+}
+
+interface CompanionDeployRequest {
+  monsterId: string;                                                   // 倉庫内の対象モンスター個体ID
+}
+
+interface CompanionDeployResult {
+  success: boolean;                                                    // デプロイ処理の成否
+  companionState?: CompanionState;                                     // 生成された同行状態
+  consumedVigor: number;                                               // 消費された活力 (標準 30)
+  message: string;                                                     // 処理結果メッセージ
+}
+
+interface CompanionDismissResult {
+  success: boolean;                                                    // 同行解除の成否
+  returnedMonsterId?: string;                                         // 倉庫へ帰還したモンスター個体ID
+  message: string;                                                     // 処理結果メッセージ
+}
+
+interface CompanionTacticUpdateRequest {
+  tactic: 'aggressive' | 'defensive' | 'support' | 'follow';          // 更新する作戦
+}
+
+interface CompanionTacticUpdateResult {
+  success: boolean;                                                    // 作戦更新の成否
+  currentTactic: 'aggressive' | 'defensive' | 'support' | 'follow';   // 更新後の作戦
+  message: string;                                                     // 処理結果メッセージ
+}
+
+interface CompanionFeedRequest {
+  itemId: string;                                                      // 与える食料アイテムの個体ID
+}
+
+interface CompanionFeedResult {
+  success: boolean;                                                    // エサやりの成否
+  healedHp: number;                                                    // 回復したHP量
+  recoveredSatiety: number;                                           // 回復した満腹度量
+  consumedItemId: string;                                              // 消費されたアイテムID
+  message: string;                                                     // 処理結果メッセージ
 }
 
 interface MailAttachment {
