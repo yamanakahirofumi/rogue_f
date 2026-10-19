@@ -256,6 +256,21 @@
 }
 ```
 
+### 2.20 companion_event (モンスター同行)
+探索者が所有モンスターを同行（デプロイ）、作戦変更、エサやり、または同行モンスターのダウン・蘇生が発生した際に記録されます。
+
+```typescript
+{
+  action: 'deploy' | 'dismiss' | 'tactic_change' | 'feed' | 'downed' | 'revived'; // 同行アクション
+  monsterId: string;                                                         // モンスター個体ID
+  monsterTypeId: string;                                                     // モンスター種別ID
+  tactic?: 'aggressive' | 'defensive' | 'support' | 'follow';                // 適用作戦
+  consumedItemId?: string;                                                   // 消費アイテムID ('feed' 時)
+  healedHp?: number;                                                         // 回復HP量
+  position?: { x: number, y: number };                                       // イベント発生座標
+}
+```
+
 ## 3. 相互参照
 - [管理者データモデル](Admin-Data-Models.md)
 - [管理者システム](../features/Admin-System.md)
