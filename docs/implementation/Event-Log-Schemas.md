@@ -256,6 +256,20 @@
 }
 ```
 
+### 2.20 companion_event (同伴モンスターイベント)
+探索者プレイヤーが同伴モンスターを出撃（`deploy`）、解任（`dismiss`）、AI戦術変更（`tactic_change`）、給餌（`feed`）、倒倒（`downed`）、蘇生（`revived`）、または自動撤退（`withdrawn`）させた際に記録されます。
+
+```typescript
+{
+  action: 'deploy' | 'dismiss' | 'tactic_change' | 'feed' | 'downed' | 'revived' | 'withdrawn'; // 同伴者アクション
+  monsterId: string;                                          // 対象モンスター個体ID
+  monsterTypeId: string;                                      // モンスター種別ID
+  tactic?: 'aggressive' | 'defensive' | 'support' | 'follow'; // 設定された戦術
+  consumedItemId?: string;                                    // 給餌されたアイテムID
+  position?: { x: number; y: number };                         // イベント発生座標
+}
+```
+
 ## 3. 相互参照
 - [管理者データモデル](Admin-Data-Models.md)
 - [管理者システム](../features/Admin-System.md)
@@ -271,3 +285,4 @@
 - [エモート・スタンプマスターリスト](../features/Emote-Stamp-Master-List.md)
 - [ショップシステム](../features/Shop-System.md)
 - [ゲームバランス調整システム](../features/Game-Balance-System.md)
+- [モンスター同伴システム](../features/Monster-Companion-System.md)
