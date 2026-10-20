@@ -53,6 +53,65 @@ declare class Player {
   worldTimeState?: WorldTimeState;                             // 現在の階層/ワールドの昼夜・天候状態
   bestiary?: BestiaryEntry[];                                  // モンスター図鑑のエントリーリスト
   unreadMailCount?: number;                                    // 未読/未受取メールの件数 (拠点UI表示用)
+  companion?: CompanionState;                                  // 現在同伴中のモンスター状態 (出撃時のみ存在)
+}
+
+interface CompanionState {
+  monsterId: string;           // モンスター個体ID (倉庫内ID)
+  typeId: string;              // モンスター種別ID
+  name: string;                // モンスター表示名
+  level: number;               // 現在のレベル
+  hp: number;                  // 現在のHP
+  maxHp: number;               // 最大HP
+  stamina?: number;            // 現在のスタミナ
+  maxStamina?: number;         // 最大スタミナ
+  vigor: number;               // 現在の活力
+  maxVigor: number;            // 最大活力
+  satiety: number;             // 現在の満腹度
+  maxSatiety: number;          // 最大満腹度
+  tactic: 'aggressive' | 'defensive' | 'support' | 'follow'; // 現在のAI戦術
+  status: 'active' | 'downed'; // 出撃中のステータス
+  position?: { x: number; y: number }; // マップ上の現在座標
+}
+
+interface CompanionDeployRequest {
+  monsterId: string;                                           // 出撃させる所有モンスターの個体ID
+  initialTactic?: 'aggressive' | 'defensive' | 'support' | 'follow'; // 初期AI戦術 (未指定時は 'defensive')
+}
+
+interface CompanionDeployResult {
+  success: boolean;                                            // 出撃処理の成否
+  companion?: CompanionState;                                  // 出撃した同伴モンスターの状態データ
+  message: string;                                             // 処理結果メッセージ
+}
+
+interface CompanionDismissResult {
+  success: boolean;                                            // 解任・帰還処理の成否
+  returnedMonsterId?: string;                                  // 倉庫へ帰還したモンスター個体ID
+  message: string;                                             // 処理結果メッセージ
+}
+
+interface CompanionTacticUpdateRequest {
+  tactic: 'aggressive' | 'defensive' | 'support' | 'follow';   // 新しいAI戦術
+}
+
+interface CompanionTacticUpdateResult {
+  success: boolean;                                            // 戦術更新の成否
+  updatedTactic?: 'aggressive' | 'defensive' | 'support' | 'follow'; // 更新後のAI戦術
+  message: string;                                             // 処理結果メッセージ
+}
+
+interface CompanionFeedRequest {
+  itemId: string;                                              // 給餌するアイテムの個体ID
+}
+
+interface CompanionFeedResult {
+  success: boolean;                                            // 給餌処理の成否
+  healedHp: number;                                            // 回復したHP
+  recoveredVigor: number;                                      // 回復した活力
+  recoveredSatiety: number;                                    // 回復した満腹度
+  consumedItemId: string;                                      // 消費されたアイテムID
+  message: string;                                             // 処理結果メッセージ
 }
 
 interface MailAttachment {

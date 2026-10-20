@@ -50,6 +50,7 @@
 
 ### 3.7 クエスト掲示板・ギルド (Quest Board & Guild)
 - 探索者（Explorer）、管理者（Admin）、PKerそれぞれに向けた日課・週課・単発クエストの受諾、達成状況の確認、およびクリア報酬（ゴールド、経験値、資材、限定スタンプ等）を受領するための施設です。
+- 所有するモンスターを 1 体出撃させ、ダンジョン探索を共に進めるための「同伴モンスター出撃準備」を行う窓口でもあります。詳細は **[モンスター同伴システム](Monster-Companion-System.md)** を参照してください。
 - 詳細は **[クエストシステム](Quest-System.md)** を参照してください。
 
 ### 3.8 ランキング掲示板 (Ranking Board)
@@ -113,4 +114,5 @@
 - [祭壇システム](Altar-System.md)
 - [彫像システム](Statue-System.md)
 - [インベントリシステム](Inventory-System.md)
+- [モンスター同伴システム](Monster-Companion-System.md)
 - [実装詳細](../implementation/Implementation-Details.md)

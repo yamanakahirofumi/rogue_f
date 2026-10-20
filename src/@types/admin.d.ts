@@ -224,7 +224,7 @@ interface StoredMonster {
   stats: MonsterStats;     // 詳細ステータス
   traits: string[];        // 継承された特性
   expeditionId?: string;   // 遠征中の場合、遠征セッションID
-  status?: 'idle' | 'placed' | 'expedition'; // モンスターの現在の状態
+  status?: 'idle' | 'placed' | 'expedition' | 'companion'; // モンスターの現在の状態
 }
 
 interface ExpeditionState {
@@ -331,7 +331,8 @@ interface DungeonEvent {
     | BalanceTelemetryDetails
     | SynthesisEventDetails
     | ShopTransactionDetails
-    | BreedingEventDetails;
+    | BreedingEventDetails
+    | CompanionEventDetails;
 }
 
 type DungeonEventType =
@@ -354,7 +355,8 @@ type DungeonEventType =
   | 'synthesis_event'      // アイテム合成・解体イベント
   | 'shop_transaction'     // ショップ取引（購入・売却・鑑定）
   | 'breeding_event'       // モンスター繁殖・孵化・促進
-  | 'mutator_event';       // ダンジョンフロア変異イベント
+  | 'mutator_event'        // ダンジョンフロア変異イベント
+  | 'companion_event';     // 同伴モンスターイベント
 
 interface PlayerEntryDetails {
   entranceId: string;
@@ -823,4 +825,13 @@ interface MutatorEventDetails {
   mutatorId: string;              // 変異ID
   isNaturallyGenerated: boolean;  // 自然発生か
   position?: { x: number; y: number };
+}
+
+interface CompanionEventDetails {
+  action: 'deploy' | 'dismiss' | 'tactic_change' | 'feed' | 'downed' | 'revived' | 'withdrawn'; // 同伴者アクション
+  monsterId: string;              // 対象モンスター個体ID
+  monsterTypeId: string;          // モンスター種別ID
+  tactic?: 'aggressive' | 'defensive' | 'support' | 'follow'; // 設定された戦術
+  consumedItemId?: string;        // 給餌されたアイテムID
+  position?: { x: number; y: number }; // イベント発生座標
 }
