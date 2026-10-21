@@ -69,12 +69,29 @@
 - **巻物の消費抑制**: 祝福された巻物は、使用時に **25%** の確率で消費されずに手元に残ります。
 - **消費の抑制**: 効果時間が延長される場合があります。
 
+### 4.3 付加状態変更（解呪・祝福・強化）と巻物の作用
+インベントリ内のアイテムに対する「解呪」「祝福」「強化」の巻物使用時のフラグおよびパラメータ変化のルールです。
+
+- **解呪の巻物 (`scroll_uncurse`)**:
+  - 対象アイテムの `isCursed` を `false` に変更します。
+  - 呪われていた装備品の攻撃力/防御力マイナス補正（-1）が解除されます。
+  - レスポンス `UseItemResult.uncursedItemIds` に対象アイテムIDが設定されます。
+- **祝福の巻物 (`scroll_blessing`)**:
+  - 対象アイテムの `isBlessed` を `true` に変更します。
+  - 装備品の場合、`attackBonus` または `defenseBonus` に固定 **+1** の祝福補正が適用されます。
+  - レスポンス `UseItemResult.blessedItemIds` に対象アイテムIDが設定されます。
+- **強化の巻物 (`scroll_enhance_weapon`, `scroll_enhance_armor`)**:
+  - 成功時、対象アイテムの `enhanceLevel` が **+1** 増加（最大 **+10**）し、対応する `attackBonus` / `defenseBonus` が **+1** 増加します。
+  - レスポンス `UseItemResult.enhancedItemId` および `enhancedStatBonus` に対象IDと上昇数値が設定されます。
+  - 詳細は [装備システム](Equipment-System.md#6-装備強化・祝福・解呪システム) を参照してください。
+
 ## 5. データモデルとの関連
 本システムの状態は、`InventoryItem` インターフェースの以下のプロパティで管理されます。
 
 - `isIdentified`: 識別状態（true=識別済み, false=未識別）
 - `isCursed`: 呪い状態（true=呪い）
 - `isBlessed`: 祝福状態（true=祝福）
+- `enhanceLevel`: 装備強化値（+0〜+10）
 
 ## 6. 相互参照
 - [インベントリシステム](Inventory-System.md)
