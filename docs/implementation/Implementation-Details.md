@@ -459,6 +459,7 @@
   value: number;
   tier: number;        // アイテムの Tier (1, 2, 3)
   // 装備品および道具の補正値
+  enhanceLevel?: number; // 装備強化値 (+1〜+10)
   attackBonus?: number;
   defenseBonus?: number;
   agilityBonus?: number;
@@ -527,6 +528,10 @@ interface UseItemResult {
   appliedStatusEffects?: string[];                             // 付与された状態異常/バフのIDリスト
   removedStatusEffects?: string[];                             // 解除された状態異常/デバフのIDリスト
   identifiedItemIds?: string[];                                // 鑑定されたアイテムのIDリスト (鑑定の巻物等)
+  enhancedItemId?: string;                                     // 強化された装備品ID (強化の巻物等)
+  enhancedStatBonus?: number;                                  // 強化によるステータス上昇値
+  uncursedItemIds?: string[];                                  // 解呪されたアイテムIDリスト
+  blessedItemIds?: string[];                                   // 祝福されたアイテムIDリスト
   teleportedPosition?: { x: number; y: number };               // テレポート先座標 (高飛びの巻物等)
   message: string;                                             // 処理結果メッセージ
 }
