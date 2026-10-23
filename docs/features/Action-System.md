@@ -42,6 +42,10 @@
 | **祭壇略奪 (`altar/loot`)** | 1.2 秒 | 2 ST | 祭壇に捧げられた戦利品を強奪する。 |
 | **クラフト合成 (`craft`)** | 1.5 秒 | 0 ST | 拠点工房等で資材・レシピからアイテムを作成。 |
 | **解体 (`dismantle`)** | 1.2 秒 | 0 ST | インベントリ内の不要アイテムを分解・一部資材回収。 |
+| **仲間出撃 (`companion/deploy`)** | 0.8 秒 | 0 ST | 倉庫のモンスターを同行コンパニオンとして出撃登録。 |
+| **仲間解任 (`companion/dismiss`)** | 0.5 秒 | 0 ST | 同行中の仲間コンパニオンを離脱させ倉庫へ返還。 |
+| **作戦変更 (`companion/tactic`)** | 0.0 秒 | 0 ST | 同行仲間のAI思考モードを即座に変更 (即時実行)。 |
+| **仲間給餌 (`companion/feed`)** | 0.8 秒 | 0 ST | インベントリの食料を仲間コンパニオンに与えて回復。 |
 
 #### リソースの呼称について (Stamina vs Mana)
 システム上、プレイヤーおよびモンスターがアクションを消費するために使用するリソースは「**スタミナ (ST)**」として統一されています。一部の魔法的な特性やアイテムの説明において「**魔力 (Mana)**」と表現される場合がありますが、これらは現在の実装においてはスタミナと同一のリソースを指します。将来的な拡張において、独立した「魔力」リソースが導入される可能性があります。
@@ -70,6 +74,7 @@
 - **釣り操作 (`cast`, `hook`)**: `FishCastResult` / `FishingHookResult` （ヒット待ちティック数、獲得アイテム/魚、モンスター襲撃判定等）
 - **祭壇操作 (`pray`, `offer-gold`, `offer-item`, `desecrate`, `loot`)**: `AltarActionResult` （神の加護・罰、信仰度変化、獲得アイテム等）
 - **合成・解体操作 (`craft`, `dismantle`)**: `SynthesisCraftResult` / `SynthesisDismantleResult` （完成アイテム、消費/回収資材リスト、ゴールド変動等）
+- **コンパニオン操作 (`deploy`, `dismiss`, `tactic`, `feed`)**: `CompanionDeployResult` / `CompanionDismissResult` / `CompanionTacticUpdateResult` / `CompanionFeedResult` （出撃状態、AIモード、回復満腹度・HP等）
 
 ### 2.3 モンスターのインターバル
 モンスターの待機時間は、[モンスターマスターリスト](Monster-Master-List.md) に定義された「インターバル」を基準とします。

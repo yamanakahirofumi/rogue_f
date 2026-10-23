@@ -256,6 +256,21 @@
 }
 ```
 
+### 2.20 companion_event (同行仲間モンスター関連イベント)
+プレイヤーがダンジョン内で仲間モンスターを出撃登録、解任・離脱、作戦変更、エサやり、または気絶(DOWNED)・救護復帰させた際に記録されます。
+
+```typescript
+{
+  action: 'deploy' | 'dismiss' | 'tactic_change' | 'feed' | 'downed' | 'revived'; // イベントアクション
+  monsterId: string;              // モンスター固有ID
+  species: string;                // モンスター種別ID
+  tactic?: 'aggressive' | 'defensive' | 'support' | 'follow'; // 作戦モード
+  restoredSatiety?: number;       // 回復した満腹度
+  restoredHp?: number;            // 回復したHP
+  position?: { x: number, y: number }; // イベント発生位置
+}
+```
+
 ## 3. 相互参照
 - [管理者データモデル](Admin-Data-Models.md)
 - [管理者システム](../features/Admin-System.md)
