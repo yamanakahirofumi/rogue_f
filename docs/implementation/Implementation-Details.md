@@ -133,6 +133,18 @@
       - レスポンス: `BaseStatusResponse`
     - `POST /api/player/{userId}/base/rest`: 拠点（宿屋・休憩所）での即時全回復処理（HP・スタミナの完全回復および一時状態異常の消去）。
       - レスポンス: `BaseRestResult`
+  - 仲間モンスター管理エンドポイント (Companion Endpoints):
+    - `POST /api/player/{userId}/companion/deploy`: 倉庫に保管中のモンスターを同行仲間（コンパニオン）としてダンジョン探索に出撃登録。
+      - リクエスト: `CompanionDeployRequest`
+      - レスポンス: `CompanionDeployResult`
+    - `DELETE /api/player/{userId}/companion/dismiss`: 現在同行中の仲間モンスターを解任・離脱させ倉庫へ返還。
+      - レスポンス: `CompanionDismissResult`
+    - `PUT /api/player/{userId}/companion/tactic`: 同行仲間モンスターの作戦（AI思考モード）を即座に変更 (アクションコスト0)。
+      - リクエスト: `CompanionTacticUpdateRequest`
+      - レスポンス: `CompanionTacticUpdateResult`
+    - `POST /api/player/{userId}/companion/feed`: インベントリ内の食料アイテムを同行仲間モンスターに与えて満腹度・HP・活力を回復。
+      - リクエスト: `CompanionFeedRequest`
+      - レスポンス: `CompanionFeedResult`
   - レスポンス (上記移動/一般コマンド): `{ [name: string]: boolean }`
   - レスポンス (pickup): `PickUpResult`
   - レスポンス (search): `SearchResult`
@@ -609,7 +621,8 @@ interface ThrowResult {
     | SynthesisEventDetails
     | ShopTransactionDetails
     | BreedingEventDetails
-    | MutatorEventDetails;
+    | MutatorEventDetails
+    | CompanionEventDetails;
 }
 
 type DungeonEventType =
@@ -632,7 +645,8 @@ type DungeonEventType =
   | 'synthesis_event'      // アイテム合成・解体イベント
   | 'shop_transaction'     // ショップ取引（購入・売却・鑑定）
   | 'breeding_event'       // モンスター繁殖・孵化・促進
-  | 'mutator_event';       // ダンジョンフロア変異イベント
+  | 'mutator_event'        // ダンジョンフロア変異イベント
+  | 'companion_event';     // 同行仲間モンスター関連イベント
 
 interface PlayerEntryDetails {
   entranceId: string;      // 入口のID
@@ -1528,6 +1542,73 @@ interface MonsterSkillExecution {
   statusEffectDurationTicks?: number;                  // 付与する状態異常の持続時間 (ティック数)
   soundEffectId: string;                               // 再生される効果音ID (例: 'se_skill_fire_breath')
   targetType: 'single_target' | 'line_of_sight' | 'self_aoe' | 'self_buff' | 'summon' | 'passive'; // ターゲット種別
+}
+```
+
+### 3.36 Companion System Models
+```typescript
+interface CompanionState {
+  monsterId: string;                                           // 対象モンスターの固有ID
+  name: string;                                                // モンスター名
+  species: string;                                             // モンスター種別ID
+  level: number;                                               // モンスターレベル
+  hp: number;                                                  // 現在HP
+  maxHp: number;                                               // 最大HP
+  vigor: number;                                               // 現在の活力
+  maxVigor: number;                                            // 最大活力
+  satiety: number;                                             // 現在の満腹度 (0〜100)
+  maxSatiety: number;                                          // 最大満腹度 (標準 100)
+  tactic: 'aggressive' | 'defensive' | 'support' | 'follow';   // 設定中の作戦AIモード
+  status: 'active' | 'downed' | 'injured';                     // 現在のコンパニオン状態
+  downedTicksRemaining?: number;                               // 気絶(DOWNED)状態の残り維持ティック数
+}
+
+interface CompanionDeployRequest {
+  monsterId: string;                                           // 倉庫に存在する対象モンスターの固有ID
+}
+
+interface CompanionDeployResult {
+  success: boolean;                                            // 出撃登録の成否
+  companion?: CompanionState;                                  // 出撃登録されたコンパニオンデータ
+  message: string;                                             // 結果メッセージ
+}
+
+interface CompanionDismissResult {
+  success: boolean;                                            // 離脱・返還処理の成否
+  returnedToWarehouse: boolean;                                // 倉庫へ正常返還されたか
+  message: string;                                             // 結果メッセージ
+}
+
+interface CompanionTacticUpdateRequest {
+  tactic: 'aggressive' | 'defensive' | 'support' | 'follow';   // 変更後の作戦モード
+}
+
+interface CompanionTacticUpdateResult {
+  success: boolean;                                            // 作戦変更の成否
+  currentTactic?: 'aggressive' | 'defensive' | 'support' | 'follow'; // 更新後の作戦モード
+  message: string;                                             // 結果メッセージ
+}
+
+interface CompanionFeedRequest {
+  itemId: string;                                              // 給餌する食料アイテムの固有ID
+}
+
+interface CompanionFeedResult {
+  success: boolean;                                            // 給餌処理の成否
+  restoredSatiety: number;                                     // 回復した満腹度
+  restoredHp: number;                                          // 回復したHP量
+  restoredVigor: number;                                       // 回復した活力
+  message: string;                                             // 結果メッセージ
+}
+
+interface CompanionEventDetails {
+  action: 'deploy' | 'dismiss' | 'tactic_change' | 'feed' | 'downed' | 'revived'; // イベントアクション
+  monsterId: string;              // モンスター固有ID
+  species: string;                // モンスター種別ID
+  tactic?: 'aggressive' | 'defensive' | 'support' | 'follow'; // 作戦モード
+  restoredSatiety?: number;       // 回復した満腹度
+  restoredHp?: number;            // 回復したHP
+  position?: { x: number; y: number }; // イベント発生位置
 }
 ```
 

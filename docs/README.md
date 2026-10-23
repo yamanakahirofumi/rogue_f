@@ -16,6 +16,7 @@
 - **[ダンジョン変異システム](features/Dungeon-Mutator-System.md)**: 階層ごとに発生する動的な環境変異（モンスター狂乱、濃霧と秘宝、ブラッドムーン等）、発生・消滅条件、管理者発動メカニズム。
 - **[戦闘システム](features/Combat-System.md)**: リアルタイム制バトル、ダメージ計算、モンスターAI。
 - **[モンスターシステム](features/Monster-System.md)**: モンスターの獲得、繁殖、運用。
+- **[仲間モンスターシステム](features/Monster-Companion-System.md)**: 所有モンスターを同行仲間（コンパニオン）として連れ出し、作戦指示（AI思考モード）、満腹度・活力管理、エサやり、共用経験値で共闘。
 - **[モンスター図鑑システム](features/Monster-Bestiary-System.md)**: モンスターの遭遇・討伐・捕獲・繁殖データの記録・研究、段階的情報開示および各種ボーナス。
 - **[モンスター遠征システム](features/Monster-Expedition-System.md)**: モンスターを遠征に派遣し、経験値やゴールド、建築資材、アイテムを獲得。
 - **[モンスター繁殖システム](features/Monster-Breeding-System.md)**: 卵の生成、遺伝、孵化。

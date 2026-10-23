@@ -331,7 +331,8 @@ interface DungeonEvent {
     | BalanceTelemetryDetails
     | SynthesisEventDetails
     | ShopTransactionDetails
-    | BreedingEventDetails;
+    | BreedingEventDetails
+    | CompanionEventDetails;
 }
 
 type DungeonEventType =
@@ -354,7 +355,8 @@ type DungeonEventType =
   | 'synthesis_event'      // アイテム合成・解体イベント
   | 'shop_transaction'     // ショップ取引（購入・売却・鑑定）
   | 'breeding_event'       // モンスター繁殖・孵化・促進
-  | 'mutator_event';       // ダンジョンフロア変異イベント
+  | 'mutator_event'        // ダンジョンフロア変異イベント
+  | 'companion_event';     // 同行仲間モンスター関連イベント
 
 interface PlayerEntryDetails {
   entranceId: string;
@@ -823,4 +825,14 @@ interface MutatorEventDetails {
   mutatorId: string;              // 変異ID
   isNaturallyGenerated: boolean;  // 自然発生か
   position?: { x: number; y: number };
+}
+
+interface CompanionEventDetails {
+  action: 'deploy' | 'dismiss' | 'tactic_change' | 'feed' | 'downed' | 'revived'; // イベントアクション
+  monsterId: string;              // モンスター固有ID
+  species: string;                // モンスター種別ID
+  tactic?: 'aggressive' | 'defensive' | 'support' | 'follow'; // 作戦モード ('tactic_change' / 'deploy' 時)
+  restoredSatiety?: number;       // 回復した満腹度 ('feed' 時)
+  restoredHp?: number;            // 回復したHP ('feed' / 'revived' 時)
+  position?: { x: number; y: number }; // イベント発生位置
 }
