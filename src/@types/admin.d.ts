@@ -331,7 +331,8 @@ interface DungeonEvent {
     | BalanceTelemetryDetails
     | SynthesisEventDetails
     | ShopTransactionDetails
-    | BreedingEventDetails;
+    | BreedingEventDetails
+    | CompanionEventDetails;
 }
 
 type DungeonEventType =
@@ -354,7 +355,8 @@ type DungeonEventType =
   | 'synthesis_event'      // アイテム合成・解体イベント
   | 'shop_transaction'     // ショップ取引（購入・売却・鑑定）
   | 'breeding_event'       // モンスター繁殖・孵化・促進
-  | 'mutator_event';       // ダンジョンフロア変異イベント
+  | 'mutator_event'        // ダンジョンフロア変異イベント
+  | 'companion_event';     // お供モンスターイベント
 
 interface PlayerEntryDetails {
   entranceId: string;
@@ -641,6 +643,15 @@ interface BreedingEventDetails {
   consumedGold?: number;      // 消費したゴールド
   consumedMaterials?: { typeId: string; amount: number }[]; // 消費した資材
   isMutationOccurred?: boolean; // 突然変異が発生したか
+}
+
+interface CompanionEventDetails {
+  action: 'deploy' | 'dismiss' | 'tactic_change' | 'feed' | 'downed' | 'revived'; // イベントアクション
+  monsterId: string;           // モンスター個体ID
+  monsterTypeId: string;       // モンスター種別ID
+  tactic?: string;             // 設定作戦名 ('tactic_change' 時)
+  consumedItemId?: string;     // 消費アイテムID ('feed' 時)
+  position?: { x: number; y: number }; // イベント座標
 }
 
 interface WarehouseItemDepositRequest {

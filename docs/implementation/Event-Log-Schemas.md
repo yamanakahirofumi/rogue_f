@@ -256,9 +256,24 @@
 }
 ```
 
+### 2.20 companion_event (お供モンスターイベント)
+探索者がお供モンスターを出撃、送還、AI作戦変更、エサやり（回復）、ダウン状態移行、または救護復帰させた際に記録されます。
+
+```typescript
+{
+  action: 'deploy' | 'dismiss' | 'tactic_change' | 'feed' | 'downed' | 'revived'; // イベントアクション
+  monsterId: string;           // モンスター個体ID
+  monsterTypeId: string;       // モンスター種別ID
+  tactic?: string;             // 設定作戦名 ('tactic_change' 時)
+  consumedItemId?: string;     // 消費アイテムID ('feed' 時)
+  position?: { x: number; y: number }; // イベント座標
+}
+```
+
 ## 3. 相互参照
 - [管理者データモデル](Admin-Data-Models.md)
 - [管理者システム](../features/Admin-System.md)
+- [お供モンスターシステム](../features/Monster-Companion-System.md)
 - [モンスター繁殖システム](../features/Monster-Breeding-System.md)
 - [合成システム](../features/Synthesis-System.md)
 - [宝箱・鍵システム](../features/Chest-Key-System.md)
