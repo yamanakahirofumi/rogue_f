@@ -53,6 +53,59 @@ declare class Player {
   worldTimeState?: WorldTimeState;                             // 現在の階層/ワールドの昼夜・天候状態
   bestiary?: BestiaryEntry[];                                  // モンスター図鑑のエントリーリスト
   unreadMailCount?: number;                                    // 未読/未受取メールの件数 (拠点UI表示用)
+  companionState?: CompanionState;                             //同行中のお供モンスターの状態 (存在する場合)
+}
+
+interface CompanionState {
+  monsterId: string;               // 倉庫内のモンスター個体ID
+  monsterTypeId: string;           // モンスター種別ID (例: 'slime', 'fire_dragon')
+  name: string;                    // モンスター個体名/種族名
+  level: number;                   // 現在のレベル
+  hp: number;                      // 現在のHP
+  maxHp: number;                   // 最大HP
+  satiety: number;                 // 現在の満腹度 (0〜100)
+  maxSatiety: number;              // 最大満腹度
+  vigor: number;                   // 現在の活力 (0〜100)
+  tactic: 'aggressive' | 'defensive' | 'support' | 'follow'; // 現在のAI作戦
+  isDowned: boolean;               // ダウン状態フラグ
+  position: { x: number; y: number }; // マップ上の現在座標
+}
+
+interface CompanionDeployRequest {
+  monsterId: string;
+  initialTactic?: 'aggressive' | 'defensive' | 'support' | 'follow';
+}
+
+interface CompanionDeployResult {
+  success: boolean;
+  companionState?: CompanionState;
+  message: string;
+}
+
+interface CompanionDismissResult {
+  success: boolean;
+  message: string;
+}
+
+interface CompanionTacticUpdateRequest {
+  tactic: 'aggressive' | 'defensive' | 'support' | 'follow';
+}
+
+interface CompanionTacticUpdateResult {
+  success: boolean;
+  updatedTactic: 'aggressive' | 'defensive' | 'support' | 'follow';
+  message: string;
+}
+
+interface CompanionFeedRequest {
+  itemId: string;
+}
+
+interface CompanionFeedResult {
+  success: boolean;
+  recoveredSatiety: number;
+  recoveredVigor: number;
+  message: string;
 }
 
 interface MailAttachment {
