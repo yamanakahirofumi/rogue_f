@@ -365,6 +365,21 @@
 - `GET /api/monster/traits`: システム内に定義された全ての特性マスターエントリー（ID、名称、効果記述、レアリティ、カテゴリ、ステータス補正値等）を取得します。
   - レスポンス: `MonsterTraitEntry[]`
 
+### 2.13 同行モンスター API (Companion API)
+オトモモンスターの同行出撃・手動帰還・AI作戦設定・給餌を制御するエンドポイントです。詳細は **[モンスター同行システム](../features/Monster-Companion-System.md)** を参照してください。
+
+- `POST /api/player/{userId}/companion/deploy`: 指定した倉庫内モンスターを同行出撃（活力 30 消費）。
+  - リクエスト: `CompanionDeployRequest`
+  - レスポンス: `CompanionDeployResult`
+- `DELETE /api/player/{userId}/companion/dismiss`: 現在同行中のモンスターを手動解散・拠点倉庫へ帰還。
+  - レスポンス: `CompanionDismissResult`
+- `PUT /api/player/{userId}/companion/tactic`: 同行モンスターの AI 作戦方針（`aggressive`, `defensive`, `support`, `follow`）を変更。
+  - リクエスト: `CompanionTacticUpdateRequest`
+  - レスポンス: `CompanionTacticUpdateResult`
+- `POST /api/player/{userId}/companion/feed`: インベントリ内の食料アイテムを指定して同行モンスターへ給餌。
+  - リクエスト: `CompanionFeedRequest`
+  - レスポンス: `CompanionFeedResult`
+
 ## 3. データモデル
 
 ### 3.1 Player
@@ -609,7 +624,8 @@ interface ThrowResult {
     | SynthesisEventDetails
     | ShopTransactionDetails
     | BreedingEventDetails
-    | MutatorEventDetails;
+    | MutatorEventDetails
+    | CompanionEventDetails;
 }
 
 type DungeonEventType =
@@ -632,7 +648,17 @@ type DungeonEventType =
   | 'synthesis_event'      // アイテム合成・解体イベント
   | 'shop_transaction'     // ショップ取引（購入・売却・鑑定）
   | 'breeding_event'       // モンスター繁殖・孵化・促進
-  | 'mutator_event';       // ダンジョンフロア変異イベント
+  | 'mutator_event'        // ダンジョンフロア変異イベント
+  | 'companion_event';     // オトモモンスター同行イベント
+
+interface CompanionEventDetails {
+  action: 'deploy' | 'dismiss' | 'tactic_change' | 'feed' | 'downed' | 'revive' | 'death_return'; // 同行アクション
+  monsterId: string;                                           // 対象モンスター個体ID
+  monsterTypeId: string;                                       // モンスター種別ID
+  tactic?: 'aggressive' | 'defensive' | 'support' | 'follow';   // 設定された作戦
+  foodItemId?: string;                                         // 給餌に使用された食料アイテムID
+  position?: { x: number; y: number };                         // 発生座標
+}
 
 interface PlayerEntryDetails {
   entranceId: string;      // 入口のID
@@ -1528,6 +1554,76 @@ interface MonsterSkillExecution {
   statusEffectDurationTicks?: number;                  // 付与する状態異常の持続時間 (ティック数)
   soundEffectId: string;                               // 再生される効果音ID (例: 'se_skill_fire_breath')
   targetType: 'single_target' | 'line_of_sight' | 'self_aoe' | 'self_buff' | 'summon' | 'passive'; // ターゲット種別
+}
+```
+
+### 3.36 Companion Models
+```typescript
+interface CompanionState {
+  monsterId: string;                                           // モンスター個体ID (倉庫内ID)
+  typeId: string;                                              // モンスター種別ID
+  name: string;                                                // モンスター名
+  level: number;                                               // レベル
+  hp: number;                                                  // 現在HP
+  maxHp: number;                                               // 最大HP
+  stamina: number;                                             // 現在スタミナ
+  maxStamina: number;                                          // 最大スタミナ
+  satiety: number;                                             // 現在満腹度 (0〜100)
+  maxSatiety: number;                                          // 最大満腹度 (100)
+  vigor: number;                                               // 残活力
+  currentTactic: 'aggressive' | 'defensive' | 'support' | 'follow'; // 現在のAI作戦方針
+  position: { x: number; y: number };                          // マップ上の座標
+  isDowned: boolean;                                           // 転倒 (Downed) 状態フラグ
+  downedTicksRemaining?: number;                               // 転倒状態の残り救済ティック数 (標準 30)
+  stats: {
+    attack: number;
+    defense: number;
+    agility: number;
+    dexterity: number;
+    speed: number;
+    luck: number;
+  };
+  skills?: string[];                                           // 使用可能スキルIDリスト
+  traits?: string[];                                           // 所持特性IDリスト
+}
+
+interface CompanionDeployRequest {
+  monsterId: string;                                           // 同行出撃させる倉庫内モンスター個体ID
+}
+
+interface CompanionDeployResult {
+  success: boolean;                                            // 出撃処理の成否
+  companion?: CompanionState;                                  // 生成された同行モンスター状態
+  consumedVigor: number;                                       // 消費された活力 (標準 30)
+  message: string;                                             // 処理結果メッセージ
+}
+
+interface CompanionDismissResult {
+  success: boolean;                                            // 手動解散・帰還処理の成否
+  returnedMonsterId?: string;                                  // 倉庫へ帰還したモンスター個体ID
+  message: string;                                             // 処理結果メッセージ
+}
+
+interface CompanionTacticUpdateRequest {
+  tactic: 'aggressive' | 'defensive' | 'support' | 'follow';   // 設定するAI作戦方針
+}
+
+interface CompanionTacticUpdateResult {
+  success: boolean;                                            // 作戦変更の成否
+  updatedTactic?: 'aggressive' | 'defensive' | 'support' | 'follow'; // 更新後の作戦方針
+  message: string;                                             // 処理結果メッセージ
+}
+
+interface CompanionFeedRequest {
+  foodItemId: string;                                          // 給餌に使用するインベントリ内食料アイテムの個体ID
+}
+
+interface CompanionFeedResult {
+  success: boolean;                                            // 給餌処理の成否
+  recoveredSatiety: number;                                    // 回復した満腹度
+  recoveredHp?: number;                                        // 回復したHP
+  consumedItemName?: string;                                   // 消費された食料アイテム名
+  message: string;                                             // 処理結果メッセージ
 }
 ```
 

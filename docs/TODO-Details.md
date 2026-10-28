@@ -71,6 +71,11 @@
 - **概要**: ダンジョン階層ごとに動的・一時的な環境特性（モンスター狂乱、濃霧と秘宝、ブラッドムーン、聖なる祝福等）を付与し、リスクとリターンの変動、ならびに管理者の手動発動介入を組み込む。
 - **解決策**: [ダンジョン変異システム](features/Dungeon-Mutator-System.md) にて、全 8 種類の変異効果、自然発生ロジック（5%〜15%）、発動コスト・クールタイム、REST API (`POST /api/admin/dungeon/{dungeonId}/floor/{floorLevel}/mutator`, `GET /api/dungeon/{dungeonId}/floor/{floorLevel}/mutators`)、および TypeScript 型定義 (`DungeonMutatorEntry`, `ActiveFloorMutator`, `MutatorTriggerRequest`, `MutatorTriggerResult`, `MutatorEventDetails`) の策定を完了。
 
+### [x] モンスター同行（オトモコンパニオン）システムの設計
+- **完了日**: 2026-10-28 (提案・仕様策定完了)
+- **概要**: 探索者が所持・育成しているモンスターから 1 体を選び、オトモとしてダンジョン探索へ帯同させる仕組み。
+- **解決策**: [モンスター同行システム](features/Monster-Companion-System.md) にて、出撃条件（成体・活力30消費）、4 種の AI 作戦（`aggressive`, `defensive`, `support`, `follow`）、リソース管理・給餌、転倒（Downed・救済30ティック）と自動送還メカニズム、REST API (`/api/player/{userId}/companion/*`)、および TypeScript 型定義 (`CompanionState`, `CompanionDeployRequest`, `CompanionDeployResult`, `CompanionDismissResult`, `CompanionTacticUpdateRequest`, `CompanionTacticUpdateResult`, `CompanionFeedRequest`, `CompanionFeedResult`, `CompanionEventDetails`) の策定を完了。
+
 ## 2. 技術面
 
 ### [x] 欠落仕様の補完
