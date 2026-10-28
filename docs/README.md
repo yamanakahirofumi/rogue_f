@@ -18,6 +18,7 @@
 - **[モンスターシステム](features/Monster-System.md)**: モンスターの獲得、繁殖、運用。
 - **[モンスター図鑑システム](features/Monster-Bestiary-System.md)**: モンスターの遭遇・討伐・捕獲・繁殖データの記録・研究、段階的情報開示および各種ボーナス。
 - **[モンスター遠征システム](features/Monster-Expedition-System.md)**: モンスターを遠征に派遣し、経験値やゴールド、建築資材、アイテムを獲得。
+- **[モンスター同行システム](features/Monster-Companion-System.md)**: 所持モンスターをオトモとしてダンジョン探索に帯同、作戦切り替え、給餌、救済・転倒。
 - **[モンスター繁殖システム](features/Monster-Breeding-System.md)**: 卵の生成、遺伝、孵化。
 - **[モンスター特性リスト](features/Monster-Trait-List.md)**: 特性の種類、効果、レアリティ。
 - **[活力システム](features/Vigor-System.md)**: モンスターの活動リソース（活力）の消費と回復。

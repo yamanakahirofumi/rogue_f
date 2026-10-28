@@ -256,6 +256,20 @@
 }
 ```
 
+### 2.20 companion_event (オトモモンスター同行)
+探索者がオトモモンスターを同行出撃、手動解散、作戦変更、給餌、転倒、蘇生、または自動送還した際に記録されます。
+
+```typescript
+{
+  action: 'deploy' | 'dismiss' | 'tactic_change' | 'feed' | 'downed' | 'revive' | 'death_return'; // 同行アクション
+  monsterId: string;                                           // 対象モンスター個体ID
+  monsterTypeId: string;                                       // モンスター種別ID
+  tactic?: 'aggressive' | 'defensive' | 'support' | 'follow';   // 設定された作戦
+  foodItemId?: string;                                         // 給餌に使用された食料アイテムID
+  position?: { x: number, y: number };                         // 発生座標
+}
+```
+
 ## 3. 相互参照
 - [管理者データモデル](Admin-Data-Models.md)
 - [管理者システム](../features/Admin-System.md)
@@ -271,3 +285,4 @@
 - [エモート・スタンプマスターリスト](../features/Emote-Stamp-Master-List.md)
 - [ショップシステム](../features/Shop-System.md)
 - [ゲームバランス調整システム](../features/Game-Balance-System.md)
+- [モンスター同行システム](../features/Monster-Companion-System.md)
