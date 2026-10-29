@@ -133,6 +133,18 @@
       - レスポンス: `BaseStatusResponse`
     - `POST /api/player/{userId}/base/rest`: 拠点（宿屋・休憩所）での即時全回復処理（HP・スタミナの完全回復および一時状態異常の消去）。
       - レスポンス: `BaseRestResult`
+  - 同行モンスター（オトモ）管理エンドポイント (Companion Endpoints):
+    - `POST /api/player/{userId}/companion/deploy`: 拠点倉庫の所有モンスターを同行枠へ設定・出撃登録。
+      - リクエスト: `CompanionDeployRequest`
+      - レスポンス: `CompanionDeployResult`
+    - `DELETE /api/player/{userId}/companion/dismiss`: 現在同行中のモンスターを解除・拠点倉庫へ送還。
+      - レスポンス: `CompanionDismissResult`
+    - `PUT /api/player/{userId}/companion/tactic`: 同行モンスターの AI 戦術指示 (`aggressive`, `defensive`, `support`, `follow`) を変更。
+      - リクエスト: `CompanionTacticUpdateRequest`
+      - レスポンス: `CompanionTacticUpdateResult`
+    - `POST /api/player/{userId}/companion/feed`: インベントリの食料アイテムを同行モンスターへ与え満腹度・活力を回復。
+      - リクエスト: `CompanionFeedRequest`
+      - レスポンス: `CompanionFeedResult`
   - レスポンス (上記移動/一般コマンド): `{ [name: string]: boolean }`
   - レスポンス (pickup): `PickUpResult`
   - レスポンス (search): `SearchResult`
@@ -410,6 +422,24 @@
   worldTimeState?: WorldTimeState; // ワールドの時間帯・天候状態
   bestiary?: BestiaryEntry[];     // モンスター図鑑エントリー
   unreadMailCount?: number;       // 未読/未受取メール件数
+  activeCompanion?: CompanionState; // 現在同行中のモンスター状態 (任意)
+}
+
+interface CompanionState {
+  monsterId: string;
+  monsterTypeId: string;
+  name: string;
+  level: number;
+  hp: number;
+  maxHp: number;
+  stamina: number;
+  maxStamina: number;
+  satiety: number;
+  maxSatiety: number;
+  vigor: number;
+  tactic: 'aggressive' | 'defensive' | 'support' | 'follow';
+  isDowned: boolean;
+  position: { x: number; y: number };
 }
 ```
 
