@@ -315,7 +315,8 @@ interface DungeonEvent {
     | SynthesisEventDetails
     | ShopTransactionDetails
     | BreedingEventDetails
-    | MutatorEventDetails;
+    | MutatorEventDetails
+    | CompanionEventDetails;
 }
 
 type DungeonEventType =
@@ -338,7 +339,18 @@ type DungeonEventType =
   | 'synthesis_event'      // アイテム合成・解体イベント
   | 'shop_transaction'     // ショップ取引（購入・売却・鑑定）
   | 'breeding_event'       // モンスター繁殖・孵化・促進
-  | 'mutator_event';       // ダンジョンフロア変異イベント
+  | 'mutator_event'        // ダンジョンフロア変異イベント
+  | 'companion_event';     // 同行モンスターイベント (出撃・送還・作戦変更・給餌・ダウン・救助)
+
+interface CompanionEventDetails {
+  action: 'deploy' | 'dismiss' | 'tactic_switch' | 'feed' | 'downed' | 'revived';
+  monsterId: string;
+  monsterTypeId: string;
+  tactic?: 'aggressive' | 'defensive' | 'support' | 'follow';
+  satietyRecovered?: number;
+  vigorRecovered?: number;
+  position?: { x: number; y: number };
+}
 
 interface SynthesisEventDetails {
   action: 'craft' | 'dismantle';                              // 合成または解体

@@ -53,6 +53,62 @@ declare class Player {
   worldTimeState?: WorldTimeState;                             // 現在の階層/ワールドの昼夜・天候状態
   bestiary?: BestiaryEntry[];                                  // モンスター図鑑のエントリーリスト
   unreadMailCount?: number;                                    // 未読/未受取メールの件数 (拠点UI表示用)
+  activeCompanion?: CompanionState;                            // 現在同行中のモンスターの状態 (任意)
+}
+
+interface CompanionState {
+  monsterId: string;
+  monsterTypeId: string;
+  name: string;
+  level: number;
+  hp: number;
+  maxHp: number;
+  stamina: number;
+  maxStamina: number;
+  satiety: number;
+  maxSatiety: number;
+  vigor: number;
+  tactic: 'aggressive' | 'defensive' | 'support' | 'follow';
+  isDowned: boolean;
+  position: { x: number; y: number };
+}
+
+interface CompanionDeployRequest {
+  monsterId: string;
+}
+
+interface CompanionDeployResult {
+  success: boolean;
+  companion?: CompanionState;
+  message: string;
+}
+
+interface CompanionDismissResult {
+  success: boolean;
+  dismissedMonsterId?: string;
+  message: string;
+}
+
+interface CompanionTacticUpdateRequest {
+  tactic: 'aggressive' | 'defensive' | 'support' | 'follow';
+}
+
+interface CompanionTacticUpdateResult {
+  success: boolean;
+  currentTactic?: 'aggressive' | 'defensive' | 'support' | 'follow';
+  message: string;
+}
+
+interface CompanionFeedRequest {
+  itemId: string;
+}
+
+interface CompanionFeedResult {
+  success: boolean;
+  recoveredSatiety?: number;
+  recoveredVigor?: number;
+  remainingFoodCount?: number;
+  message: string;
 }
 
 interface MailAttachment {

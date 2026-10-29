@@ -256,6 +256,21 @@
 }
 ```
 
+### 2.20 companion_event (同行モンスターイベント)
+探索者が拠点にて同行モンスターを出撃登録、送還・解除、AI戦術指示をリアルタイム変更、給餌、あるいは同行モンスターがダウン・救助された際に記録されます。
+
+```typescript
+{
+  action: 'deploy' | 'dismiss' | 'tactic_switch' | 'feed' | 'downed' | 'revived'; // 行動種別
+  monsterId: string;                                          // モンスター個体ID
+  monsterTypeId: string;                                      // モンスター種別ID
+  tactic?: 'aggressive' | 'defensive' | 'support' | 'follow';  // 変更後の戦術 ('tactic_switch' 時)
+  satietyRecovered?: number;                                  // 回復した満腹度 ('feed' 時)
+  vigorRecovered?: number;                                    // 回復した活力 ('feed' 時)
+  position?: { x: number; y: number };                        // 発生座標
+}
+```
+
 ## 3. 相互参照
 - [管理者データモデル](Admin-Data-Models.md)
 - [管理者システム](../features/Admin-System.md)
