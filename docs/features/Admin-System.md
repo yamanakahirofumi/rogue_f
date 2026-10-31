@@ -179,6 +179,13 @@
   - リクエスト: `AdminTriggerRequest`
   - レスポンス: `AdminTriggerResult`
 
+#### フロア変異管理 API
+- `POST /api/admin/dungeon/{dungeonId}/floor/{floorLevel}/mutator`: 指定階層にフロア変異を意図的に付与（コスト: 500 G + 木材×10 + 魔水晶の欠片×2）。
+  - リクエスト: `MutatorTriggerRequest`
+  - レスポンス: `MutatorTriggerResult`
+- `GET /api/dungeon/{dungeonId}/floor/{floorLevel}/mutators`: 指定階層で現在アクティブなフロア変異一覧および残り時間の取得。
+  - レスポンス: `ActiveFloorMutator[]`
+
 #### モニタリング & ログ API
 - `GET /api/admin/logs/dungeon/{dungeonId}`: 指定ダンジョンのイベントログを取得。
   - クエリパラメータ: `limit`, `offset`, `type`
@@ -257,5 +264,6 @@ type AdminActionType =
 - [トラップシステム](Trap-System.md)
 - [モンスターシステム](Monster-System.md)
 - [UI・UX設計](UI-UX-Design.md)
+- [ダンジョン変異システム](Dungeon-Mutator-System.md)
 - [実装詳細](../implementation/Implementation-Details.md)
 - [管理者データモデル](../implementation/Admin-Data-Models.md)
