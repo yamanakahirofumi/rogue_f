@@ -81,6 +81,11 @@
 - `PUT /api/admin/dungeon/{dungeonId}/floor/{floorLevel}`: 特定階層の構成（地形、モンスター・トラップ・施設・ショップ配置）の更新。
   - リクエスト: `FloorConfig`
   - レスポンス: `FloorConfig`
+- `POST /api/admin/dungeon/{dungeonId}/floor/{floorLevel}/mutator`: 指定階層にフロア変異を意図的に付与。
+  - リクエスト: `MutatorTriggerRequest`
+  - レスポンス: `MutatorTriggerResult`
+- `GET /api/dungeon/{dungeonId}/floor/{floorLevel}/mutators`: 指定階層で現在アクティブなフロア変異一覧および残り時間の取得。
+  - レスポンス: `ActiveFloorMutator[]`
 - `DELETE /api/admin/dungeon/{dungeonId}/floor/{floorLevel}/trap`: 配置済みトラップの撤去・解体（設置コストの 50% 資材・ゴールドを回収）。
   - リクエスト: `TrapDismantleRequest`
   - レスポンス: `TrapDismantleResult`
@@ -244,9 +249,37 @@ interface AdminLog {
 type AdminActionType =
   | 'create_dungeon'       // ダンジョン作成
   | 'update_floor'         // 階層更新
+  | 'trigger_mutator'      // フロア変異発動
   | 'update_shop_price'    // ショップ価格更新
   | 'update_trust_policy'  // 信頼ポリシー更新
   | 'intervene_player';    // プレイヤーへの介入
+
+interface DungeonMutatorEntry {
+  id: string;                                                         // 変異ID (例: 'monster_frenzy')
+  name: string;                                                       // 変異表示名
+  category: 'threat' | 'treasure' | 'magic' | 'support' | 'resource'; // 変異カテゴリ
+  description: string;                                                // 効果説明
+  durationTicks: number;                                             // 基本持続ティック数 (標準 600)
+}
+
+interface ActiveFloorMutator {
+  mutatorId: string;         // 適用中の変異ID
+  appliedAtTick: number;     // 適用時のゲーム累積ティック
+  remainingTicks: number;    // 残り持続ティック数
+  isNaturallyGenerated: boolean; // 自然発生フラグ
+}
+
+interface MutatorTriggerRequest {
+  mutatorId: string;         // 発動する変異のID
+}
+
+interface MutatorTriggerResult {
+  success: boolean;               // 発動処理の成否
+  activeMutator?: ActiveFloorMutator; // 生成された変異状態
+  consumedGold?: number;          // 消費ゴールド
+  consumedMaterials?: { typeId: string; amount: number }[]; // 消費資材
+  message: string;                // 結果メッセージ
+}
 ```
 
 ## 9. 相互参照
