@@ -1531,6 +1531,68 @@ interface MonsterSkillExecution {
 }
 ```
 
+### 3.36 Dungeon Mutator Models
+ダンジョン階層ごとに発生・付与されるフロア変異（[ダンジョン変異システム](../features/Dungeon-Mutator-System.md) 参照）のデータモデルです。
+
+```typescript
+interface DungeonMutatorEntry {
+  id: string;                                                         // 変異ID (例: 'monster_frenzy')
+  name: string;                                                       // 変異表示名
+  category: 'threat' | 'treasure' | 'magic' | 'support' | 'resource'; // 変異カテゴリ
+  description: string;                                                // 効果説明
+  durationTicks: number;                                             // 基本持続ティック数 (標準 600)
+}
+
+interface ActiveFloorMutator {
+  mutatorId: string;         // 適用中の変異ID
+  appliedAtTick: number;     // 適用時のゲーム累積ティック
+  remainingTicks: number;    // 残り持続ティック数
+  isNaturallyGenerated: boolean; // 自然発生フラグ
+}
+
+interface MutatorTriggerRequest {
+  mutatorId: string;         // 発動する変異のID
+}
+
+interface MutatorTriggerResult {
+  success: boolean;               // 発動処理の成否
+  activeMutator?: ActiveFloorMutator; // 生成された変異状態
+  consumedGold?: number;          // 消費ゴールド
+  consumedMaterials?: { typeId: string; amount: number }[]; // 消費資材
+  message: string;                // 結果メッセージ
+}
+
+interface MutatorEventDetails {
+  action: 'applied' | 'expired' | 'cleared'; // 変異アクション
+  mutatorId: string;              // 変異ID
+  isNaturallyGenerated: boolean;  // 自然発生か
+  position?: { x: number; y: number };
+}
+```
+
+### 3.37 StatusEffectType
+プレイヤーやモンスターに付与される全16種類の標準状態異常ID（[状態異常システム](../features/Status-Effect-System.md) 参照）の型定義です。
+
+```typescript
+type StatusEffectType =
+  | 'POISON'            // 毒 (5秒毎に最大HPの2%DoT)
+  | 'STUN'              // スタン (全行動不能)
+  | 'SLOW'              // 鈍足 (アクションインターバル2.0倍)
+  | 'CURSE'             // 呪い (装備固定・解除不可)
+  | 'HUNGRY'            // 空腹 (自然回復停止)
+  | 'STARVING'          // 飢餓 (自然回復停止・5秒毎最大HP1%DoT)
+  | 'CONFUSION'         // 混乱 (入力方向ランダム)
+  | 'BLINDNESS'         // 盲目 (視界半径1マス・命中率0.5倍)
+  | 'RAGE'              // 激昂 (攻撃力/敏捷性1.5倍・防御力0.5倍)
+  | 'REGENERATION'      // 再生 (自然回復速度向上)
+  | 'SATIATED'          // 満腹 (自然回復速度1.2倍)
+  | 'SPEED_UP'          // 加速 (アクションインターバル0.7倍)
+  | 'DIVINE_BLESSING'   // 神の祝福 (全能力値+10%、HP/ST自然回復+2、デバフ耐性+50%)
+  | 'DIVINE_PUNISHMENT' // 神罰 (自然回復停止、行動時最大HP1%DoT、被ダメージ1.2倍)
+  | 'CHILLED'           // 冷気 (クールタイム1.3倍、ST自然回復停止)
+  | 'OVERHEATED';       // 熱気 (5秒毎2ダメージDoT、命中率0.85倍)
+```
+
 詳細は **[イベントログ詳細仕様](Event-Log-Schemas.md)** を参照してください。
 
 ## 4. フィールドマップ記号 (Field Map Symbols)

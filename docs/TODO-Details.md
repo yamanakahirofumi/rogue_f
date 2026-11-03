@@ -96,6 +96,7 @@
     - [x] モンスター特殊行動（スキル）実行パラメーターマスター仕様、効果音ID定義およびTypeScript型定義（`MonsterSkillExecution`）の追加補完。
     - [x] サウンドエフェクトマスターリスト（SE Master List）の策定・追加定義。
     - [x] 拠点ステータス・手動全回復 REST API 仕様（`GET/POST /api/player/{userId}/base/*`）および TypeScript 型定義（`BaseFacilityInfo`, `BaseStatusResponse`, `BaseRestResult`）の追加補完。
+    - [x] ダンジョン変異システム REST API・データモデル同期（`Implementation-Details.md`, `Admin-System.md`）および全 16 種状態異常 ID の TypeScript 型定義（`StatusEffectType`）の補完・整理。
 - **解決策**: 各機能仕様書および [実装詳細](implementation/Implementation-Details.md) を更新し、曖昧さを排除済み。
 
 ### [x] セーブ・ロード機能
