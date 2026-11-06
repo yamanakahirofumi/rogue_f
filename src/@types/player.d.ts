@@ -12,6 +12,24 @@ interface WorldTimeState {
   weatherTicksRemaining: number;                               // 現在の天候が継続する残りティック数
 }
 
+type StatusEffectType =
+  | 'POISON'
+  | 'STUN'
+  | 'SLOW'
+  | 'CURSE'
+  | 'HUNGRY'
+  | 'STARVING'
+  | 'CONFUSION'
+  | 'BLINDNESS'
+  | 'RAGE'
+  | 'REGENERATION'
+  | 'SATIATED'
+  | 'SPEED_UP'
+  | 'DIVINE_BLESSING'
+  | 'DIVINE_PUNISHMENT'
+  | 'CHILLED'
+  | 'OVERHEATED';
+
 declare class Player {
   id: string;
   name: string;
@@ -42,7 +60,7 @@ declare class Player {
   accessoryId?: string;
   inventory: InventoryItem[];
   inventoryCapacity: number;
-  statusEffects: string[];
+  statusEffects: StatusEffectType[];
   audioSettings?: AudioSettings; // オーディオ・音量設定（任意、初期設定あり）
   unlockedLoreIds?: string[];    // 解放されたLoreのIDリスト
   unlockedTitleIds?: string[];   // アンロックされた称号のIDリスト
@@ -291,8 +309,8 @@ interface UseItemResult {
   healedHp?: number;                                           // 回復したHP
   healedStamina?: number;                                      // 回復したスタミナ
   recoveredSatiety?: number;                                   // 回復した満腹度
-  appliedStatusEffects?: string[];                             // 付与された状態異常/バフのIDリスト
-  removedStatusEffects?: string[];                             // 解除された状態異常/デバフのIDリスト
+  appliedStatusEffects?: StatusEffectType[];                   // 付与された状態異常/バフのIDリスト
+  removedStatusEffects?: StatusEffectType[];                   // 解除された状態異常/デバフのIDリスト
   identifiedItemIds?: string[];                                // 鑑定されたアイテムのIDリスト (鑑定の巻物等)
   teleportedPosition?: { x: number; y: number };               // テレポート先座標 (高飛びの巻物等)
   message: string;                                             // 処理結果メッセージ
@@ -330,7 +348,7 @@ interface ThrowResult {
   damageDealt?: number;                                        // 与えたダメージ量
   isBroken: boolean;                                           // 投擲・着弾により破砕・消滅したか（薬等）
   landedPosition?: { x: number; y: number };                   // 最終的な着地・落下の座標
-  appliedStatusEffects?: string[];                             // 着弾時に付与された状態異常 (毒薬等)
+  appliedStatusEffects?: StatusEffectType[];                   // 着弾時に付与された状態異常 (毒薬等)
   message: string;                                             // 処理結果メッセージ
 }
 
@@ -446,7 +464,7 @@ interface ReplayFrame {
     position?: { x: number; y: number };
     hp?: number;
     stamina?: number;
-    statusEffects?: string[];
+    statusEffects?: StatusEffectType[];
   }[];
 }
 
@@ -663,6 +681,6 @@ interface BaseRestResult {
   success: boolean;                                                    // 全回復処理の成否
   healedHp: number;                                                    // 回復したHP量
   healedStamina: number;                                               // 回復したスタミナ量
-  curedStatusEffects: string[];                                        // 解除された状態異常のIDリスト
+  curedStatusEffects: StatusEffectType[];                               // 解除された状態異常のIDリスト
   message: string;                                                     // 処理結果メッセージ
 }

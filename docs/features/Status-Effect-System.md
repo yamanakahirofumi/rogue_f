@@ -37,7 +37,27 @@
 ## 3. 技術的実装
 
 ### 3.1 データ構造
-`Player` モデル内の `statusEffects: string[]` 配列で管理されます。
+`Player` モデル内の `statusEffects: StatusEffectType[]` 配列で管理されます。型定義の詳細は [実装詳細](../implementation/Implementation-Details.md#30-statuseffecttype) および `src/@types/player.d.ts` を参照してください。
+
+```typescript
+export type StatusEffectType =
+  | 'POISON'
+  | 'STUN'
+  | 'SLOW'
+  | 'CURSE'
+  | 'HUNGRY'
+  | 'STARVING'
+  | 'CONFUSION'
+  | 'BLINDNESS'
+  | 'RAGE'
+  | 'REGENERATION'
+  | 'SATIATED'
+  | 'SPEED_UP'
+  | 'DIVINE_BLESSING'
+  | 'DIVINE_PUNISHMENT'
+  | 'CHILLED'
+  | 'OVERHEATED';
+```
 
 #### 状態異常 ID 一覧
 API およびフロントエンドで使用される標準的な状態異常 ID（文字列定数）の定義です。
